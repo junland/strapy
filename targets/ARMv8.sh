@@ -2,9 +2,9 @@
 
 . $(dirname $(realpath -s $0))/../lib/base.sh
 
+# The ARMv8(a) profile is intended primarily for the Rockchip RK3399, found
+# in the Pinebook Pro. This profile should also support Rasberry Pi 4  too.
 
-# The rockchip build profile is intended for Rockchip RK3399, found in Pinebook Pro
-# This happily supports Rasberry Pi 4 too.
 export SERPENT_TARGET_CFLAGS="-march=armv8-a+crc -mtune=cortex-a72 -O3"
 export SERPENT_TARGET_CXXFLAGS="${SERPENT_TARGET_CFLAGS}"
 export SERPENT_TARGET_LDFLAGS=""
