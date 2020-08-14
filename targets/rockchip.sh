@@ -11,3 +11,6 @@ export SERPENT_TARGET_LDFLAGS=""
 export SERPENT_TRIPLET="aarch64-serpent-linux-musl"
 export SERPENT_TARGET_LLVM_BACKEND="AArch64"
 export SERPENT_TARGET_ARCH="arm64"
+
+# The inlude directory in musl
+export SERPENT_TARGET_MUSL="aarch64"

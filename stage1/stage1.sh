@@ -9,6 +9,7 @@ executionPath=$(dirname $(realpath -s $0))
 COMPONENTS=(
     "headers"
     "toolchain"
+    "compiler-rt"
     "musl"
     "libffi"
     "pkgconf"
