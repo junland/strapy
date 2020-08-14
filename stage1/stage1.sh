@@ -11,6 +11,7 @@ COMPONENTS=(
     "toolchain"
     "compiler-rt"
     "musl"
+    "toolchain-extra"
     "libffi"
     "pkgconf"
 )
