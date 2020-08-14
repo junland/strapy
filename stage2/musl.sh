@@ -10,7 +10,7 @@ cd musl-*
 printInfo "Configuring musl"
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --build="${SERPENT_TRIPLET}" \
     --enable-optimize=auto \
     --enable-visibility
 
