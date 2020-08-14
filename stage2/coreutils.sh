@@ -8,6 +8,9 @@ cd coreutils-*
 
 
 printInfo "Configuring coreutils"
+# Fix aarch64 SYS_getdents regression
+patch -p1 < "${SERPENT_PATCHES_DIR}/coreutils_8_31_ls.patch"
+
 export FORCE_UNSAFE_CONFIGURE=1
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
