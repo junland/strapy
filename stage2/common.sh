@@ -14,7 +14,6 @@ if [[ ! -e "${SERPENT_STAGE1_TREE}/usr/bin/clang" ]]; then
 fi
 
 export PATH="${SERPENT_STAGE1_TREE}/usr/bin:$PATH"
-unset SERPENT_STAGE1_TREE
 
 # Check its the right clang/llvm.
 SERPENT_LLVM_TARGET=`llvm-config --host-target`
@@ -42,5 +41,7 @@ export CFLAGS="${SERPENT_TARGET_CFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L$
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -Wno-unused-command-line-argument -D_LIBCPP_HAS_MUSL_LIBC -Wno-error"
 export LDFLAGS="${SERPENT_TARGET_LDFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib"
 export PKG_CONFIG_PATH="${SERPENT_INSTALL_DIR}/usr/lib/pkgconfig:${SERPENT_INSTALL_DIR}/usr/share/pkgconfig"
+
+unset SERPENT_STAGE1_TREE
 
 prepareBuild
