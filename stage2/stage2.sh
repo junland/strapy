@@ -26,7 +26,7 @@ COMPONENTS=(
     "autoconf"
     "automake"
     "m4"
-    "texinfo"
+    # "texinfo"
     "make"
     "gawk"
     "grep"
