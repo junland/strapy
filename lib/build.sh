@@ -139,7 +139,7 @@ else
     exit 1
 fi
 
-export SERPENT_TARGET=${SERPENT_TARGET:-"ia"}
+export SERPENT_TARGET=${SERPENT_TARGET:-"x86_64"}
 
 [ -e "${SERPENT_ROOT_DIR}/targets/${SERPENT_TARGET}.sh" ] || serpentFail "Failed to load targets/${SERPENT_TARGET}.sh"
 
