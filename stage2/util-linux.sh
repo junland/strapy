@@ -8,6 +8,7 @@ cd util-linux-*
 
 
 printInfo "Configuring util-linux"
+
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
@@ -34,7 +35,8 @@ printInfo "Configuring util-linux"
     --disable-makeinstall-chown \
     --disable-makeinstall-setuid \
     --bindir=/usr/bin \
-    --sbindir=/usr/sbin
+    --sbindir=/usr/sbin \
+    --disable-hwclock-cmos
 
 
 printInfo "Building util-linux"
