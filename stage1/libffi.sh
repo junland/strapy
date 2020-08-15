@@ -9,6 +9,7 @@ cd libffi-*
 export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="clang"
 export CXX="clang++"
+export LD="ld.lld"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_INSTALL_DIR}/lib"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_INSTALL_DIR}/lib"
