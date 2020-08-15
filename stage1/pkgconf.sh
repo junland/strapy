@@ -28,4 +28,4 @@ printInfo "Installing pkgconf"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 
 printInfo "Setting pkgconf as default pkg-config"
-ln -sv pkgconf "${SERPENT_INSTALL_DIR}/usr/bin/pkg-config"
+ln -svf pkgconf "${SERPENT_INSTALL_DIR}/usr/bin/pkg-config"
