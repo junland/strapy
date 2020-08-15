@@ -9,7 +9,7 @@ cd attr-*
 
 printInfo "Configuring attr"
 ./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
+    --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --enable-shared \
     --disable-static \
