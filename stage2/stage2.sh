@@ -11,7 +11,6 @@ COMPONENTS=(
     "headers"
     "musl"
     "zlib"
-    "libffi"
     "toolchain"
     "attr"
     "acl"
@@ -21,7 +20,6 @@ COMPONENTS=(
     "xz"
     "util-linux"
     "coreutils"
-    "openssl"
     "autoconf"
     "automake"
     "m4"
@@ -32,15 +30,7 @@ COMPONENTS=(
     "patch"
     "less"
     "which"
-    "intltool"
     "slibtool"
-    "libxml2"
-    "bison"
-    "gdbm"
-    "expat"
-    "db"
-    "perl"
-    "gperf"
 )
 
 prefetchSources
