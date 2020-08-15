@@ -9,7 +9,7 @@ set -e
 # Currently this is just libunwind and should be sufficient to get onto stage2.
 
 if [[ "${SERPENT_TARGET_ARCH}" == "${SERPENT_HOST}" ]]; then
-    printInfo "Skipping compiler-rt on native architecture"
+    printInfo "Skipping toolchain-extras on native architecture"
     exit 0
 fi
 
