@@ -26,6 +26,7 @@ COMPONENTS=(
     "grep"
     "sed"
     "patch"
+    "diffutils"
     "less"
     "which"
     "slibtool"
