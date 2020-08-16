@@ -15,6 +15,7 @@ export FORCE_UNSAFE_CONFIGURE=1
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
+    --disable-acl \
     --disable-nls \
     --enable-largefile \
     --libdir=/usr/lib \

@@ -12,8 +12,6 @@ COMPONENTS=(
     "musl"
     "zlib"
     "toolchain"
-    "attr"
-    "acl"
     "ncurses"
     "bash"
     "gzip"
