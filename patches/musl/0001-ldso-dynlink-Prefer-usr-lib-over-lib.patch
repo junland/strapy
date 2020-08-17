@@ -1,0 +1,34 @@
+From 66f6b844af0813c5911b76c495df38aff34cfffa Mon Sep 17 00:00:00 2001
+From: Ikey Doherty <ikey.doherty@lispysnake.com>
+Date: Mon, 17 Aug 2020 18:19:59 +0100
+Subject: [PATCH] ldso/dynlink: Prefer /usr/lib over /lib
+
+This is a Serpent OS specific change for a post-usrsplit
+era. We do not package any files in `/lib`, only within
+the `/usr/` tree.
+
+Therefore the `/lib` path is **always** a symlink back
+to the native architecture directory. We save an unnecessary
+stat for each library by looking in `/usr/` first.
+
+Signed-off-by: Ikey Doherty <ikey.doherty@lispysnake.com>
+---
+ ldso/dynlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ldso/dynlink.c b/ldso/dynlink.c
+index d3d4ddd..ea72b15 100644
+--- a/ldso/dynlink.c
++++ b/ldso/dynlink.c
+@@ -1071,7 +1071,7 @@ static struct dso *load_library(const char *name, struct dso *needed_by)
+ 					sys_path = "";
+ 				}
+ 			}
+-			if (!sys_path) sys_path = "/lib:/usr/local/lib:/usr/lib";
++			if (!sys_path) sys_path = "/usr/lib:/usr/local/lib:/lib";
+ 			fd = path_open(name, sys_path, buf, sizeof buf);
+ 		}
+ 		pathname = buf;
+-- 
+2.27.0
+

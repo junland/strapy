@@ -6,13 +6,16 @@ set -e
 extractSource musl
 cd musl-*
 
+patch -p1 < "${SERPENT_PATCHES_DIR}/musl/0001-ldso-dynlink-Prefer-usr-lib-over-lib.patch"
 
 printInfo "Configuring musl"
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
     --enable-optimize=auto \
-    --enable-visibility
+    --enable-visibility \
+    --libdir=/usr/lib \
+    --syslibdir=/usr/lib
 
 printInfo "Building musl"
 make -j "${SERPENT_BUILD_JOBS}"
