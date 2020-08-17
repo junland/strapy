@@ -14,6 +14,9 @@ extractSource libunwind
 extractSource lld
 extractSource llvm
 
+pushd clang
+patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+popd
 
 ln -sv "clang-${TOOLCHAIN_VERSION}.src" clang
 ln -sv "compiler-rt-${TOOLCHAIN_VERSION}.src" compiler-rt
