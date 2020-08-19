@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export SERPENT_STAGE_NAME="stage2.5"
+export SERPENT_STAGE_NAME="stage3"
 
 . $(dirname $(realpath -s $0))/../lib/build.sh
 
@@ -12,7 +12,7 @@ COMPONENTS=(
 
 checkRootUser
 
-requireTools "mknod" "rsync"
+requireTools "mknod"
 
 prefetchSources
 

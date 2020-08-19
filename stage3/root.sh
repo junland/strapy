@@ -3,18 +3,20 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-printInfo "Configuring root filesystem"
+printInfo "Configuring root filesystem layout"
 
-export SERPENT_STAGE2_TREE=`getInstallDir "2"`
+install -v -D -d -m 00755 "${SERPENT_INSTALL_DIR}"/usr/{bin,lib,share,sbin,include}
+install -v -D -d -m 00755 "${SERPENT_INSTALL_DIR}"/{etc,proc,run,var,sys,dev,tmp}
 
-[ -e "${SERPENT_STAGE2_TREE}/usr/bin/clang" ] || serpentFail "Cannot find stage2 tree"
+install -v -D -d -m 00755 "${SERPENT_INSTALL_DIR}/run/lock"
+ln -sv ../run/lock "${SERPENT_INSTALL_DIR}/var/lock"
 
-install -D -d -m 00755 "${SERPENT_INSTALL_DIR}" || serpentFail "Could not construct stage2.5 installdir"
+ln -sv lib "${SERPENT_INSTALL_DIR}/usr/lib64"
+ln -sv usr/bin "${SERPENT_INSTALL_DIR}/bin"
+ln -sv usr/sbin "${SERPENT_INSTALL_DIR}/sbin"
+ln -sv usr/lib "${SERPENT_INSTALL_DIR}/lib"
+ln -sv usr/lib64 "${SERPENT_INSTALL_DIR}/lib64"
 
-printInfo "Duplicating stage2 for 2.5"
-
-# We bindmount prior to rsync, so lets prevent hell on earth.
-rsync --exclude '/dev' --exclude '/proc' --exclude '/sys' -aHP "${SERPENT_STAGE2_TREE}/." "${SERPENT_INSTALL_DIR}/."
 
 printInfo "Constructing device nodes"
 
@@ -38,5 +40,3 @@ ln -svf /proc/self/fd/0 "${SERPENT_INSTALL_DIR}"/dev/stdin
 ln -svf /proc/self/fd/1 "${SERPENT_INSTALL_DIR}"/dev/stdout
 ln -svf /proc/self/fd/2 "${SERPENT_INSTALL_DIR}"/dev/stderr
 ln -svf /proc/kcore "${SERPENT_INSTALL_DIR}"/dev/core
-
-printInfo "Duplication completed"
