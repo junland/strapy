@@ -11,6 +11,9 @@ COMPONENTS=(
 )
 
 checkRootUser
+
+requireTools "mknod" "rsync"
+
 prefetchSources
 
 bringUpMounts
