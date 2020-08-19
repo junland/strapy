@@ -10,6 +10,9 @@ COMPONENTS=(
     "root"
     "headers"
     "musl"
+    "diffutils"
+    "ncurses"
+    "bash"
 )
 
 checkRootUser
