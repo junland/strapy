@@ -11,6 +11,7 @@ COMPONENTS=(
     "headers"
     "musl"
     "zlib"
+    "xz"
     "diffutils"
     "ncurses"
     "bash"
