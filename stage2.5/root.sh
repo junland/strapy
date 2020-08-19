@@ -13,6 +13,7 @@ install -D -d -m 00755 "${SERPENT_INSTALL_DIR}" || serpentFail "Could not constr
 
 printInfo "Duplicating stage2 for 2.5"
 
-rsync -aHP "${SERPENT_STAGE2_TREE}/." "${SERPENT_INSTALL_DIR}/." --delete
+# We bindmount prior to rsync, so lets prevent hell on earth.
+rsync --exclude '/dev' --exclude '/proc' --exclude '/sys' -aHP "${SERPENT_STAGE2_TREE}/." "${SERPENT_INSTALL_DIR}/." --delete
 
 printInfo "Duplication completed"
