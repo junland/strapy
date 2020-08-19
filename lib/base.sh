@@ -56,6 +56,7 @@ function createMountDirs()
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/proc"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/sys"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
+    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
 }
 
 # Bring up required bindmounts for functional chroot environment
@@ -71,6 +72,9 @@ function bringUpMounts()
     mount --bind /proc "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to bind-mount /proc"
     mount --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
     mount -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
+
+    mount -v --bind -o ro "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
+    mount -o remount,ro,bind "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to make /build read-only"
 }
 
 # Helper to ensure something *does* get unmounted
@@ -95,6 +99,7 @@ function takeDownMounts()
 {
     set +e
     printInfo "Taking down the mounts"
+    serpentUnmount "${SERPENT_INSTALL_DIR}/build"
     serpentUnmount "${SERPENT_INSTALL_DIR}/serpent"
     serpentUnmount "${SERPENT_INSTALL_DIR}/dev/pts"
     serpentUnmount "${SERPENT_INSTALL_DIR}/sys"
