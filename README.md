@@ -34,5 +34,5 @@ Use stage1 to cross-compile essentials for a working chroot, and freshly cross-c
 
 #### stage3
 
-Use stage2's resulting chroot environment to build 100% clean, native toolchain, libraries and such.
-This base image will be used as the starting point to build serpent OS in Stage 4.
+Reuse stage1 to build musl + headers.
+Reusage stage2 at `/serpent` in a chroot to build a clean stage3 install.
