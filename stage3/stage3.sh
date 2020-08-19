@@ -26,6 +26,7 @@ COMPONENTS=(
     "root"
     "headers"
     "musl"
+    "findutils"
     "zlib"
     "xz"
     "diffutils"
