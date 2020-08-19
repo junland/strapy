@@ -116,7 +116,7 @@ function serpentChroot()
 # Set the chroot dir
 function serpentChrootCd()
 {
-    export SERPENT_CHROOT_DIR="$1"
+    export SERPENT_CHROOT_DIR="${SERPENT_BUILD_DIR}/$1"
 }
 
 # Tightly control the path
