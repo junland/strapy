@@ -15,4 +15,4 @@ printInfo "Duplicating stage2 for 2.5"
 
 rsync -aHP "${SERPENT_STAGE2_TREE}/." "${SERPENT_INSTALL_DIR}/." --delete
 
-printInfo "Duplicatoin completed"
+printInfo "Duplication completed"
