@@ -21,7 +21,7 @@ export FORCE_UNSAFE_CONFIGURE=1
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
-    --enable-single-binary
+    --disable-single-binary
 
 
 printInfo "Building coreutils"
