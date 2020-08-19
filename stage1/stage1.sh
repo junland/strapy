@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+########################################################################
+#                                                                      #
+# Stage: One                                                           #
+#                                                                      #
+# Our aim here is to bootstrap an absolutely minimal cross-compiler    #
+# for the target system. It will be used to build the entirety of      #
+# stage2.                                                              #
+#                                                                      #
+########################################################################
+
 export SERPENT_STAGE_NAME="stage1"
 
 . $(dirname $(realpath -s $0))/../lib/build.sh
