@@ -10,6 +10,7 @@ COMPONENTS=(
     "root"
 )
 
+checkRootUser
 prefetchSources
 
 for component in ${COMPONENTS[@]} ; do

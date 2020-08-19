@@ -31,11 +31,19 @@ function serpentFail()
     exit 1
 }
 
+# Check tools can be found
 function requireTools()
 {
     for tool in $* ; do
         which "${tool}" &>/dev/null  || serpentFail "Missing host executable: ${tool}"
     done
+}
+
+# Check we're running as the root user
+function checkRootUser()
+{
+    [ "${EUID}" -eq "0" ] || serpentFail "$0: Must be run via sudo"
+    [ ! -z "${SUDO_USER}" ] || serpentFail "SUDO_USER incorrectly set"
 }
 
 # Tightly control the path
