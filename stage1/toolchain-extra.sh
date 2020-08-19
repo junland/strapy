@@ -8,7 +8,7 @@ set -e
 #
 # Currently this is just libunwind and should be sufficient to get onto stage2.
 
-if [[ "${SERPENT_TARGET_ARCH}" == "${SERPENT_HOST}" ]]; then
+if [[ "${SERPENT_TARGET_ARCH}" == "${SERPENT_ARCH}" ]]; then
     printInfo "Skipping toolchain-extra on native architecture"
     exit 0
 fi

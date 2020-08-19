@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_TARGET_ARCH}" == "${SERPENT_HOST}" ]]; then
+if [[ "${SERPENT_TARGET_ARCH}" == "${SERPENT_ARCH}" ]]; then
     printInfo "Skipping compiler-rt on native architecture"
     exit 0
 fi
