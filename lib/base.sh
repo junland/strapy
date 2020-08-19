@@ -2,6 +2,7 @@
 
 # Common functionality between all stages
 
+export SERPENT_CHROOT_DIR="/"
 
 # Emit a warning to tty
 function printWarning()
@@ -109,7 +110,13 @@ function takeDownMounts()
 # chroot helper. In future we should expand to support qemu-static.
 function serpentChroot()
 {
-    LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/bash -c "$*;"
+    LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/bash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+}
+
+# Set the chroot dir
+function serpentChrootCd()
+{
+    export SERPENT_CHROOT_DIR="$1"
 }
 
 # Tightly control the path
