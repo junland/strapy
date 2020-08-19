@@ -74,8 +74,7 @@ function bringUpMounts()
     mount -v --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
     mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
 
-    mount -v --bind -o ro "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
-    mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to make /build read-only"
+    mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
 }
 
 # Helper to ensure something *does* get unmounted
@@ -116,7 +115,7 @@ function serpentChroot()
 # Set the chroot dir
 function serpentChrootCd()
 {
-    export SERPENT_CHROOT_DIR="${SERPENT_BUILD_DIR}/$1"
+    export SERPENT_CHROOT_DIR="/build/${SERPENT_BUILD_NAME}/$1"
 }
 
 # Tightly control the path
