@@ -68,14 +68,14 @@ function bringUpMounts()
 
     local stage2tree=`getInstallDir 2`
 
-    mount --bind /dev/pts "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
-    mount --bind /sys "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to bind-mount /sys"
-    mount --bind /proc "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to bind-mount /proc"
-    mount --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
-    mount -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
+    mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
+    mount -v --bind /sys "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to bind-mount /sys"
+    mount -v --bind /proc "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to bind-mount /proc"
+    mount -v --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
+    mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
 
     mount -v --bind -o ro "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
-    mount -o remount,ro,bind "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to make /build read-only"
+    mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to make /build read-only"
 }
 
 # Helper to ensure something *does* get unmounted
