@@ -17,6 +17,7 @@ COMPONENTS=(
     "bash"
     "coreutils"
     "util-linux"
+    "libarchive"
 )
 
 checkRootUser
