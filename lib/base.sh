@@ -101,6 +101,12 @@ function takeDownMounts()
     serpentUnmount "${SERPENT_INSTALL_DIR}/proc"
 }
 
+# chroot helper. In future we should expand to support qemu-static.
+function serpentChroot()
+{
+    LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/bash -c "$*;"
+}
+
 # Tightly control the path
 export PATH="/usr/bin:/bin/:/sbin:/usr/sbin"
 
