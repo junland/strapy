@@ -16,6 +16,7 @@ COMPONENTS=(
     "ncurses"
     "bash"
     "coreutils"
+    "util-linux"
 )
 
 checkRootUser
