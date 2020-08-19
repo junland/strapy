@@ -40,3 +40,6 @@ ln -svf /proc/self/fd/0 "${SERPENT_INSTALL_DIR}"/dev/stdin
 ln -svf /proc/self/fd/1 "${SERPENT_INSTALL_DIR}"/dev/stdout
 ln -svf /proc/self/fd/2 "${SERPENT_INSTALL_DIR}"/dev/stderr
 ln -svf /proc/kcore "${SERPENT_INSTALL_DIR}"/dev/core
+
+printInfo "Stashing /bin/sh compat link"
+ln -svf /serpent/usr/bin/bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
