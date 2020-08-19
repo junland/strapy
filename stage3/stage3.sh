@@ -23,7 +23,7 @@ checkRootUser
 requireTools "mknod"
 
 prefetchSources
-
+mkdir ${SERPENT_BUILD_DIR} #No builds yet, no dir yet.
 bringUpMounts
 
 for component in ${COMPONENTS[@]} ; do
@@ -31,3 +31,4 @@ for component in ${COMPONENTS[@]} ; do
 done
 
 takeDownMounts
+
