@@ -13,6 +13,7 @@ COMPONENTS=(
     "diffutils"
     "ncurses"
     "bash"
+    "coreutils"
 )
 
 checkRootUser
