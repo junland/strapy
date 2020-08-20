@@ -58,6 +58,7 @@ COMPONENTS=(
     "libffi"
     "python"
     "meson"
+    "systemd"
 )
 
 checkRootUser
