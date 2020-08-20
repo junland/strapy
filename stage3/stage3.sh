@@ -40,6 +40,7 @@ COMPONENTS=(
     "libarchive"
     "slibtool"
     "less"
+    "cmake"
 )
 
 checkRootUser
