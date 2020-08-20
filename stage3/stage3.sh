@@ -55,6 +55,7 @@ COMPONENTS=(
     "ninja"
     "libcap"
     "gperf"
+    "libffi"
 )
 
 checkRootUser
