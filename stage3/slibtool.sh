@@ -12,7 +12,7 @@ printInfo "Configuring slibtool"
 serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
-    --prefix=/usr \ \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \

@@ -10,7 +10,7 @@ serpentChrootCd diffutils*
 serpentChroot ./configure \
     --host="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
-    --prefix=/usr \ \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \

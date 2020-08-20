@@ -17,7 +17,7 @@ serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --enable-largefile \
-    --prefix=/usr \ \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \

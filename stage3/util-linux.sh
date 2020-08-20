@@ -10,7 +10,7 @@ serpentChrootCd util-linux-*
 printInfo "Configuring util-linux"
 
 serpentChroot ./configure \
-    --prefix=/usr \ \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \

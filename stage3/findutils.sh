@@ -8,7 +8,7 @@ serpentChrootCd findutils-*
 
 printInfo "Configuring findutils"
 serpentChroot ./configure \
-    --prefix=/usr \ \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
