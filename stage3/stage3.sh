@@ -42,6 +42,7 @@ COMPONENTS=(
     "less"
     "cmake"
     "ninja"
+    "perl"
 )
 
 checkRootUser
