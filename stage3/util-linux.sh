@@ -22,7 +22,6 @@ serpentChroot ./configure \
     --without-systemd \
     --without-udev \
     --without-python \
-    --without-libmagic \
     --without-readline \
     --without-cryptsetup \
     --without-btrfs \

@@ -34,6 +34,7 @@ COMPONENTS=(
     "diffutils"
     "ncurses"
     "bash"
+    "file"
     "coreutils"
     "util-linux"
     "libarchive"
