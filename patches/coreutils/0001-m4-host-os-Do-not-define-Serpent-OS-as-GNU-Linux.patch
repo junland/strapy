@@ -1,4 +1,4 @@
-From da11026c9190fe96a8120feabd048c57ae77fc31 Mon Sep 17 00:00:00 2001
+From 393246384d43c63d7b9aac1f65fa4752f5756dc7 Mon Sep 17 00:00:00 2001
 From: Ikey Doherty <ikey.doherty@lispysnake.com>
 Date: Thu, 20 Aug 2020 15:31:02 +0100
 Subject: [PATCH] m4/host-os: Do not define Serpent OS as 'GNU/Linux'
@@ -14,28 +14,14 @@ that does not and will not exist.
 
 Signed-off-by: Ikey Doherty <ikey.doherty@lispysnake.com>
 ---
- configure     | 2 +-
- m4/host-os.m4 | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure b/configure
 index 65317b4..a9d12fb 100755
 --- a/configure
 +++ b/configure
 @@ -39342,7 +39342,7 @@ else
-        mint*)           os='MiNT';;
-        mingw*)          os='MinGW';;
-        lynxos*)         os='LynxOS';;
--       linux*)          os='GNU/Linux';;
-+       linux*)          os='Linux';;
-        hpux*)           os='HP-UX';;
-        hiux*)           os='HI-UX';;
-        gnu*)            os='GNU';;
-diff --git a/m4/host-os.m4 b/m4/host-os.m4
-index f4614b9..ee44c99 100644
---- a/m4/host-os.m4
-+++ b/m4/host-os.m4
-@@ -48,7 +48,7 @@ AC_DEFUN([gl_HOST_OS],
         mint*)           os='MiNT';;
         mingw*)          os='MinGW';;
         lynxos*)         os='LynxOS';;
