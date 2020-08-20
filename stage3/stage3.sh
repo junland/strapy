@@ -37,6 +37,7 @@ COMPONENTS=(
     "coreutils"
     "util-linux"
     "libarchive"
+    "slibtool"
 )
 
 checkRootUser
