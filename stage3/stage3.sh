@@ -38,6 +38,7 @@ COMPONENTS=(
     "util-linux"
     "libarchive"
     "slibtool"
+    "less"
 )
 
 checkRootUser
