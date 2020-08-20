@@ -43,6 +43,8 @@ COMPONENTS=(
     "cmake"
     "ninja"
     "perl"
+    "libcap"
+    "gperf"
 )
 
 checkRootUser
