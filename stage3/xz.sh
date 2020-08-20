@@ -10,14 +10,17 @@ serpentChrootCd xz-*
 printInfo "Configuring xz"
 # Enable largefile support
 export CFLAGS="${CFLAGS} -D_FILE_OFFSET_BITS=64"
-serpentChroot ./configure --prefix=/usr \
+serpentChroot ./configure --prefix=/usr
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --enable-shared \
-    --disable-static \
-    --libdir=/usr/lib \
-    --bindir=/usr/bin \
-    --sbindir=/usr/sbin
+    --disable-static
 
 
 printInfo "Building xz"

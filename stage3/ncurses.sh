@@ -10,8 +10,12 @@ serpentChrootCd ncurses*
 serpentChroot ./configure \
     --host="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
-    --prefix=/usr \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
     --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --without-debug \
     --disable-rpath \
     --with-shared \

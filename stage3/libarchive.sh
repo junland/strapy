@@ -10,13 +10,17 @@ serpentChrootCd libarchive-*
 printInfo "Configuring libarchive"
 
 # TODO: Fix static linking!
-serpentChroot ./configure --prefix=/usr \
+serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
     --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --disable-hardlink \
     --disable-rpath \
-    --bindir=/usr/bin \
     --enable-bsdcpio=static \
     --enable-bsdtar=static \
     --enable-shared \

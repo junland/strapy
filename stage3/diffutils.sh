@@ -10,9 +10,12 @@ serpentChrootCd diffutils*
 serpentChroot ./configure \
     --host="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
-    --prefix=/usr \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
     --libdir=/usr/lib \
-    --bindir=/usr/bin
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share
 
 printInfo "Building diffutils"
 serpentChroot make -j${SERPENT_BUILD_JOBS}

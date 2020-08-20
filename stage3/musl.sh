@@ -17,7 +17,8 @@ printInfo "Configuring musl"
     --enable-optimize=auto \
     --enable-visibility \
     --libdir=/usr/lib \
-    --syslibdir=/usr/lib
+    --syslibdir=/usr/lib \
+    --sysconfdir=/etc
 
 printInfo "Building musl"
 make -j "${SERPENT_BUILD_JOBS}"
