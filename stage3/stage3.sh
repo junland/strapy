@@ -26,6 +26,8 @@ COMPONENTS=(
     "root"
     "headers"
     "musl"
+    "attr"
+    "acl"
     "findutils"
     "zlib"
     "xz"

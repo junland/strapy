@@ -16,7 +16,6 @@ export FORCE_UNSAFE_CONFIGURE=1
 serpentChroot ./configure --prefix=/usr \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
-    --disable-acl \
     --enable-largefile \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
