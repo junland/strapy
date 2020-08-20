@@ -66,7 +66,7 @@ checkRootUser
 requireTools "mknod"
 
 prefetchSources
-mkdir ${SERPENT_BUILD_DIR} #No builds yet, no dir yet.
+mkdir -p "${SERPENT_BUILD_DIR}" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}"
 bringUpMounts
 
 for component in ${COMPONENTS[@]} ; do
