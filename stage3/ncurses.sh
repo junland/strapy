@@ -31,3 +31,6 @@ serpentChroot ./configure \
 printInfo "Building ncurses"
 serpentChroot make -j${SERPENT_BUILD_JOBS}
 serpentChroot make -j${SERPENT_BUILD_JOBS} install
+
+echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libncurses.so"
+echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libcurses.so"
