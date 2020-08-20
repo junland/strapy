@@ -41,6 +41,7 @@ COMPONENTS=(
     "slibtool"
     "less"
     "cmake"
+    "ninja"
 )
 
 checkRootUser
