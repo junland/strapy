@@ -10,8 +10,8 @@ serpentChrootCd xz-*
 printInfo "Configuring xz"
 # Enable largefile support
 export CFLAGS="${CFLAGS} -D_FILE_OFFSET_BITS=64"
-serpentChroot ./configure --prefix=/usr
-    --prefix=/usr \ \
+serpentChroot ./configure \
+    --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
