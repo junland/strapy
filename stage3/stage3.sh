@@ -56,6 +56,8 @@ COMPONENTS=(
     "libcap"
     "gperf"
     "libffi"
+    "python"
+    "meson"
 )
 
 checkRootUser
