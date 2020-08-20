@@ -8,7 +8,12 @@ serpentChrootCd acl-*
 
 printInfo "Configuring acl"
 serpentChroot ./configure \
-    --prefix=/usr \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --enable-shared \

@@ -9,11 +9,15 @@ serpentChrootCd less-*
 
 printInfo "Configuring less"
 
-serpentChroot ./configure --prefix=/usr \
+serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
     --libdir=/usr/lib \
-    --bindir=/usr/bin
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
 
 
 printInfo "Building less"

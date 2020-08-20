@@ -13,13 +13,16 @@ printInfo "Configuring coreutils"
 patch -p1 < "${SERPENT_PATCHES_DIR}/coreutils_8_31_ls.patch"
 
 export FORCE_UNSAFE_CONFIGURE=1
-serpentChroot ./configure --prefix=/usr \
+serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --enable-largefile \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --enable-single-binary
 
 

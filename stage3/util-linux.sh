@@ -9,7 +9,13 @@ serpentChrootCd util-linux-*
 
 printInfo "Configuring util-linux"
 
-serpentChroot ./configure --prefix=/usr \
+serpentChroot ./configure \
+    --prefix=/usr \ \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
     --disable-nls \
