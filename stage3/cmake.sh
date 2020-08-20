@@ -11,8 +11,6 @@ printInfo "Configuring cmake"
 
 serpentChroot ./configure \
     --prefix=/usr \
-    --bindir=/usr/bin \
-    --datadir=/usr/share \
     --parallel="${SERPENT_BUILD_JOBS}" \
     -- -DCMAKE_USE_OPENSSL=OFF
 
