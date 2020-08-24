@@ -9,7 +9,6 @@ cd pkgconf-*
 # Build pkgconf as a host-native executable, which will be used for
 # further stages in bootstrap, i.e. we need to be able to execute it.
 printInfo "Configuring pkgconf"
-./autogen.sh
 ./configure --prefix=/usr \
     --build="${SERPENT_HOST}" \
     --host="${SERPENT_HOST}" \
