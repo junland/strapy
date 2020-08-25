@@ -80,3 +80,6 @@ serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v
 
 printInfo "Installing toolchain"
 serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -v
+
+printInfo "Setting ld.lld as default ld"
+ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"

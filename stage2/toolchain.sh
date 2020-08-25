@@ -94,3 +94,6 @@ ninja -j "${SERPENT_BUILD_JOBS}" -v
 
 printInfo "Installing toolchain"
 DESTDIR="${SERPENT_INSTALL_DIR}" ninja install -j "${SERPENT_BUILD_JOBS}" -v
+
+printInfo "Setting ld.lld as default ld"
+ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
