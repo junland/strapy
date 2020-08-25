@@ -59,6 +59,7 @@ COMPONENTS=(
     "libffi"
     "python"
     "meson"
+    "libc-support"
     "systemd"
 )
 
