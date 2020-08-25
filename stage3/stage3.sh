@@ -51,6 +51,7 @@ COMPONENTS=(
     "perl"
     "autoconf"
     "automake"
+    "pkgconf"
     "cmake"
     "ninja"
     "libcap"
