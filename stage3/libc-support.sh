@@ -7,13 +7,10 @@ serpentChrootCd libc-support
 git clone https://dev.serpentos.com/source/libc-support.git
 
 printInfo "Configuring libc-support"
-
-serpentChroot sh autogen.sh \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}"
+serpentChroot meson --prefix=/usr --buildtype=plain build
 
 printInfo "Building libc-support"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -C build
 
 printInfo "Installing libc-support"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -C build
