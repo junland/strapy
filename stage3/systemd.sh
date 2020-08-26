@@ -6,6 +6,8 @@ set -e
 extractSource systemd
 serpentChrootCd systemd-*
 
+printInfo "Enabling libwildebeest workarounds"
+export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest` -Wno-unused-command-line-argument"
 
 printInfo "Configuring systemd"
 serpentChroot meson --prefix=/usr --buildtype=plain build

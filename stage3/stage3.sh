@@ -60,6 +60,7 @@ COMPONENTS=(
     "python"
     "meson"
     "libc-support"
+    "libwildebeest"
     "systemd"
 )
 
