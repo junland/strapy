@@ -21,17 +21,14 @@ export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest
 #
 # Disabled:
 #
-#       - gshadow: Lack of gshadow support
 #       - *-tests: Various macro expansion failures
 #       - tmpfiles: GNU glob() usage
 #       - nss-*: We don't supportly support NSS
-#       - userdb: Lack of gshadow support
 #       - ldconfig: We don't need/support ldconfig
 #       - utmp: Not supported properly in musl
 printInfo "Configuring systemd"
 serpentChroot meson --buildtype=plain build \
         --prefix=/usr \
-        -Dgshadow=false \
         -Dutmp=false \
         -Dtmpfiles=false \
         -Dnetworkd=false \
@@ -41,7 +38,6 @@ serpentChroot meson --buildtype=plain build \
         -Dinstall-tests=false \
         -Dresolve=false \
         -Dldconfig=false \
-        -Duserdb=false \
         -Dnss-systemd=false \
         -Dnss-resolve=false \
         -Dnss-mymachines=false \
@@ -52,3 +48,5 @@ serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -C build
 
 printInfo "Installing systemd"
 serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -C build
+
+exit 1
