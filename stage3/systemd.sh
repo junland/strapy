@@ -19,7 +19,22 @@ export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest
 # Some fail for networking reasons and can be re-enabled in future
 # NSS we currently disable as we're not *yet* using it.
 printInfo "Configuring systemd"
-serpentChroot meson --prefix=/usr --buildtype=plain build -Dgshadow=false -Dtmpfiles=false -Dnetworkd=false -Dtests=false -Dfuzz-tests=false -Dslow-tests=false -Dinstall-tests=false -Dresolve=false -Dldconfig=false -Duserdb=false -Dnss-systemd=false -Dnss-resolve=false -Dnss-mymachines=false -Dnss-myhostname=false
+serpentChroot meson --buildtype=plain build \
+        --prefix=/usr \
+        -Dgshadow=false \
+        -Dtmpfiles=false \
+        -Dnetworkd=false \
+        -Dtests=false \
+        -Dfuzz-tests=false \
+        -Dslow-tests=false \
+        -Dinstall-tests=false \
+        -Dresolve=false \
+        -Dldconfig=false \
+        -Duserdb=false \
+        -Dnss-systemd=false \
+        -Dnss-resolve=false \
+        -Dnss-mymachines=false \
+        -Dnss-myhostname=false
 
 printInfo "Building systemd"
 serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -C build
