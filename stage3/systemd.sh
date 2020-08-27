@@ -10,6 +10,9 @@ pushd systemd-*
 # Ensure sys/file.h is used for LOCK_EX
 patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/0001-partition-makefs-Include-missing-sys-file.h-header.patch"
 
+# Testing / not upstreamed
+patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/in-progress.patch"
+
 printInfo "Enabling libwildebeest workarounds"
 
 # If we don't enable __UAPI_DEF_ETHDR=0 then the private if_ether header gets used and breaks the world.
@@ -24,10 +27,12 @@ export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest
 #       - nss-*: We don't supportly support NSS
 #       - userdb: Lack of gshadow support
 #       - ldconfig: We don't need/support ldconfig
+#       - utmp: Not supported properly in musl
 printInfo "Configuring systemd"
 serpentChroot meson --buildtype=plain build \
         --prefix=/usr \
         -Dgshadow=false \
+        -Dutmp=false \
         -Dtmpfiles=false \
         -Dnetworkd=false \
         -Dtests=false \
