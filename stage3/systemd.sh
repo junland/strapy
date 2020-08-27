@@ -12,7 +12,7 @@ patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/0001-partition-makefs-Include-missin
 
 printInfo "Enabling libwildebeest workarounds"
 
-# If we don't enable __UAPI_DEF_ETHDR=0 then the private if_ether header gets used and breaks the wordl.
+# If we don't enable __UAPI_DEF_ETHDR=0 then the private if_ether header gets used and breaks the world.
 export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest` -Wno-unused-command-line-argument -D__UAPI_DEF_ETHHDR=0"
 
 # Many fails are due to missing gshadow, which is our current priority after finishing stubs
