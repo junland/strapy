@@ -15,9 +15,15 @@ printInfo "Enabling libwildebeest workarounds"
 # If we don't enable __UAPI_DEF_ETHDR=0 then the private if_ether header gets used and breaks the world.
 export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest` -Wno-unused-command-line-argument -D__UAPI_DEF_ETHHDR=0"
 
-# Many fails are due to missing gshadow, which is our current priority after finishing stubs
-# Some fail for networking reasons and can be re-enabled in future
-# NSS we currently disable as we're not *yet* using it.
+#
+# Disabled:
+#
+#       - gshadow: Lack of gshadow support
+#       - *-tests: Various macro expansion failures
+#       - tmpfiles: GNU glob() usage
+#       - nss-*: We don't supportly support NSS
+#       - userdb: Lack of gshadow support
+#       - ldconfig: We don't need/support ldconfig
 printInfo "Configuring systemd"
 serpentChroot meson --buildtype=plain build \
         --prefix=/usr \
