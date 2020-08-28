@@ -24,7 +24,6 @@ export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest
 # Disabled:
 #
 #       - *-tests: Various macro expansion failures
-#       - tmpfiles: GNU glob() usage
 #       - nss-*: We don't supportly support NSS
 #       - ldconfig: We don't need/support ldconfig
 #       - utmp: Not supported properly in musl
@@ -32,7 +31,6 @@ printInfo "Configuring systemd"
 serpentChroot meson --buildtype=plain build \
         --prefix=/usr \
         -Dutmp=false \
-        -Dtmpfiles=false \
         -Dtests=false \
         -Dfuzz-tests=false \
         -Dslow-tests=false \
