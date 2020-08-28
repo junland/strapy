@@ -47,5 +47,3 @@ serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -C build
 
 printInfo "Installing systemd"
 serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -C build
-
-exit 1
