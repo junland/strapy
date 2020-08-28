@@ -14,6 +14,7 @@ patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/0001-partition-makefs-Include-missin
 # Use net/if_arp.h NOT linux/if_arp.h
 # When including linux/if_ether.h, include netinet/if_ether.h first
 patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/in-progress.patch"
+patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/includes.patch"
 
 printInfo "Enabling libwildebeest workarounds"
 
