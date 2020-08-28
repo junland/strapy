@@ -72,6 +72,11 @@ prefetchSources
 mkdir -p "${SERPENT_BUILD_DIR}" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}"
 bringUpMounts
 
+if [[ "${SERPENT_TARGET_ARCH}" != "${SERPENT_ARCH}" ]]; then
+        requireTools "${SERPENT_QEMU_USER_STATIC}"
+        installQemuStatic
+fi
+
 for component in ${COMPONENTS[@]} ; do
     /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" bash --norc --noprofile "${executionPath}/${component}.sh"  || serpentFail "Building ${component} failed"
 done

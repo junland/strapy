@@ -77,6 +77,12 @@ function bringUpMounts()
     mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
 }
 
+function installQemuStatic()
+{
+        printInfo "Installing qemu-user-static for cross-compilation chroot"
+        install -D -m 00755 $(which ${SERPENT_QEMU_USER_STATIC}) "${SERPENT_INSTALL_DIR}/usr/bin/${SERPENT_QEMU_USER_STATIC}" || serpentFail "Failed to install qemu-user-static"
+}
+
 # Helper to ensure something *does* get unmounted
 function serpentUnmount()
 {

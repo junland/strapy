@@ -14,3 +14,6 @@ export SERPENT_TARGET_ARCH="arm64"
 
 # The inlude directory in musl
 export SERPENT_TARGET_MUSL="aarch64"
+
+# The qemu-user-static binary we need
+export SERPENT_QEMU_USER_STATIC="qemu-aarch64-static"
