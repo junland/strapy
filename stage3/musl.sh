@@ -14,7 +14,7 @@ printInfo "Configuring musl"
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
-    --enable-optimize=auto \
+    --enable-optimize=yes \
     --enable-visibility \
     --libdir=/usr/lib \
     --syslibdir=/usr/lib \
