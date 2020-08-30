@@ -33,6 +33,7 @@ COMPONENTS=(
     "xz"
     "diffutils"
     "ncurses"
+    "bash"
     "dash"
     "file"
     "coreutils"
