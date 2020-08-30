@@ -27,7 +27,7 @@ COMPONENTS=(
     "zlib"
     "toolchain"
     "ncurses"
-    "bash"
+    "dash"
     "gzip"
     "xz"
     "util-linux"
