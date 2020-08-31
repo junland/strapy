@@ -64,6 +64,9 @@ COMPONENTS=(
     "libwildebeest"
     "systemd"
     "shadow"
+    "expat"
+    "dbus"
+    "dbus-broker"
 )
 
 checkRootUser
