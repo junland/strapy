@@ -63,6 +63,7 @@ COMPONENTS=(
     "libc-support"
     "libwildebeest"
     "systemd"
+    "shadow"
 )
 
 checkRootUser
