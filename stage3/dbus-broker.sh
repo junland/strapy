@@ -17,3 +17,6 @@ serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -C build
 
 printInfo "Installing dbus-broker"
 serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -C build
+
+# Make dbus-broker the default
+ln -svf ../dbus-broker.service "${SERPENT_INSTALL_DIR}/usr/lib/systemd/system/multi-user.target.wants/dbus-broker.service"
