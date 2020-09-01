@@ -43,6 +43,10 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SER
 
 [ -e "${SERPENT_CLANG_TABLEGEN}" ] || serpentFail "Cannot find stage1 tblgen"
 
+# Help build cache.
+export HOME=$(pwd)/h
+mkdir h
+
 # Last two options deliberately remove sanitizer support. We actually do need this
 # in future, so we should follow: https://reviews.llvm.org/D63785
 cmake -G Ninja ../ \
@@ -90,8 +94,6 @@ cmake -G Ninja ../ \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_PARALLEL_LINK_JOBS="${SERPENT_BUILD_JOBS}" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_USE_LINKER=ld.lld \
-    -DCLANG_ENABLE_STATIC_ANALYZER=OFF \
     -DDLLVM_USE_SPLIT_DWARF=ON
 
 

@@ -39,6 +39,10 @@ else
     export CXXFLAGS="-O3"
 fi
 
+# Help build cache.
+export HOME=$(pwd)/h
+mkdir h
+
 cmake -G Ninja ../ \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
@@ -80,8 +84,6 @@ cmake -G Ninja ../ \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_PARALLEL_LINK_JOBS="${SERPENT_BUILD_JOBS}" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_USE_LINKER=ld.gold \
-    -DCLANG_ENABLE_STATIC_ANALYZER=OFF \
     -DDLLVM_USE_SPLIT_DWARF=ON
 
 ninja -j "${SERPENT_BUILD_JOBS}" -v
