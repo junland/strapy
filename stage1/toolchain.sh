@@ -32,11 +32,11 @@ mkdir build && pushd build
 
 if [[ "${SERPENT_TARGET_ARCH}" == "x86_64" ]]; then
 
-    export CFLAGS="-fPIC"
-    export CXXFLAGS="-fPIC"
+    export CFLAGS="-fPIC -O3"
+    export CXXFLAGS="-fPIC -O3"
 else
-    export CFLAGS=""
-    export CXXFLAGS=""
+    export CFLAGS="-O3"
+    export CXXFLAGS="-O3"
 fi
 
 cmake -G Ninja ../ \
@@ -78,7 +78,10 @@ cmake -G Ninja ../ \
     -DLLVM_ENABLE_UNWIND_TABLES=OFF \
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
-    -DLLVM_ENABLE_PIC=ON
+    -DLLVM_PARALLEL_LINK_JOBS="${SERPENT_BUILD_JOBS}" \
+    -DLLVM_OPTIMIZED_TABLEGEN=ON \
+    -DLLVM_USE_LINKER=ld.gold \
+    -DCLANG_ENABLE_STATIC_ANALYZER=OFF
 
 ninja -j "${SERPENT_BUILD_JOBS}" -v
 
