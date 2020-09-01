@@ -77,7 +77,8 @@ serpentChroot cmake -G Ninja ../ \
     -DLLVM_PARALLEL_LINK_JOBS="${SERPENT_BUILD_JOBS}" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
     -DLLVM_USE_LINKER=ld.lld
-    -DCLANG_ENABLE_STATIC_ANALYZER=OFF
+    -DCLANG_ENABLE_STATIC_ANALYZER=OFF \
+    -DDLLVM_USE_SPLIT_DWARF=ON
 
 printInfo "Building toolchain"
 serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v
