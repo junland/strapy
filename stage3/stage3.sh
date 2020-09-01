@@ -67,6 +67,7 @@ COMPONENTS=(
     "expat"
     "dbus"
     "dbus-broker"
+    "util-linux2"
 )
 
 checkRootUser
