@@ -62,6 +62,7 @@ COMPONENTS=(
     "meson"
     "libwildebeest"
     "libc-support"
+    #"linux-pam"
     "systemd"
     "shadow"
     "expat"
