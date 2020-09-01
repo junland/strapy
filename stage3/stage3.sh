@@ -68,6 +68,8 @@ COMPONENTS=(
     "dbus"
     "dbus-broker"
     "util-linux2"
+    "systemd"
+    "dbus-broker"
 )
 
 checkRootUser
