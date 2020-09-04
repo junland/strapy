@@ -75,8 +75,7 @@ serpentChroot cmake -G Ninja ../ \
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_PARALLEL_LINK_JOBS="${SERPENT_BUILD_JOBS}" \
-    -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DDLLVM_USE_SPLIT_DWARF=ON
+    -DLLVM_OPTIMIZED_TABLEGEN=ON
 
 printInfo "Building toolchain"
 serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v
