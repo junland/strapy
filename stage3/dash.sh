@@ -4,8 +4,8 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource dash
-cd dash-*
 serpentChrootCd dash-*
+cd dash-*
 
 printInfo "Configuring dash"
 serpentChroot ./configure \
