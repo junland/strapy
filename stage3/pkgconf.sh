@@ -8,8 +8,8 @@ serpentChrootCd pkgconf-*
 
 printInfo "Configuring pkgconf"
 serpentChroot ./configure \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --build="${SERPENT_TRIPLET}" \
+    --host="${SERPENT_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \

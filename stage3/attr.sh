@@ -14,8 +14,8 @@ serpentChroot ./configure \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --build="${SERPENT_TRIPLET}" \
+    --host="${SERPENT_TRIPLET}" \
     --enable-shared \
     --disable-static
 

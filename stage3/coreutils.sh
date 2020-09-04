@@ -16,7 +16,7 @@ patch -p1 < "${SERPENT_PATCHES_DIR}/coreutils/0001-m4-host-os-Do-not-define-Serp
 export FORCE_UNSAFE_CONFIGURE=1
 serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --host="${SERPENT_TRIPLET}" \
     --enable-largefile \
     --prefix=/usr \
     --sysconfdir=/etc \
