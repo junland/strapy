@@ -22,7 +22,7 @@ export SERPENT_BUILD_JOBS=$(nproc)
 function getInstallDir()
 {
     [ ! -z "${1}" ] || serpentFail "Incorrect use of getInstallDir"
-    echo "${SERPENT_INSTALL_ROOT}/stage${1}"
+    echo "${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/stage${1}"
 }
 
 # Verify the download is correct
