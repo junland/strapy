@@ -5,7 +5,6 @@ set -e
 
 extractSource dash
 serpentChrootCd dash-*
-cd dash-*
 
 printInfo "Configuring dash"
 serpentChroot ./configure \
