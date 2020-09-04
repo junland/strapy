@@ -5,12 +5,15 @@ export SERPENT_ROOT_DIR="$(dirname $(dirname $(realpath -s ${BASH_SOURCE[0]})))"
 
 . "${SERPENT_ROOT_DIR}/lib/base.sh"
 
+# Set the target Arch to import early for install dir
+export SERPENT_TARGET=${SERPENT_TARGET:-"x86_64"}
+
 # Make sure the scripts are properly implemented.
 [ ! -z "${SERPENT_STAGE_NAME}" ] || serpentFail "Stage name is not set"
 
 # Stage specific directories
 export SERPENT_BUILD_DIR="${SERPENT_BUILD_ROOT}/${SERPENT_STAGE_NAME}"
-export SERPENT_INSTALL_DIR="${SERPENT_INSTALL_ROOT}/${SERPENT_STAGE_NAME}"
+export SERPENT_INSTALL_DIR="${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/${SERPENT_STAGE_NAME}"
 export SERPENT_BUILD_SCRIPT=$(basename "${0}")
 export SERPENT_BUILD_NAME="${SERPENT_BUILD_SCRIPT%.sh}"
 export SERPENT_BUILD_JOBS=$(nproc)
@@ -181,8 +184,6 @@ else
     printError "Unsupported host configuration"
     exit 1
 fi
-
-export SERPENT_TARGET=${SERPENT_TARGET:-"x86_64"}
 
 [ -e "${SERPENT_ROOT_DIR}/targets/${SERPENT_TARGET}.sh" ] || serpentFail "Failed to load targets/${SERPENT_TARGET}.sh"
 
