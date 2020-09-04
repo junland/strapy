@@ -30,14 +30,8 @@ pushd llvm
 
 mkdir build && pushd build
 
-if [[ "${SERPENT_TARGET_ARCH}" == "x86_64" ]]; then
-
-    export CFLAGS="-fPIC -O3"
-    export CXXFLAGS="-fPIC -O3"
-else
-    export CFLAGS="-O3"
-    export CXXFLAGS="-O3"
-fi
+export CFLAGS="-fPIC -O3 -pipe"
+export CXXFLAGS="${CFLAGS}"
 
 cmake -G Ninja ../ \
     -DCMAKE_INSTALL_PREFIX=/usr \
