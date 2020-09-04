@@ -8,14 +8,20 @@ cd dash-*
 
 
 printInfo "Configuring dash"
-./configure --prefix=/usr \
+serpentChroot ./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --libdir=/usr/lib \
+    --bindir=/usr/bin \
+    --sbindir=/usr/sbin \
+    --datadir=/usr/share \
     --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+    --host="${SERPENT_HOST}" \
     --enable-static
 
 printInfo "Building dash"
-make -j "${SERPENT_BUILD_JOBS}"
+serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing dash"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
 ln -svf dash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
