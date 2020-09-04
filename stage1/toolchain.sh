@@ -30,7 +30,7 @@ pushd llvm
 
 mkdir build && pushd build
 
-export CFLAGS="-fPIC -O3 -pipe"
+export CFLAGS="-fPIC -O2 -pipe"
 export CXXFLAGS="${CFLAGS}"
 
 cmake -G Ninja ../ \
