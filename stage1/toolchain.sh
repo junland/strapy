@@ -39,10 +39,6 @@ else
     export CXXFLAGS="-O3"
 fi
 
-# Help build cache.
-export HOME=$(pwd)/h
-mkdir h
-
 cmake -G Ninja ../ \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \

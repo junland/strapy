@@ -43,10 +43,6 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SER
 
 [ -e "${SERPENT_CLANG_TABLEGEN}" ] || serpentFail "Cannot find stage1 tblgen"
 
-# Help build cache.
-export HOME=$(pwd)/h
-mkdir h
-
 # Last two options deliberately remove sanitizer support. We actually do need this
 # in future, so we should follow: https://reviews.llvm.org/D63785
 cmake -G Ninja ../ \
