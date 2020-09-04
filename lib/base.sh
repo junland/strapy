@@ -66,7 +66,7 @@ function bringUpMounts()
     printInfo "Bringing up the mounts"
     createMountDirs
 
-    local stage2tree=`getInstallDir 2`
+    local stage2tree=$(getInstallDir 2)
 
     mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
     mount -v --bind /sys "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to bind-mount /sys"

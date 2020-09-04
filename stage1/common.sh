@@ -6,7 +6,7 @@ export SERPENT_STAGE_NAME="stage1"
 
 # Set up stage1 specific requirements
 
-if [[ `which gcc 2>/dev/null` ]]; then
+if [[ $(which gcc 2>/dev/null) ]]; then
     export CC="gcc"
     export CXX="g++"
 else

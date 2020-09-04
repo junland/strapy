@@ -33,7 +33,7 @@ pushd llvm
 mkdir build && pushd build
 unset CFLAGS CXXFLAGS
 
-export SERPENT_STAGE1_TREE=`getInstallDir "1"`
+export SERPENT_STAGE1_TREE=$(getInstallDir "1")
 
 # Our old libc++ is built likely against glibc, so we need to tell it again
 # that any new use of libc++ is via musl.

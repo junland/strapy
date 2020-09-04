@@ -129,7 +129,7 @@ function prefetchSources()
 # Activate the stage1 compiler for use.
 function activateStage1Compiler()
 {
-    export SERPENT_STAGE1_TREE=`getInstallDir "1"`
+    export SERPENT_STAGE1_TREE=$(getInstallDir "1")
 
     if [[ ! -e "${SERPENT_STAGE1_TREE}/usr/bin/clang" ]]; then
         printError "No stage1 compiler found"
@@ -139,7 +139,7 @@ function activateStage1Compiler()
     export PATH="${SERPENT_STAGE1_TREE}/usr/bin:$PATH"
 
     # Check its the right clang/llvm.
-    SERPENT_LLVM_TARGET=`llvm-config --host-target`
+    SERPENT_LLVM_TARGET=$(llvm-config --host-target)
     if [[ $? -ne 0 ]]; then
         printError "Could not run llvm-config"
         exit 1
@@ -176,7 +176,7 @@ function activateStage1Compiler()
 requireTools curl tar ninja cmake uname patch
 
 # TODO: Revisit this if needed
-export SERPENT_ARCH=`uname -m`
+export SERPENT_ARCH=$(uname -m)
 
 if [[ -e '/lib/ld-linux-x86-64.so.2' ]] || [[ -e '/lib64/ld-linux-x86-64.so.2' ]]; then
     export SERPENT_HOST="${SERPENT_ARCH}-linux-gnu"

@@ -19,7 +19,7 @@ patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/includes.patch"
 printInfo "Enabling libwildebeest workarounds"
 
 # If we don't enable __UAPI_DEF_ETHDR=0 then the private if_ether header gets used and breaks the world.
-export CFLAGS="${CFLAGS} `serpentChroot pkg-config --cflags --libs libwildebeest` -Wno-unused-command-line-argument -D__UAPI_DEF_ETHHDR=0"
+export CFLAGS="${CFLAGS} $(serpentChroot pkg-config --cflags --libs libwildebeest) -Wno-unused-command-line-argument -D__UAPI_DEF_ETHHDR=0"
 
 #
 # Disabled:
