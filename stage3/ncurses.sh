@@ -4,6 +4,7 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource ncurses
+unset CONFIG_SITE
 
 printInfo "Configuring ncurses"
 serpentChrootCd ncurses*

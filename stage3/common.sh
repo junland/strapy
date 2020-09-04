@@ -19,3 +19,4 @@ export STRIP="llvm-strip"
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 export LDFLAGS="${SERPENT_TARGET_LDFLAGS}"
+export CONFIG_SITE=/config.site

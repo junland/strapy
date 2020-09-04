@@ -86,6 +86,9 @@ if [[ "${SERPENT_TARGET_ARCH}" != "${SERPENT_ARCH}" ]]; then
         installQemuStatic
 fi
 
+# Install the config.site file for autotools caching
+cp "${executionPath}/config.site" "${SERPENT_INSTALL_DIR}/"
+
 for component in ${COMPONENTS[@]} ; do
     /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" bash --norc --noprofile "${executionPath}/${component}.sh"  || serpentFail "Building ${component} failed"
 done
