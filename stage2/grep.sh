@@ -13,7 +13,8 @@ printInfo "Configuring grep"
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
-    --sbindir=/usr/sbin
+    --sbindir=/usr/sbin \
+    --disable-perl-regexp
 
 
 printInfo "Building grep"
