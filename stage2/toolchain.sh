@@ -45,7 +45,7 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SER
 
 # Last two options deliberately remove sanitizer support. We actually do need this
 # in future, so we should follow: https://reviews.llvm.org/D63785
-cmake -G Ninja ../ \
+export llvmopts="
     -DLLVM_TABLEGEN="${SERPENT_STAGE1_TREE}/usr/bin/llvm-tblgen" \
     -DCLANG_TABLEGEN="${SERPENT_CLANG_TABLEGEN}" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -91,7 +91,10 @@ cmake -G Ninja ../ \
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_BUILD_TOOLS=OFF \
+    -DLLVM_BUILD_TOOLS=OFF"
+
+cmake -G Ninja ../ \
+    ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON
 
@@ -102,6 +105,13 @@ ninja -j "${SERPENT_BUILD_JOBS}" -v llvm-config
 
 printInfo "Installing toolchain"
 DESTDIR="${SERPENT_INSTALL_DIR}" ninja install -j "${SERPENT_BUILD_JOBS}" -v
+
+cmake -G Ninja ../ \
+    ${llvmopts} \
+    -DLLVM_BUILD_LLVM_DYLIB=OFF \
+    -DLLVM_LINK_LLVM_DYLIB=OFF \
+    -DCLANG_LINK_CLANG_DYLIB=OFF
+ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
 cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
 printInfo "Setting ld.lld as default ld"
