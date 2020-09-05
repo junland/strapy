@@ -33,7 +33,7 @@ unset CFLAGS CXXFLAGS
 
 # Last two options deliberately remove sanitizer support. We actually do need this
 # in future, so we should follow: https://reviews.llvm.org/D63785
-serpentChroot cmake -G Ninja ../ \
+export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS="clang\;compiler-rt\;libcxx\;libcxxabi\;libunwind\;lld\;llvm" \
     -DCMAKE_BUILD_TYPE=Release \
@@ -77,7 +77,10 @@ serpentChroot cmake -G Ninja ../ \
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_BUILD_TOOLS=OFF \
+    -DLLVM_BUILD_TOOLS=OFF"
+
+serpentChroot cmake -G Ninja ../ \
+    ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON
 
@@ -87,6 +90,13 @@ serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v llvm-config
 
 printInfo "Installing toolchain"
 serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -v
+
+serpentChroot cmake -G Ninja ../ \
+    ${llvmopts} \
+    -DLLVM_BUILD_LLVM_DYLIB=OFF \
+    -DLLVM_LINK_LLVM_DYLIB=OFF \
+    -DCLANG_LINK_CLANG_DYLIB=OFF
+serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
 cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
 printInfo "Setting ld.lld as default ld"
