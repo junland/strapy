@@ -33,7 +33,7 @@ mkdir build && pushd build
 export CFLAGS="-fPIC -O2 -pipe"
 export CXXFLAGS="${CFLAGS}"
 
-cmake -G Ninja ../ \
+export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
     -DDEFAULT_SYSROOT="${SERPENT_INSTALL_DIR}" \
@@ -76,7 +76,10 @@ cmake -G Ninja ../ \
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_BUILD_TOOLS=OFF \
+    -DLLVM_BUILD_TOOLS=OFF"
+
+cmake -G Ninja ../ \
+    ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON
 
@@ -85,6 +88,13 @@ ninja -j "${SERPENT_BUILD_JOBS}" -v llvm-config
 
 printInfo "Installing toolchain"
 DESTDIR="${SERPENT_INSTALL_DIR}" ninja install -j "${SERPENT_BUILD_JOBS}" -v
+
+cmake -G Ninja ../ \
+    ${llvmopts} \
+    -DLLVM_BUILD_LLVM_DYLIB=OFF \
+    -DLLVM_LINK_LLVM_DYLIB=OFF \
+    -DCLANG_LINK_CLANG_DYLIB=OFF
+ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
 cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
 printInfo "Setting ld.lld as default ld"
