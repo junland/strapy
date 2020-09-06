@@ -20,22 +20,13 @@ rmdir root/serpent
 set +e
 find root/usr/bin -type f | xargs -I{} strip {}
 find root/usr/libexec -type f | xargs -I{} strip {}
-find root/usr/lib -type -f -name "*.so*" | xargs -I{} strip {}
-rm -v root/usr/lib/*.a
+find root/usr/lib -type -f -name "*.so*" | xargs -I{} strip -g --strip-unneeded {}
 rm -v root/usr/lib/*.la
-rm -v root/usr/lib/*.so
-rm -vrf root/usr/include
-rm -vrf root/usr/share/doc
-rm -vrf root/usr/share/man
-rm -vrf root/usr/{bin,share,lib}/*perl*
-rm -vrf root/usr/{bin,share,lib}/*python*
-rm -vrf root/usr/{bin,share,lib}/*cmake*
-rm -vf root/usr/bin/{cpack,ctest}
 set -e
 
 # TODO: Stateless profile! This is ugly as sin.
 
-cp profile root/etc/profile
+install -m 00644 profile root/etc/profile
 docker rmi serpentos/staging:latest || :
 
 docker build --tag serpentos/staging:latest .
