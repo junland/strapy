@@ -35,7 +35,7 @@ unset CFLAGS CXXFLAGS
 # in future, so we should follow: https://reviews.llvm.org/D63785
 export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLLVM_ENABLE_PROJECTS="clang\;compiler-rt\;libcxx\;libcxxabi\;libunwind\;lld\;llvm" \
+    -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_TARGET_ARCH="${SERPENT_TARGET_ARCH}" \
     -DLLVM_DEFAULT_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
