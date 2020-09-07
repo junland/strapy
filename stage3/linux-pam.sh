@@ -6,9 +6,6 @@ set -e
 extractSource linux-pam
 serpentChrootCd Linux-PAM-*
 
-# Nuke quota.
-cd Linux-PAM-*
-
 printInfo "Configuring linux-pam"
 unset CONFIG_SITE
 
