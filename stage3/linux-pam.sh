@@ -30,4 +30,4 @@ printInfo "Building linux-pam"
 serpentChroot make -j 1 V=1 VERBOSE=1
 
 printInfo "Installing linux-pam"
-serpentChroot make -j 1 V=1 VERBOSE=1
+serpentChroot make -j 1 V=1 VERBOSE=1 install
