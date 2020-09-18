@@ -32,11 +32,12 @@ popd
 mkdir ldc-build && pushd ldc-build
 cmake -G "Ninja" .. \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_DIR=/usr \
+    -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=OFF \
     -DD_COMPILER="${SERPENT_BUILD_DIR}/ldc2-${LDC_VERSION}-linux-x86_64/bin/ldmd2" \
     -DLDC_DYNAMIC_COMPILE=OFF \
-    -DLDC_WITH_LLD=OFF
+    -DLDC_WITH_LLD=OFF \
+    -DD_EXTRA_FLAGS="-mtriple=x86_64-serpent-linux-musl"
 
 printInfo "Building ldc"
 ninja -j "${SERPENT_BUILD_JOBS}" -v
