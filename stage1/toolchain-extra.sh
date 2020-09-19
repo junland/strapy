@@ -19,8 +19,8 @@ export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="clang"
 export CXX="clang++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -D_LIBCPP_HAS_MUSL_LIBC -Wno-error -Wno-macro-redefined -Wno-unused-command-line-argument"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -D_LIBCPP_HAS_MUSL_LIBC -Wno-error -Wno-macro-redefined -Wno-unused-command-line-argument"
+export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/usr/lib ${SERPENT_LIBC_FLAGS} -Wno-error -Wno-macro-redefined -Wno-unused-command-line-argument"
+export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/usr/lib ${SERPENT_LIBC_FLAGS} -Wno-error -Wno-macro-redefined -Wno-unused-command-line-argument"
 export AR="llvm-ar"
 export RANLIB="llvm-ranlib"
 export STRIP="llvm-strip"
@@ -39,9 +39,12 @@ ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
 
 # Stop using glibc functionality through failed test
 # Prevents HAVE___CXA_THREAD_ATEXIT_IMPL being defined and the ensuing linking errors
-pushd libcxxabi
-patch -p1 < "${SERPENT_PATCHES_DIR}/libcxxabi_musl_exit.patch"
-popd
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    pushd libcxxabi
+    patch -p1 < "${SERPENT_PATCHES_DIR}/libcxxabi_musl_exit.patch"
+    popd
+    export TOOLCHAIN_EXTRA_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
+fi
 
 pushd llvm
 
@@ -62,7 +65,7 @@ cmake .. -G Ninja  \
     -DCMAKE_AR="${SERPENT_INSTALL_DIR}/usr/bin/ar" \
     -DCMAKE_NM="${SERPENT_INSTALL_DIR}/usr/bin/llvm-nm" \
     -DCMAKE_RANLIB="${SERPENT_INSTALL_DIR}/usr/bin/llvm-ranlib" \
-    -DLIBCXX_HAS_MUSL_LIBC=ON \
+    "${TOOLCHAIN_EXTRA_FLAGS}" \
     -DLIBCXX_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
     -DLIBCXX_USE_COMPILER_RT=ON \
     -DLIBCXXABI_TARGET_TRIPLE="${SERPENT_TRIPLET}" \

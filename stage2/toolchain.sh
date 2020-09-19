@@ -22,9 +22,13 @@ ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
 ln -sv "lld-${TOOLCHAIN_VERSION}.src" lld
 ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
 
-pushd clang
-patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
-popd
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    pushd clang
+    patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+    popd
+    export TOOLCHAIN_CFLAGS="_D_LIBCPP_HAS_MUSL_LIBC"
+    export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
+fi
 
 export SERPENT_CLANG_TABLEGEN=$(realpath ../../stage1/toolchain/llvm-${TOOLCHAIN_VERSION}.src/build/bin/clang-tblgen)
 
@@ -37,8 +41,8 @@ export SERPENT_STAGE1_TREE=$(getInstallDir "1")
 
 # Our old libc++ is built likely against glibc, so we need to tell it again
 # that any new use of libc++ is via musl.
-export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_STAGE1_TREE}/lib  -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument -D_LIBCPP_HAS_MUSL_LIBC -Wno-error"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument -D_LIBCPP_HAS_MUSL_LIBC -Wno-error"
+export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_STAGE1_TREE}/lib  -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument ${TOOLCHAIN_CFLAGS} -Wno-error"
+export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument -${TOOLCHAIN_CFLAGS} -Wno-error"
 
 
 [ -e "${SERPENT_CLANG_TABLEGEN}" ] || serpentFail "Cannot find stage1 tblgen"
@@ -67,7 +71,7 @@ export llvmopts="
     -DCOMPILER_RT_USE_LIBCXX=ON \
     -DLLVM_ENABLE_LIBCXX=ON \
     -DSANITIZER_CXX_ABI=libc++ \
-    -DLIBCXX_HAS_MUSL_LIBC=ON \
+    ${TOOLCHAIN_FLAGS} \
     -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
     -DLIBCXX_ENABLE_SHARED=ON \
     -DLIBCXX_ENABLE_STATIC=OFF \

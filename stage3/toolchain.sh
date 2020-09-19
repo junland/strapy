@@ -22,9 +22,12 @@ ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
 ln -sv "lld-${TOOLCHAIN_VERSION}.src" lld
 ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
 
-pushd clang
-patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
-popd
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    pushd clang
+    patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+    popd
+    export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
+fi
 
 mkdir -p llvm/build
 serpentChrootCd llvm/build
@@ -53,7 +56,7 @@ export llvmopts="
     -DCOMPILER_RT_USE_LIBCXX=ON \
     -DLLVM_ENABLE_LIBCXX=ON \
     -DSANITIZER_CXX_ABI=libc++ \
-    -DLIBCXX_HAS_MUSL_LIBC=ON \
+    ${TOOLCHAIN_FLAGS} \
     -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
     -DLIBCXX_ENABLE_SHARED=ON \
     -DLIBCXX_ENABLE_STATIC=OFF \

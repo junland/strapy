@@ -21,25 +21,29 @@ export RANLIB="llvm-ranlib"
 export STRIP="llvm-strip"
 export TOOLCHAIN_VERSION="10.0.1"
 
-extractSource musl
 extractSource compiler-rt
 
-printInfo "Pre-configuring musl for cross-target headers"
-pushd musl*
-./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --build="${SERPENT_TRIPLET}" \
-    --enable-optimize=auto \
-    --enable-visibility \
+# Handle musl-specific bootstrap of compiler-rt
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    printInfo "Pre-configuring musl for cross-target headers"
+    extractSource musl
+    pushd musl*
+    ./configure --prefix=/usr \
+        --target="${SERPENT_TRIPLET}" \
+        --build="${SERPENT_TRIPLET}" \
+        --enable-optimize=auto \
+        --enable-visibility \
 
-printInfo "Initial non-linked build of musl"
-make -j "${SERPENT_BUILD_JOBS}" obj/include/bits/alltypes.h obj/include/bits/syscall.h
+    printInfo "Initial non-linked build of musl"
+    make -j "${SERPENT_BUILD_JOBS}" obj/include/bits/alltypes.h obj/include/bits/syscall.h
 
-printInfo "Expanding flags to musl base"
-export MUSL_EXTRA_FLAGS="-I$(pwd)/include -I$(pwd)/arch/generic -I$(pwd)/arch/${SERPENT_TARGET_MUSL} -I$(pwd)/obj/include -Wno-unused-command-line-argument -Wno-error"
-export CFLAGS="${CFLAGS} ${MUSL_EXTRA_FLAGS}"
-export CXXFLAGS="${CXXFLAGS} ${MUSL_EXTRA_FLAGS}"
-popd
+    printInfo "Expanding flags to musl base"
+    export MUSL_EXTRA_FLAGS="-I$(pwd)/include -I$(pwd)/arch/generic -I$(pwd)/arch/${SERPENT_TARGET_MUSL} -I$(pwd)/obj/include -Wno-unused-command-line-argument -Wno-error"
+    export CFLAGS="${CFLAGS} ${MUSL_EXTRA_FLAGS}"
+    export CXXFLAGS="${CXXFLAGS} ${MUSL_EXTRA_FLAGS}"
+    popd
+
+fi
 
 printInfo "Configuring compiler-rt builtins"
 pushd compiler-rt*

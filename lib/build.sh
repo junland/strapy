@@ -8,6 +8,9 @@ export SERPENT_ROOT_DIR="$(dirname $(dirname $(realpath -s ${BASH_SOURCE[0]})))"
 # Set the target Arch to import early for install dir
 export SERPENT_TARGET=${SERPENT_TARGET:-"x86_64"}
 
+# Define which libc we wish to use with this build
+export SERPENT_LIBC=${SERPENT_LIBC:-"musl"}
+
 # Make sure the scripts are properly implemented.
 [ ! -z "${SERPENT_STAGE_NAME}" ] || serpentFail "Stage name is not set"
 
@@ -160,8 +163,15 @@ function activateStage1Compiler()
     export RANLIB="llvm-ranlib"
     export STRIP="llvm-strip"
 
-    export CFLAGS="${SERPENT_TARGET_CFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -Wno-unused-command-line-argument -D_LIBCPP_HAS_MUSL_LIBC -Wno-error"
-    export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -Wno-unused-command-line-argument -D_LIBCPP_HAS_MUSL_LIBC -Wno-error"
+    # Handle libc specifics for stage1
+    if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+        export SERPENT_LIBC_FLAGS="-D_LIBCPP_HAS_MUSL_LIBC"
+    else
+        export SERPENT_LIBC_FLAGS=""
+    fi
+
+    export CFLAGS="${SERPENT_TARGET_CFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -Wno-unused-command-line-argument ${SERPENT_LIBC_FLAGS} -Wno-error"
+    export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib -Wno-unused-command-line-argument ${SERPENT_LIBC_FLAGS} -Wno-error"
     export LDFLAGS="${SERPENT_TARGET_LDFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_INSTALL_DIR}/usr/lib"
     export PKG_CONFIG_PATH="${SERPENT_INSTALL_DIR}/usr/lib/pkgconfig:${SERPENT_INSTALL_DIR}/usr/share/pkgconfig"
 

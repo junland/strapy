@@ -20,7 +20,7 @@ cmake -G "Ninja" ../runtime \
     -DD_VERSION=2 \
     -DDMDFE_MINOR_VERSION=0 \
     -DDMDFE_PATCH_VERSION=93 \
-    -DD_EXTRA_FLAGS="-mtriple=x86_64-serpent-linux-musl"
+    -DD_EXTRA_FLAGS="-mtriple=${SERPENT_TRIPLET}"
 ninja -j "${SERPENT_BUILD_JOBS}" -v
 
 # Install musl ldc runtime for use to compile D programs
@@ -37,7 +37,7 @@ cmake -G "Ninja" .. \
     -DD_COMPILER="${SERPENT_BUILD_DIR}/ldc2-${LDC_VERSION}-linux-x86_64/bin/ldmd2" \
     -DLDC_DYNAMIC_COMPILE=OFF \
     -DLDC_WITH_LLD=OFF \
-    -DD_EXTRA_FLAGS="-mtriple=x86_64-serpent-linux-musl"
+    -DD_EXTRA_FLAGS="-mtriple=${SERPENT_TRIPLET}"
 
 printInfo "Building ldc"
 ninja -j "${SERPENT_BUILD_JOBS}" -v

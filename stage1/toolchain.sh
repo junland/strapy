@@ -22,9 +22,11 @@ ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
 ln -sv "lld-${TOOLCHAIN_VERSION}.src" lld
 ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
 
-pushd clang
-patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
-popd
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    pushd clang
+    patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+    popd
+fi
 
 pushd llvm
 

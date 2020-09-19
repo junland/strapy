@@ -8,7 +8,12 @@
 export SERPENT_TARGET_CFLAGS="-march=armv8-a+simd+fp+crypto -mtune=cortex-a72 -O2 -pipe -fPIC"
 export SERPENT_TARGET_CXXFLAGS="${SERPENT_TARGET_CFLAGS}"
 export SERPENT_TARGET_LDFLAGS=""
-export SERPENT_TRIPLET="aarch64-serpent-linux-musl"
+export SERPENT_TRIPLET="aarch64-serpent-linux"
+
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    export SERPENT_TRIPLET="${SERPENT_TRIPLET}-musl"
+fi
+
 export SERPENT_TARGET_LLVM_BACKEND="AArch64"
 export SERPENT_TARGET_ARCH="arm64"
 

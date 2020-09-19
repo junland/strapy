@@ -20,7 +20,7 @@ COMPONENTS=(
     "headers"
     "toolchain"
     "compiler-rt"
-    "musl"
+    "${SERPENT_LIBC}"
     "toolchain-extra"
     "libffi"
     "pkgconf"
@@ -29,5 +29,5 @@ COMPONENTS=(
 prefetchSources
 
 for component in ${COMPONENTS[@]} ; do
-    /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" bash --norc --noprofile "${executionPath}/${component}.sh" || serpentFail "Building ${component} failed"
+    /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh" || serpentFail "Building ${component} failed"
 done
