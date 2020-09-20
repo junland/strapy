@@ -16,7 +16,7 @@ export SERPENT_LIBC=${SERPENT_LIBC:-"musl"}
 
 # Stage specific directories
 export SERPENT_BUILD_DIR="${SERPENT_BUILD_ROOT}/${SERPENT_STAGE_NAME}"
-export SERPENT_INSTALL_DIR="${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/${SERPENT_STAGE_NAME}"
+export SERPENT_INSTALL_DIR="${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/${SERPENT_LIBC}/${SERPENT_STAGE_NAME}"
 export SERPENT_BUILD_SCRIPT=$(basename "${0}")
 export SERPENT_BUILD_NAME="${SERPENT_BUILD_SCRIPT%.sh}"
 export SERPENT_BUILD_JOBS=$(nproc)
@@ -25,7 +25,7 @@ export SERPENT_BUILD_JOBS=$(nproc)
 function getInstallDir()
 {
     [ ! -z "${1}" ] || serpentFail "Incorrect use of getInstallDir"
-    echo "${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/stage${1}"
+    echo "${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/${SERPENT_LIBC}/stage${1}"
 }
 
 # Verify the download is correct
