@@ -11,7 +11,6 @@ fi
 extractSource binutils
 cd binutils-*
 
-export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
 
