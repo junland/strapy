@@ -24,6 +24,7 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
+    --disable-multilib \
     libc_cv_forced_unwind=yes
 
 printInfo "Building glibc"
