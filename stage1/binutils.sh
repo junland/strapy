@@ -35,3 +35,6 @@ make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
 make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install DESTDIR="${SERPENT_INSTALL_DIR}"
+
+printInfo "Setting bfd as default ld"
+ln -svf "${SERPENT_TRIPLET}-ld" "${SERPENT_INSTALL_DIR}/usr/bin/ld"
