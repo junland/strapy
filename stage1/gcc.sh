@@ -22,9 +22,8 @@ printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --build="${SERPENT_HOST}" \
+    --build="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
-    --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --disable-bootstrap \
     --disable-multilib \
     --disable-libstdcxx \
