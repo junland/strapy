@@ -31,7 +31,7 @@ mkdir build && pushd build
     --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install DESTDIR="${SERPENT_INSTALL_DIR}"
