@@ -18,6 +18,8 @@ executionPath=$(dirname $(realpath -s $0))
 
 COMPONENTS=(
     "headers"
+    "binutils"
+    "gcc"
     "toolchain"
     "compiler-rt"
     "${SERPENT_LIBC}"
