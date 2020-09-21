@@ -3,6 +3,11 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    printInfo "Skipping gcc with musl libc"
+    exit 0
+fi
+
 extractSource glibc
 cd glibc-*
 
