@@ -28,6 +28,7 @@ mkdir build && pushd build
     --host="${SERPENT_HOST}" \
     --disable-bootstrap \
     --disable-multilib \
+    --disable-libstdcxx \
     --enable-shared \
     --enable-threads=posix \
     --enable-gnu-indirect-function \
@@ -38,7 +39,7 @@ mkdir build && pushd build
     --enable-linker-build-id  \
     --with-linker-hash-style=gnu \
     --with-gnu-ld \
-    --enable-languages=c,c++,lto
+    --enable-languages=c
 
 printInfo "Building gcc"
 make -j "${SERPENT_BUILD_JOBS}" all-gcc all-target-libgcc
