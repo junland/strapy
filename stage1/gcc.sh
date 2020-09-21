@@ -24,6 +24,7 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --build="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
+    --disable-bootstrap \
     --disable-multilib \
     --enable-shared \
     --enable-threads=posix \
@@ -35,7 +36,7 @@ mkdir build && pushd build
     --enable-linker-build-id  \
     --with-linker-hash-style=gnu \
     --with-gnu-ld \
-    --enable-languages=c,c++,lto'
+    --enable-languages=c,c++,lto
 
 printInfo "Building gcc"
 make -j "${SERPENT_BUILD_JOBS}"
