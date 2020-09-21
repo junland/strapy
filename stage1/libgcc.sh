@@ -29,18 +29,19 @@ export CXX="g++"
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 
-printInfo "Configuring gcc"
+printInfo "Configuring libgcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
+    --disable-multilib \
     --disable-shared \
     --with-gcc-major-version-only \
     --enable-languages=c,c++
 
-printInfo "Building gcc compiler only"
+printInfo "Building libgcc"
 make -j "${SERPENT_BUILD_JOBS}" all-target-libgcc
 
-printInfo "Installing gcc"
+printInfo "Installing libgcc"
 make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
