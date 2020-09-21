@@ -23,10 +23,15 @@ mkdir build && pushd build
 ../configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
     --libdir=/usr/lib \
-    --disable-multilib
+    --disable-multilib \
+    --enable-deterministic-archives \
+    --enable-plugins \
+    --enable-ld=default \
+    --enable-secureplt \
+    --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install DESTDIR="${SERPENT_INSTALL_DIR}"
