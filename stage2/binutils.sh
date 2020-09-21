@@ -33,8 +33,8 @@ mkdir build && pushd build
     --disable-silent-rules \
     --disable-dependency-tracking
 
-printInfo "Building gas and ld"
-make -j "${SERPENT_BUILD_JOBS}" maybe-all-gas maybe-all-ld
+printInfo "Building binutils"
+make -j "${SERPENT_BUILD_JOBS}"
 
-printInfo "Installing gas and ld"
-make -j "${SERPENT_BUILD_JOBS}" maybe-install-gas maybe-install-ld DESTDIR="${SERPENT_INSTALL_DIR}"
+printInfo "Installing binutils"
+make -j "${SERPENT_BUILD_JOBS}" DESTDIR="${SERPENT_INSTALL_DIR}"
