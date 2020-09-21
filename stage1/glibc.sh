@@ -33,8 +33,8 @@ mkdir build && pushd build
     --disable-dependency-tracking
 
 printInfo "Building glibc"
-make -j "${SERPENT_BUILD_JOBS}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip"
+make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing glibc"
-make -j "${SERPENT_BUILD_JOBS}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip" install DESTDIR="${SERPENT_INSTALL_DIR}"
-make -j "${SERPENT_BUILD_JOBS}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
