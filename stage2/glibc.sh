@@ -24,13 +24,7 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
-    --without-cvs \
-    --without-gd \
-    --without-selinux \
-    --disable-profile \
-    --disable-debug \
-    --disable-silent-rules \
-    --disable-dependency-tracking
+    libc_cv_forced_unwind=yes
 
 printInfo "Building glibc"
 make -j "${SERPENT_BUILD_JOBS}"

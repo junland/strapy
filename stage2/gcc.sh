@@ -28,21 +28,11 @@ mkdir build && pushd build
     --host="${SERPENT_HOST}" \
     --disable-bootstrap \
     --disable-multilib \
-    --disable-libstdcxx \
-    --enable-shared \
-    --enable-threads=posix \
-    --enable-gnu-indirect-function \
-    --enable-__cxa_atexit \
-    --enable-ld=default \
-    --enable-clocale=gnu \
     --with-gcc-major-version-only \
-    --enable-linker-build-id  \
-    --with-linker-hash-style=gnu \
-    --with-gnu-ld \
-    --enable-languages=c
+    --enable-languages=c,c++
 
 printInfo "Building gcc"
-make -j "${SERPENT_BUILD_JOBS}" all-gcc all-target-libgcc
+make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install-gcc install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" DESTDIR="${SERPENT_INSTALL_DIR}"

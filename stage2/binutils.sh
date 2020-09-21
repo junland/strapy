@@ -24,14 +24,12 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
-    --without-cvs \
-    --without-gd \
-    --without-selinux \
     --disable-multilib \
-    --disable-profile \
-    --disable-debug \
-    --disable-silent-rules \
-    --disable-dependency-tracking
+    --enable-deterministic-archives \
+    --enable-plugins \
+    --enable-ld=default \
+    --enable-secureplt \
+    --enable-64-bit-bfd
 
 printInfo "Building binutils"
 make -j "${SERPENT_BUILD_JOBS}"
