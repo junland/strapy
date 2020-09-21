@@ -36,6 +36,7 @@ mkdir build && pushd build
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
+    --disable-multilib \
     --with-gcc-major-version-only \
     --enable-languages=c,c++
 
