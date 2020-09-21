@@ -11,6 +11,17 @@ fi
 extractSource gcc
 cd gcc-*
 
+printInfo "Extracting gcc requirements"
+extractSource mpfr
+extractSource mpc
+extractSource gmp
+extractSource isl
+
+mv "mpfr-*" mpfr
+mv "mpc-*" mpc
+mv "gmp-*" gmp
+mv "isl-*" isl
+
 export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
@@ -25,22 +36,11 @@ mkdir build && pushd build
     --build="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
-    --disable-multilib \
-    --disable-libstdcxx \
-    --enable-shared \
-    --enable-threads=posix \
-    --enable-gnu-indirect-function \
-    --enable-__cxa_atexit \
-    --enable-ld=default \
-    --enable-clocale=gnu \
     --with-gcc-major-version-only \
-    --enable-linker-build-id  \
-    --with-linker-hash-style=gnu \
-    --with-gnu-ld \
-    --enable-languages=c
+    --enable-languages=c,c++
 
-printInfo "Building gcc"
-make -j "${SERPENT_BUILD_JOBS}"
+printInfo "Building gcc compiler only"
+make -j "${SERPENT_BUILD_JOBS}" all-gcc
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" install-gcc DESTDIR="${SERPENT_INSTALL_DIR}"
