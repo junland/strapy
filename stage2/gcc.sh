@@ -41,7 +41,7 @@ mkdir build && pushd build
     --enable-languages=c,c++,lto
 
 printInfo "Building gcc"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${SERPENT_BUILD_JOBS}" all-gcc all-target-libgcc
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" install-gcc install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
