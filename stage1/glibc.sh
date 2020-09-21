@@ -21,16 +21,12 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 printInfo "Configuring glibc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --build="${SERPENT_TRIPLET}" \
     --libdir=/usr/lib \
-    --without-cvs \
-    --without-gd \
-    --without-selinux \
-    --disable-profile \
-    --disable-debug \
-    --disable-silent-rules \
-    --disable-dependency-tracking
+    --build="${MACHTYPE}" \
+    --host="${SERPENT_TRIPLET}" \
+    --target="${SERPENT_TRIPLET}" \
+    libc_cv_forced_unwind=yes
+
 
 printInfo "Building glibc"
 make -j "${SERPENT_BUILD_JOBS}"
