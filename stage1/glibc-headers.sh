@@ -29,7 +29,7 @@ mkdir build && pushd build
 
 
 printInfo "Installing glibc headers"
-make -j "${SERPENT_BUILD_JOBS}" install-bootstrap-headers=yes install-headers
+make -j "${SERPENT_BUILD_JOBS}" install-bootstrap-headers=yes install-headers DESTDIR="${SERPENT_INSTALL_DIR}"
 make -j "${SERPENT_BUILD_JOBS}" csu/subdir_lib
 install csu/crt1.o csu/crti.o csu/crtn.o "${SERPENT_INSTALL_DIR}/usr/lib"
 "${SERPENT_TRIPLET}-gcc" -nostdlib -nostartfiles -shared -x c /dev/null -o "${SERPENT_INSTALL_DIR}/usr/lib/libc.so"
