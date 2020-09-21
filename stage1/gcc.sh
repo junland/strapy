@@ -24,7 +24,7 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --build="${SERPENT_HOST}" \
     --target="${SERPENT_TRIPLET}" \
-    --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
+    --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --disable-bootstrap \
     --disable-multilib \
     --enable-shared \
