@@ -21,17 +21,10 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 printInfo "Configuring binutils"
 mkdir build && pushd build
 ../configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
     --build="${SERPENT_TRIPLET}" \
+    --target="${SERPENT_TRIPLET}" \
     --libdir=/usr/lib \
-    --without-cvs \
-    --without-gd \
-    --without-selinux \
-    --disable-multilib \
-    --disable-profile \
-    --disable-debug \
-    --disable-silent-rules \
-    --disable-dependency-tracking
+    --disable-multilib
 
 printInfo "Building binutils"
 make -j "${SERPENT_BUILD_JOBS}"
