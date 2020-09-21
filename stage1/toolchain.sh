@@ -78,7 +78,8 @@ export llvmopts="
     -DLLVM_INCLUDE_UTILS=OFF \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
-    -DLLVM_BUILD_TOOLS=OFF"
+    -DLLVM_BUILD_TOOLS=OFF \
+    -DCLANG_BUILD_TOOLS=OFF"
 
 cmake -G Ninja ../ \
     ${llvmopts} \
