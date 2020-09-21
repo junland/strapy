@@ -22,7 +22,7 @@ printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --build="${SERPENT_TRIPLET}" \
+    --build="${SERPENT_HOST}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
     --disable-multilib \
