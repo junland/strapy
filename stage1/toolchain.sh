@@ -99,5 +99,8 @@ cmake -G Ninja ../ \
 ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
 cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
-printInfo "Setting ld.lld as default ld"
-ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
+# Only install if binutils ld not already present
+if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
+    printInfo "Setting ld.lld as default ld"
+    ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
+fi
