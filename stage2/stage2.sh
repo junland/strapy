@@ -25,6 +25,8 @@ COMPONENTS=(
     "headers"
     "${SERPENT_LIBC}"
     "zlib"
+    "binutils"
+    "gcc"
     "toolchain"
     "ncurses"
     "dash"
