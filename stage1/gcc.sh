@@ -33,7 +33,6 @@ printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --build="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
     --with-gcc-major-version-only \

@@ -21,7 +21,6 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 printInfo "Configuring binutils"
 mkdir build && pushd build
 ../configure --prefix=/usr \
-    --build="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
     --libdir=/usr/lib \
     --disable-multilib
