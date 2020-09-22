@@ -26,7 +26,6 @@ export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
 export LD="ld.bfd"
-export AR="llvm-ar"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
@@ -45,7 +44,8 @@ mkdir build && pushd build
     --without-headers \
     --enable-initfini-array \
     --with-gcc-major-version-only \
-    --enable-languages=c,c++
+    --enable-languages=c,c++ \
+    LD="ld.bfd"
 
 printInfo "Building gcc compiler only"
 make -j "${SERPENT_BUILD_JOBS}" all-gcc
