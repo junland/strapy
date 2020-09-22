@@ -20,7 +20,6 @@ COMPONENTS=(
     "headers"
     "binutils"
     "gcc"
-    "glibc-headers"
     "libgcc"
     "toolchain"
     "compiler-rt"
