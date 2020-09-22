@@ -32,10 +32,7 @@ mkdir build && pushd build
     --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr all-bfd all-ld all-gas
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install DESTDIR="${SERPENT_INSTALL_DIR}"
-
-printInfo "Setting bfd as default ld"
-ln -svf "${SERPENT_TRIPLET}-ld" "${SERPENT_INSTALL_DIR}/usr/bin/ld"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install-bdf install-ld install-gas DESTDIR="${SERPENT_INSTALL_DIR}"
