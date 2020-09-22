@@ -24,7 +24,12 @@ mkdir build && pushd build
     --host="${SERPENT_TRIPLET}" \
     --with-headers="${SERPENT_INSTALL_DIR}/usr/include" \
     --disable-multilib \
-    ac_cv_slibdir=/usr/lib
+    ac_cv_slibdir=/usr/lib \
+    ac_cv_prog_LD=ld.bfd \
+    ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
+    ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
+    ac_cv_prog_AS=${SERPENT_TRIPLET}-as \
+    ac_cv_prog_NM=${SERPENT_TRIPLET}-nm
 
 printInfo "Building glibc"
 make -j "${SERPENT_BUILD_JOBS}"
