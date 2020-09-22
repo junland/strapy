@@ -26,6 +26,7 @@ export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
 export LD="ld.bfd"
+export AR="llvm-ar"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
