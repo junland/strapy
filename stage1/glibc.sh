@@ -12,8 +12,8 @@ en_US.UTF-8/UTF-8
 " > localedata/SUPPORTED
 
 export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
-export CC="gcc"
-export CXX="g++"
+export CC="${SERPENT_TRIPLET}-gcc"
+export CXX="${SERPENT_TRIPLET}-g++"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
@@ -22,17 +22,13 @@ printInfo "Configuring glibc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --build="${MACHTYPE}" \
+    --build="${SERPENT_HOST}" \
     --host="${SERPENT_TRIPLET}" \
-    --target="${SERPENT_TRIPLET}" \
-    --with-headers="${SEROENT_INSTALL_DIR}/usr/include" \
-    --disable-multilib \
-    libc_cv_forced_unwind=yes
-
+    --with-headers="${SERPENT_INSTALL_DIR}/usr/include" \
+    --disable-multilib
 
 printInfo "Building glibc"
 make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing glibc"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
-make -j "${SERPENT_BUILD_JOBS}" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
