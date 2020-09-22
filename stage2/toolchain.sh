@@ -26,7 +26,7 @@ if [[ "${SERPENT_LIBC}" == "musl" ]]; then
     pushd clang
     patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
-    export TOOLCHAIN_CFLAGS="_D_LIBCPP_HAS_MUSL_LIBC"
+    export TOOLCHAIN_CFLAGS="-D_LIBCPP_HAS_MUSL_LIBC"
     export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
     export SYMLINKS="-DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
     -DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
@@ -44,7 +44,7 @@ export SERPENT_STAGE1_TREE=$(getInstallDir "1")
 # Our old libc++ is built likely against glibc, so we need to tell it again
 # that any new use of libc++ is via musl.
 export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_STAGE1_TREE}/lib  -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument ${TOOLCHAIN_CFLAGS} -Wno-error"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument -${TOOLCHAIN_CFLAGS} -Wno-error"
+export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_STAGE1_TREE}/lib -L${SERPENT_STAGE1_TREE}/usr/lib -Wno-unused-command-line-argument ${TOOLCHAIN_CFLAGS} -Wno-error"
 
 
 [ -e "${SERPENT_CLANG_TABLEGEN}" ] || serpentFail "Cannot find stage1 tblgen"
