@@ -25,6 +25,7 @@ ln -sv "isl-0.21" isl
 export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
+export LD="ld.bfd"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
