@@ -22,6 +22,7 @@ printInfo "Configuring binutils"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
+    --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --libdir=/usr/lib \
     --disable-multilib \
     --enable-deterministic-archives \

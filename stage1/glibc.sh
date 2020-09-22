@@ -12,11 +12,9 @@ en_US.UTF-8/UTF-8
 " > localedata/SUPPORTED
 
 export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
-export CC="${SERPENT_TRIPLET}-gcc"
-export CXX="${SERPENT_TRIPLET}-g++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 
 printInfo "Configuring glibc"
 mkdir build && pushd build
