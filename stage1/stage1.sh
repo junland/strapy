@@ -19,9 +19,9 @@ executionPath=$(dirname $(realpath -s $0))
 COMPONENTS=(
     "headers"
     "binutils"
-    "gcc"
     "toolchain"
     "compiler-rt"
+    "gcc"
     "${SERPENT_LIBC}"
     "toolchain-extra"
     "libffi"
