@@ -36,8 +36,10 @@ mkdir build && pushd build
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-multilib \
+    --disable-bootstrap \
     --with-newlib \
     --disable-shared \
+    --disable-threads \
     --without-headers \
     --enable-initfini-array \
     --with-gcc-major-version-only \
@@ -49,6 +51,13 @@ make -j "${SERPENT_BUILD_JOBS}" all-gcc
 printInfo "Installing gcc"
 make -j "${SERPENT_BUILD_JOBS}" install-gcc DESTDIR="${SERPENT_INSTALL_DIR}"
 
+printInfo "Building target libgcc"
+make -j "${SERPENT_BUILD_JOBS}" all-target-libgcc
+
+printInfo "Installing target libgcc"
+make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
+
+printInfo "Installing default compiler links"
 for i in "gcc" "g++" ; do
     ln -sv "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
 done
