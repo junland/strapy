@@ -20,7 +20,6 @@ COMPONENTS=(
     "headers"
     "binutils"
     "gcc"
-    "libgcc"
     "toolchain"
     "compiler-rt"
     "${SERPENT_LIBC}"
