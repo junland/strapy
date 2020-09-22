@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
     printInfo "Skipping binutils with musl libc"
     exit 0
 fi
