@@ -9,7 +9,7 @@ export SERPENT_ROOT_DIR="$(dirname $(dirname $(realpath -s ${BASH_SOURCE[0]})))"
 export SERPENT_TARGET=${SERPENT_TARGET:-"x86_64"}
 
 # Define which libc we wish to use with this build
-export SERPENT_LIBC=${SERPENT_LIBC:-"musl"}
+export SERPENT_LIBC=${SERPENT_LIBC:-"glibc"}
 
 # Make sure the scripts are properly implemented.
 [ ! -z "${SERPENT_STAGE_NAME}" ] || serpentFail "Stage name is not set"
