@@ -37,6 +37,10 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
     --disable-multilib \
+    --with-newlib \
+    --disable-shared \
+    --enable-static \
+    --without-headers \
     --with-gcc-major-version-only \
     --enable-languages=c,c++
 

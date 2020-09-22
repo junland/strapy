@@ -25,7 +25,7 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --disable-multilib \
     --enable-deterministic-archives \
-    --enable-plugins \
+    --disable-plugins \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd

@@ -25,6 +25,7 @@ mkdir build && pushd build
     --build="${MACHTYPE}" \
     --host="${SERPENT_TRIPLET}" \
     --target="${SERPENT_TRIPLET}" \
+    --with-headers="${SEROENT_INSTALL_DIR}/usr/include" \
     --disable-multilib \
     libc_cv_forced_unwind=yes
 
