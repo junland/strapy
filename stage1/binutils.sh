@@ -20,22 +20,22 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 
 printInfo "Configuring binutils"
 mkdir build && pushd build
-../configure --prefix=/usr \
+../configure --prefix=/usr/binutils \
     --target="${SERPENT_TRIPLET}" \
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --libdir=/usr/lib \
+    --includedir=/usr/include \
     --disable-multilib \
     --enable-deterministic-archives \
     --disable-plugins \
+    --disable-shared \
+    --enable-static \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr all-bfd all-binutils all-ld all-gas
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install-bfd install-ld install-gas DESTDIR="${SERPENT_INSTALL_DIR}"
-install -m 00755 binutils/ar "${SERPENT_INSTALL_DIR}/usr/bin/${SERPENT_TRIPLET}-ar"
-install -m 00755 binutils/ranlib "${SERPENT_INSTALL_DIR}/usr/bin/${SERPENT_TRIPLET}-ranlib"
-install -m 00755 binutils/nm-new "${SERPENT_INSTALL_DIR}/usr/bin/${SERPENT_TRIPLET}-nm"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils install DESTDIR="${SERPENT_INSTALL_DIR}"

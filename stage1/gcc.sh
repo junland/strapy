@@ -22,10 +22,9 @@ ln -sv "mpc-1.2.0" mpc
 ln -sv "gmp-6.2.0" gmp
 ln -sv "isl-0.21" isl
 
-export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
+export PATH="${SERPENT_INSTALL_DIR}/usr/binutils/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
-export LD="ld.bfd"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"

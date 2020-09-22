@@ -11,7 +11,9 @@ echo "SUPPORTED_LOCALES=\
 en_US.UTF-8/UTF-8
 " > localedata/SUPPORTED
 
-export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
+export PATH="${SERPENT_INSTALL_DIR}/usr/binutils/bin:${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
+export CC="gcc"
+export CXX="g++"
 
 export CFLAGS="-O2"
 export CXXFLAGS="-O2"
