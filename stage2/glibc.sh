@@ -17,6 +17,9 @@ export CXX="g++"
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 
+export SERPENT_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+
 printInfo "Configuring glibc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
@@ -24,6 +27,12 @@ mkdir build && pushd build
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
     --disable-multilib \
+    ac_cv_slibdir=/usr/lib \
+    ac_cv_prog_LD=ld.bfd \
+    ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
+    ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
+    ac_cv_prog_AS=${SERPENT_TRIPLET}-as \
+    ac_cv_prog_NM=${SERPENT_TRIPLET}-nm \
     libc_cv_forced_unwind=yes
 
 printInfo "Building glibc"
