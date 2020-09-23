@@ -3,6 +3,11 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
+if [[ "${SERPENT_LIBC}" != "musl" ]]; then
+    printInfo "Skipping dash with non-musl libc"
+    exit 0
+fi
+
 extractSource dash
 cd dash-*
 

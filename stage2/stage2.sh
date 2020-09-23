@@ -30,6 +30,7 @@ COMPONENTS=(
     "toolchain"
     "ncurses"
     "dash"
+    "bash"
     "gzip"
     "xz"
     "util-linux"
