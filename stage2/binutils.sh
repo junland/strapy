@@ -22,10 +22,11 @@ export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
 
 printInfo "Configuring binutils"
 mkdir build && pushd build
-../configure --prefix=/usr \
+../configure --prefix=/usr/binutils \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
+    --includedir=/usr/include \
     --disable-multilib \
     --enable-deterministic-archives \
     --disable-plugins \
