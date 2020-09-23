@@ -17,6 +17,9 @@ export CXX="g++"
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 
+export SERPENT_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+
 printInfo "Configuring binutils"
 mkdir build && pushd build
 ../configure --prefix=/usr \
@@ -25,7 +28,9 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --disable-multilib \
     --enable-deterministic-archives \
-    --enable-plugins \
+    --disable-plugins \
+    --disable-shared \
+    --enable-static \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd
