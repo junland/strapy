@@ -41,3 +41,11 @@ make -j "${SERPENT_BUILD_JOBS}"
 printInfo "Installing glibc"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 make -j "${SERPENT_BUILD_JOBS}" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
+
+# Chronically broken .so scripts.
+for broken in "libc.so" "libm.so"; do
+    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib64/@@g'
+    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib/@@g'
+    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib64/@@g'
+    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib/@@g'
+done
