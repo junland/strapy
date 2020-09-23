@@ -9,10 +9,12 @@ serpentChrootCd Linux-PAM-*
 printInfo "Configuring linux-pam"
 unset CONFIG_SITE
 
-# Configure is *woefully* broken so we manually set up the required usertype limits
-export CFLAGS="${CFLAGS} $(serpentChroot pkg-config --cflags --libs libwildebeest-pwd) -Wno-unused-command-line-argument -DPAM_USERTYPE_OVERFLOW_UID=65534 -DPAM_USERTYPE_SYSUIDMIN=101 -DPAM_USERTYPE_UIDMIN=1000"
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    # Configure is *woefully* broken so we manually set up the required usertype limits
+    export CFLAGS="${CFLAGS} $(serpentChroot pkg-config --cflags --libs libwildebeest-pwd) -Wno-unused-command-line-argument -DPAM_USERTYPE_OVERFLOW_UID=65534 -DPAM_USERTYPE_SYSUIDMIN=101 -DPAM_USERTYPE_UIDMIN=1000"
+fi
 
-serpentChroot ac_cv_func_quotactl=0 ac_cv_search_dlopen="-lc" ac_cv_search_opendir="-lc" ac_cv_search_crypt="-lc" ./configure \
+serpentChroot ./configure \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
     --prefix=/usr \
@@ -24,8 +26,6 @@ serpentChroot ac_cv_func_quotactl=0 ac_cv_search_dlopen="-lc" ac_cv_search_opend
     --disable-nis \
     --with-kernel-overflow-uid=65534
 
-
-serpentChroot sed -e '/PAM_USERTYPE_/d' -i config.h
 printInfo "Building linux-pam"
 serpentChroot make -j 1 V=1 VERBOSE=1
 

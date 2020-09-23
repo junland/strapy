@@ -3,6 +3,11 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
+if [[ "${SERPENT_LIBC}" != "musl" ]]; then
+    printInfo "Skipping libc-support with non-musl libc"
+    exit 0
+fi
+
 serpentChrootCd libc-support
 git clone https://dev.serpentos.com/source/libc-support.git
 

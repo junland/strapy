@@ -3,6 +3,11 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
+if [[ "${SERPENT_LIBC}" != "musl" ]]; then
+    printInfo "Skipping libwildebeest with non-musl libc"
+    exit 0
+fi
+
 serpentChrootCd libwildebeest
 git clone https://dev.serpentos.com/source/libwildebeest.git
 
