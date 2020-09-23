@@ -25,13 +25,40 @@ ln -sv "isl-0.21" isl
 export CC="gcc"
 export CXX="g++"
 
+export SERPENT_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+
+printInfo "Configuring libstdc++"
+mkdir buildcxx && pushd buildcxx
+../libstdc++-v3/configure --prefix=/usr \
+    --libdir=/usr/lib \
+    --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
+    --target="${SERPENT_TRIPLET}" \
+    --host="${SERPENT_HOST}" \
+    --disable-shared \
+    --disable-multilib \
+    --disable-libstdcxx-pch
+
+printInfo "Building libstdcxx"
+make -j "${SERPENT_BUILD_JOBS}"
+
+printInfo "Installing libstdcxx"
+make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+popd
+
+unset CFLAGS LDFLAGS
+export CXXFLAGS="-I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
+
 printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
+    --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --disable-bootstrap \
+    --disable-shared \
+    --disable-threads \
     --disable-multilib \
     --with-gcc-major-version-only \
     --enable-languages=c,c++
