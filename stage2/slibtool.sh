@@ -14,7 +14,7 @@ printInfo "Configuring slibtool"
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
-    --all-static
+    --all-shared
 
 
 printInfo "Building slibtool"
@@ -24,4 +24,4 @@ printInfo "Installing slibtool"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 
 # Attempt to use slibtool for all libtool purposes
-ln -sv slibtool "${SERPENT_INSTALL_DIR}/usr/bin/libtool"
+ln -svf slibtool "${SERPENT_INSTALL_DIR}/usr/bin/libtool"
