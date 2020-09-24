@@ -18,7 +18,7 @@ serpentChroot ./configure \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
-    --all-static
+    --all-shared
 
 
 printInfo "Building slibtool"
