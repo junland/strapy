@@ -115,7 +115,12 @@ function takeDownMounts()
 # chroot helper. In future we should expand to support qemu-static.
 function serpentChroot()
 {
-    LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/dash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+    if [[ -e "${SERPENT_INSTALL_DIR}/serpent/usr/bin/dash" ]]; then
+        LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/dash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+    else
+        LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/bash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+
+    fi
 }
 
 # Set the chroot dir
