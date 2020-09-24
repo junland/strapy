@@ -3,6 +3,11 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
+if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
+    printInfo "Skipping bash with non-glibc libc"
+    exit 0
+fi
+
 extractSource bash
 serpentChrootCd bash-*
 
@@ -23,3 +28,4 @@ printInfo "Building bash"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+ln -svf bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
