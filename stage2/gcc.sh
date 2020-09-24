@@ -64,7 +64,12 @@ mkdir build && pushd build
     --enable-languages=c,c++
 
 printInfo "Building gcc"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${SERPENT_BUILD_JOBS}" all-gcc
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" install-gcc DESTDIR="${SERPENT_INSTALL_DIR}"
+
+printInfo "Installing default compiler links"
+for i in "gcc" "g++" ; do
+    ln -sv "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
+done
