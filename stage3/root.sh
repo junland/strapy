@@ -42,4 +42,9 @@ ln -svf /proc/self/fd/2 "${SERPENT_INSTALL_DIR}"/dev/stderr
 ln -svf /proc/kcore "${SERPENT_INSTALL_DIR}"/dev/core
 
 printInfo "Stashing /bin/sh compat link"
-ln -svf /serpent/usr/bin/dash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
+
+if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+    ln -svf /serpent/usr/bin/dash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
+else
+    ln -sfv /serpent/usr/bin/bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
+fi
