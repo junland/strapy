@@ -8,6 +8,12 @@ activateStage1Compiler
 extractSource linux
 cd linux-*
 
+if [[ "${SERPENT_LIBC}" == "glibc" ]]; then
+    export SERPENT_STAGE1_TREE=$(getInstallDir "1")
+    export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+fi
+
+
 printInfo "Configuring headers"
 export ARCH="${SERPENT_TARGET_ARCH}"
 make mrproper
