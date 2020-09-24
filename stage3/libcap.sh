@@ -6,6 +6,9 @@ set -e
 extractSource libcap
 serpentChrootCd libcap-*
 
+# Static linking broken
+cd libcap-*
+sed -i Makefile -e '/\-C tests/d'
 
 printInfo "Building libcap"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}"
