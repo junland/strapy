@@ -27,6 +27,7 @@ COMPONENTS=(
     "zlib"
     "binutils"
     "gcc"
+    "libgcc"
     "toolchain"
     "ncurses"
     "dash"
