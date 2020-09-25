@@ -28,6 +28,7 @@ COMPONENTS=(
     "${SERPENT_LIBC}"
     "diffutils"
     "binutils"
+    "gcc"
     "attr"
     "acl"
     "findutils"
