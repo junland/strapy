@@ -183,7 +183,7 @@ function activateStage1Compiler()
 [ -d "${SERPENT_SOURCES_DIR}" ] || serpentFail "Missing source tree"
 
 # Check basic requirements before we go anywhere.
-requireTools curl tar ninja cmake uname patch
+requireTools autoreconf autopoint bison cmake curl gcc g++ ninja patch tar uname
 
 # TODO: Revisit this if needed
 export SERPENT_ARCH=$(uname -m)
