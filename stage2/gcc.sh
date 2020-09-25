@@ -65,7 +65,7 @@ mkdir build && pushd build
     --disable-multilib \
     --disable-multiarch \
     --with-gcc-major-version-only \
-    --enable-languages=c
+    --enable-languages=c,c++
 
 printInfo "Building gcc compiler only"
 make -j "${SERPENT_BUILD_JOBS}" all-gcc
@@ -81,5 +81,5 @@ make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL
 
 printInfo "Installing default compiler links"
 for i in "gcc" "g++" ; do
-    ln -sv "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
+    ln -svf "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
 done
