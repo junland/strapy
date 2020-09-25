@@ -21,13 +21,7 @@ export SERPENT_STAGE_NAME="stage2"
 executionPath=$(dirname $(realpath -s $0))
 
 COMPONENTS=(
-    "root"
-    "headers"
-    "${SERPENT_LIBC}"
-    "zlib"
-    "binutils"
     "gcc"
-    "libgcc"
     "toolchain"
     "ncurses"
     "dash"

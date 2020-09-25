@@ -34,6 +34,7 @@ mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
+    --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
     --target="${SERPENT_TRIPLET}" \
     --disable-multilib \
     --disable-bootstrap \

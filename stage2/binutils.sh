@@ -11,7 +11,13 @@ fi
 extractSource binutils
 cd binutils-*
 
+export LD="ld.bfd"
+export AR="ar"
+export RANLIB="ranlib"
+export AS="as"
+export NM="nm"
 export CC="gcc"
+export CPP="clang-cpp"
 export CXX="g++"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
@@ -37,7 +43,7 @@ mkdir build && pushd build
     --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils install DESTDIR="${SERPENT_INSTALL_DIR}"
