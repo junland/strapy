@@ -28,19 +28,23 @@ popd
 serpentChrootCd gcc-*/build
 
 unset CONFIG_SITE
-export LD="ld"
+export LD="ld.bfd"
 export AR="ar"
 export RANLIB="ranlib"
 export AS="as"
 export NM="nm"
-export CC="gcc"
-export CPP="clang-cpp"
-export CXX="g++"
-export LDFLAGS="-B/usr/lib -B/serpent/usr/lib"
-export CFLAGS="-fuse-ld=bfd -I/usr/include"
-# Due to gcc wonkiness with-build-sysroot
-export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/usr/sbin:/serpent/usr/bin:/serpent/usr/sbin"
-export LIBRARY_PATH="/usr/lib:/serpent/usr/lib"
+export CC="gcc -B/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
+export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /serpent/usr/include/c++/10.2.0 -isystem /serpent/usr/include/c++/10.2.0/x86_64-linux-gnu"
+
+ln -svf /serpent/usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
+
+export LDFLAGS="-L/usr/lib -L/serpent/usr/lib -B/usr/lib -B/serpent/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
+export CFLAGS="${CFLAGS} ${LDFLAGS}"
+export CPPFLAGS="${CFLAGS} ${LDFLAGS}"
+export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /serpent/usr/include/c++/10.2.0 -isystem /serpent/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export PATH="/usr/binutils/bin:${PATH}"
+export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/serpent/usr/bin"
+export LIBRARY_PATH="/usr/lib"
 
 printInfo "Configuring gcc"
 serpentChroot ../configure --prefix=/usr \
@@ -59,10 +63,12 @@ serpentChroot ../configure --prefix=/usr \
     --disable-multilib \
     --disable-multiarch \
     --with-gcc-major-version-only \
-    --enable-languages=c,c++
+    --enable-languages=c,c++ \
+    PATH="/usr/binutils/bin:/serpent/usr/bin:/serpent/usr/sbin:/usr/bin:/usr/sbin"
 
 printInfo "Building gcc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing gcc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+ln -svf /usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
