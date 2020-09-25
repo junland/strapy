@@ -19,6 +19,7 @@ serpentChroot ./configure \
     --datadir=/usr/share \
     --without-debug \
     --disable-rpath \
+    --disable-stripping \
     --with-shared \
     --without-ada \
     --enable-widec \
