@@ -10,7 +10,7 @@ if [[ "$EUID" -ne "0" ]]; then
 fi
 
 rm -rf docker/root
-cp -Rav install/x86_64/stage3 docker/root
+cp -Rav install/x86_64/glibc/stage3 docker/root
 pushd docker
 rm -fv root/config*
 rmdir root/build
@@ -25,6 +25,12 @@ rm -v root/usr/lib/*.la
 set -e
 
 # TODO: Stateless profile! This is ugly as sin.
+
+mkdir root/root
+echo "root:x:0:0:root:/root:/bin/bash" >> root/etc/passwd
+echo "root:x:0:0:root:/root:/bin/bash" >> root/etc/passwd-
+echo "root:x:0:" >> root/etc/group
+echo "root:x:0:" >> root/etc/group-
 
 install -m 00644 profile root/etc/profile
 docker rmi serpentos/staging:latest || :
