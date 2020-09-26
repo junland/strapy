@@ -18,7 +18,7 @@ export CFLAGS="${SERPENT_TARGET_CFLAGS}"
 export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 
 export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${SERPENT_STAGE1_TREE}/usr/bin:${PATH}"
 
 printInfo "Configuring glibc"
 mkdir build && pushd build
