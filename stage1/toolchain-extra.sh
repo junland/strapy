@@ -25,7 +25,7 @@ export AR="llvm-ar"
 export RANLIB="llvm-ranlib"
 export STRIP="llvm-strip"
 
-export TOOLCHAIN_VERSION="10.0.1"
+export TOOLCHAIN_VERSION="11.0.0"
  
 extractSource libcxx
 extractSource libcxxabi

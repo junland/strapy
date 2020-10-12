@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-export TOOLCHAIN_VERSION="10.0.1"
+export TOOLCHAIN_VERSION="11.0.0"
 
 printInfo "Extracting toolchain requirements"
 extractSource clang
