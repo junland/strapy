@@ -26,8 +26,8 @@ export PATH="${SERPENT_INSTALL_DIR}/usr/binutils/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 
 printInfo "Configuring gcc"
 mkdir build && pushd build
