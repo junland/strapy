@@ -25,7 +25,7 @@ serpentChroot ./configure \
     --enable-nls
 
 printInfo "Building bash"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+serpentChroot make -j3
 
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+serpentChroot make -j3 install
 ln -svf bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"

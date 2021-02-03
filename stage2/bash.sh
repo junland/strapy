@@ -25,8 +25,8 @@ printInfo "Configuring bash"
     --enable-nls
 
 printInfo "Building bash"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j3
 
 printInfo "Installing bash"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j3 install DESTDIR="${SERPENT_INSTALL_DIR}"
 ln -svf bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
