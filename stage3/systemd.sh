@@ -7,8 +7,6 @@ extractSource systemd
 serpentChrootCd systemd-*
 
 pushd systemd-*
-# Ensure sys/file.h is used for LOCK_EX
-patch -p1 < "${SERPENT_PATCHES_DIR}/systemd/0001-partition-makefs-Include-missing-sys-file.h-header.patch"
 
 # Testing / not upstreamed
 # Use net/if_arp.h NOT linux/if_arp.h
