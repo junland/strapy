@@ -16,7 +16,8 @@ serpentChroot ./Configure \
     -Dscriptdir=/usr/bin \
     -Duseshrplib \
     -Dusethreads \
-    -Dcc=clang
+    -Dcc=clang \
+    -Dnoextensions=Encode
 
 
 printInfo "Building perl"
