@@ -78,8 +78,8 @@ COMPONENTS=(
     "zstd"
     "boulder"
     "moss"
+    "nano"
 )
-
 checkRootUser
 
 requireTools "mknod"
