@@ -10,26 +10,11 @@ extractSource ldc
 extractSource ldc-static-x86_64
 
 pushd ldc-*
-
-#printInfo "Build bootstrap ldc compiler"
-#mkdir ldc-runtime && pushd ldc-runtime
-#serpentChrootCd ldc-${LDC_VERSION}-src/ldc-runtime
-#serpentChroot cmake -G "Ninja" ../runtime \
-#    -DLDC_EXE_FULL="/build/ldc/ldc2-${LDC_VERSION}-linux-x86_64/bin/ldc2" \
-#    -DBUILD_SHARED_LIBS=OFF \
-#    -DD_VERSION=2 \
-#    -DDMDFE_MINOR_VERSION=0 \
-#    -DDMDFE_PATCH_VERSION=94
-#serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v
-#serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -v
-
-# Install ldc runtime for use to compile D programs
-#rm -rf ${SERPENT_BUILD_DIR}/ldc2-${LDC_VERSION}-linux-x86_64/lib/*
-#cp lib/* ${SERPENT_BUILD_DIR}/ldc2-${LDC_VERSION}-linux-x86_64/lib/
-#popd
+# Fix linker woes without gold
+patch -p1 < "${SERPENT_PATCHES_DIR}/0001-Default-to-lld-but-don-t-pass-linker-to-compiler.patch"
 
 
-
+printInfo "Configure ldc"
 mkdir ldc-build && pushd ldc-build
 serpentChrootCd ldc-${LDC_VERSION}-src/ldc-build
 serpentChroot cmake -G "Ninja" .. \
