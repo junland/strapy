@@ -11,3 +11,6 @@ git clone --recurse-submodules https://github.com/serpent-linux/moss.git
 
 printInfo "Building moss"
 serpentChroot ./scripts/build.sh
+
+printInfo "Installing moss"
+cp "${SERPENT_BUILD_DIR}/moss/bin/moss" "${SERPENT_INSTALL_DIR}/usr/bin/"

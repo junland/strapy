@@ -75,6 +75,9 @@ COMPONENTS=(
     "dbus-broker"
     "toolchain"
     "ldc"
+    "zstd"
+    "boulder"
+    "moss"
 )
 
 checkRootUser

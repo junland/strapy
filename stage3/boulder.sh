@@ -15,3 +15,6 @@ git clone --recurse-submodules https://github.com/serpent-linux/boulder.git
 
 printInfo "Building boulder"
 serpentChroot ./scripts/build.sh
+
+printInfo "Installing boulder"
+cp "${SERPENT_BUILD_DIR}/boulder/bin/boulder" "${SERPENT_INSTALL_DIR}/usr/bin/"
