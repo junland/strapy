@@ -74,6 +74,7 @@ COMPONENTS=(
     "systemd"
     "dbus-broker"
     "toolchain"
+    "ldc"
 )
 
 checkRootUser
