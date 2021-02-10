@@ -79,6 +79,7 @@ requireTools "mknod"
 prefetchSources
 mkdir -p "${SERPENT_BUILD_DIR}/stones" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/stones"
 mkdir -p "${stage3tree}/os/store/downloads/v1/staging" || serpentFail "Failed to create directory ${stage3tree}/os/store/downloads/v1/staging"
+mkdir -p "${stage3tree}/root" || serpentFail "Failed to create directory ${stage3tree}/root"
 createDownloadStore
 
 bringUpMounts
