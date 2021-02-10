@@ -15,6 +15,7 @@ export SERPENT_STAGE_NAME="stage4"
 . $(dirname $(realpath -s $0))/../lib/build.sh
 
 executionPath=$(dirname $(realpath -s $0))
+stage3tree=$(getInstallDir 3)
 
 COMPONENTS=(
     "root"
@@ -74,23 +75,25 @@ COMPONENTS=(
     "moss"
     "nano"
 )
+COMPONENTS=(
+    "nano"
+)
 
 checkRootUser
 
 requireTools "mknod"
 
+# Create download store so boulder is not required to fetch any files (lacks curl)
 prefetchSources
 mkdir -p "${SERPENT_BUILD_DIR}/stones" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/stones"
-mkdir -p "${SERPENT_BUILD_DIR}/os" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/os"
+mkdir -p "${stage3tree}/os/store/downloads/v1/staging" || serpentFail "Failed to create directory ${stage3tree}/os/store/downloads/v1/staging"
 createDownloadStore
 
 bringUpMounts
 
-
-
-#for component in ${COMPONENTS[@]} ; do
-#    /usr/bin/env -S -i bash --norc --noprofile "${executionPath}/${component}.sh"  || serpentFail "Building ${component} failed"
-#done
+for component in ${COMPONENTS[@]} ; do
+    cp "${executionPath}/${component}.yml" "${SERPENT_BUILD_DIR}/stones/"
+    chroot "${stage3tree}" /bin/bash -c "cd /stones; boulder build ${component}.yml;"
+done
 
 takeDownMounts
-

@@ -82,7 +82,6 @@ function bringUpMounts()
     fi
 
     if [ "${SERPENT_STAGE_NAME}" == "stage4" ]; then
-        mount -v --bind "${SERPENT_BUILD_DIR}/os" "${stage3tree}/os" || serpentFail "Failed to bind-mount /os"
         mount -v --bind "${SERPENT_BUILD_DIR}/stones" "${stage3tree}/stones" || serpentFail "Failed to bind-mount /stones"
     fi
 
@@ -123,7 +122,6 @@ function takeDownMounts()
     serpentUnmount "${stage3tree}/dev/pts"
     serpentUnmount "${stage3tree}/sys"
     serpentUnmount "${stage3tree}/proc"
-    serpentUnmount "${stage3tree}/os"
     serpentUnmount "${stage3tree}/stones"
 }
 
@@ -147,14 +145,17 @@ function serpentChrootCd()
 # Take down the mounts again
 function createDownloadStore()
 {
-    for i in ${SERPENT_SOURCES_DIR}/*; do
+    local stage3tree=$(getInstallDir 3)
+
+    for i in ${SERPENT_DOWNLOAD_DIR}/*; do
         SHASUM=$(sha256sum "${i}" | cut -f1 -d' ')
         FIRST=$(echo ${SHASUM:0:5})
         LAST=$(echo ${SHASUM:59:64})
-        if [ ! -f "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}" ]; then
-            mkdir -p "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}"
-            cp ${i} "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}"
+        if [ ! -f "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}" ]; then
+            mkdir -p "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}"
+            install -D ${i} "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}"
         fi
+        unset SHASUM FIRST LAST
     done
 }
 
