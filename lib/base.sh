@@ -57,7 +57,9 @@ function createMountDirs()
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/proc"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/sys"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
+    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/build"
+    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/os" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/os"
+    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/stones" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/stones"
 }
 
 # Bring up required bindmounts for functional chroot environment
@@ -71,10 +73,18 @@ function bringUpMounts()
     mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
     mount -v --bind /sys "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to bind-mount /sys"
     mount -v --bind /proc "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to bind-mount /proc"
-    mount -v --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
-    mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
 
-    mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
+    if [ "${SERPENT_STAGE_NAME}" == "stage3" ]; then
+        mount -v --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
+        mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
+        mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
+    fi
+
+    if [ "${SERPENT_STAGE_NAME}" == "stage4" ]; then
+        mount -v --bind "${SERPENT_BUILD_DIR}/os" "${SERPENT_INSTALL_DIR}/os" || serpentFail "Failed to bind-mount /os"
+        mount -v --bind "${SERPENT_BUILD_DIR}/stones" "${SERPENT_INSTALL_DIR}/stones" || serpentFail "Failed to bind-mount /stones"
+    fi
+
 }
 
 function installQemuStatic()
@@ -110,6 +120,8 @@ function takeDownMounts()
     serpentUnmount "${SERPENT_INSTALL_DIR}/dev/pts"
     serpentUnmount "${SERPENT_INSTALL_DIR}/sys"
     serpentUnmount "${SERPENT_INSTALL_DIR}/proc"
+    serpentUnmount "${SERPENT_INSTALL_DIR}/os"
+    serpentUnmount "${SERPENT_INSTALL_DIR}/stones"
 }
 
 # chroot helper. In future we should expand to support qemu-static.
