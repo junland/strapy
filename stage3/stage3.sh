@@ -80,7 +80,9 @@ COMPONENTS=(
     "boulder"
     "moss"
     "nano"
+    "bison"
 )
+
 checkRootUser
 
 requireTools "mknod"
