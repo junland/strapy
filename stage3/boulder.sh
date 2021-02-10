@@ -6,10 +6,6 @@ set -e
 
 serpentChrootCd boulder
 
-export CFLAGS="${CFLAGS} -fuse-ld=lld"
-export CXXFLAGS="${CXXFLAGS} -fuse-ld=lld"
-export LDFLAGS="${LDFLAGS} -fuse-ld=lld"
-
 printInfo "Cloning boulder"
 git clone --recurse-submodules https://github.com/serpent-linux/boulder.git
 
@@ -18,3 +14,5 @@ serpentChroot ./scripts/build.sh
 
 printInfo "Installing boulder"
 cp "${SERPENT_BUILD_DIR}/boulder/bin/boulder" "${SERPENT_INSTALL_DIR}/usr/bin/"
+rm -rf "${SERPENT_INSTALL_DIR}/usr/share/moss/"
+cp -a "${SERPENT_BUILD_DIR}/boulder/data" "${SERPENT_INSTALL_DIR}/usr/share/moss/"
