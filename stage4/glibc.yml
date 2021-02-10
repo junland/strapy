@@ -1,0 +1,34 @@
+name        : glibc
+version     : 2.32
+release     : 1
+summary     : The GNU libc libraries
+license     :
+    - GPL-2.0-or-later
+    - LGPL-2.1-or-later
+    - LGPL-2.1-or-later WITH GCC-exception-2.0
+homepage    : https://www.gnu.org/software/libc
+description : |
+    The GNU libc libraries
+upstreams   :
+    - https://ftp.gnu.org/gnu/glibc/glibc-2.32.tar.xz: 1627ea54f5a1a8467032563393e0901077626dc66f37f10ee6363bb722222836
+setup       : |
+    mkdir build && cd build
+    ../configure --prefix=/usr \
+        --target="${SERPENT_TRIPLET}" \
+        --host="${SERPENT_HOST}" \
+        --libdir=/usr/lib \
+        --sysconfdir=/etc \
+        --disable-multilib \
+        ac_cv_slibdir=/usr/lib \
+        ac_cv_prog_LD=ld.bfd \
+        ac_cv_prog_AR=ar \
+        ac_cv_prog_RANLIB=ranlib \
+        ac_cv_prog_AS=as \
+        ac_cv_prog_NM=nm \
+        libc_cv_forced_unwind=yes
+build       : |
+    %make -C build
+install     : |
+    %make_install build DESTDIR="%(installdir)" -C build
+    %make localedata/install-locales DESTDIR="%(installdir)" -C build
+toolchain   : gnu
