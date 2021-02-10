@@ -1,0 +1,16 @@
+name        : dash
+version     : 0.5.11.3
+release     : 1
+summary     : Small and fast POSIX-compliant shell
+license     : BSD-3-Clause
+homepage    : http://gondor.apana.org.au/~herbert/dash
+description : |
+    Small and fast POSIX-compliant shell
+upstreams   :
+    - http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.11.3.tar.gz: 62b9f1676ba6a7e8eaec541a39ea037b325253240d1f378c72360baa1cbcbc2a
+setup       : |
+    %configure --enable-static
+build       : |
+    %make
+install     : |
+    %make_install

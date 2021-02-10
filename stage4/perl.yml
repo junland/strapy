@@ -1,0 +1,25 @@
+name        : perl
+version     : 5.32.1
+release     : 1
+summary     : Perl interpreter and modules
+license     :
+    - Artistic-1.0
+    - GPL-2.0-or-later
+homepage    : https://www.perl.org/
+description : |
+    Perl interpreter and modules
+upstreams   :
+    - https://www.cpan.org/src/5.0/perl-5.32.1.tar.xz: 57cc47c735c8300a8ce2fa0643507b44c4ae59012bfdad0121313db639e02309
+setup       : |
+    ./Configure -des \
+        -Dprefix=/usr \
+        -Dvendorprefix=/usr \
+        -Dscriptdir=/usr/bin \
+        -Duseshrplib \
+        -Dusethreads \
+        -Dcc=clang \
+        -Dnoextensions=Encode
+build       : |
+    %make
+install     : |
+    %make_install

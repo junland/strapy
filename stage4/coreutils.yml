@@ -1,0 +1,19 @@
+name        : coreutils
+version     : 8.32
+release     : 1
+summary     : Basic file, shell, and text manipulation utilities
+license     : GPL-3.0-or-later
+homepage    : https://www.gnu.org/software/coreutils
+description : |
+    Basic file, shell, and text manipulation utilities
+upstreams   :
+    - https://ftp.gnu.org/gnu/coreutils/coreutils-8.32.tar.xz 4458d8de7849df44ccab15e16b1548b285224dbba5f08fac070c1c0e0bcc4cfa
+setup       : |
+    # LFS: Fix issue with autoconf 2.70 update
+    echo '# deleted' > m4/std-gnu11.m4
+
+    %configure --enable-single-binary
+build       : |
+    %make
+install     : |
+    %make_install

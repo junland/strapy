@@ -1,0 +1,19 @@
+name        : attr
+version     : 2.4.48
+release     : 1
+summary     : Commands for Manipulating Extended Attributes
+license     :
+    - GPL-2.0-or-later
+    - LGPL-2.1-or-later
+homepage    : https://savannah.nongnu.org/projects/attr
+description : |
+    Commands for Manipulating Extended Attributes
+upstreams   :
+    - http://download.savannah.gnu.org/releases/attr/attr-2.4.48.tar.gz: 5ead72b358ec709ed00bbf7a9eaef1654baad937c001c044fe8b74c57f5324e7
+setup       : |
+    %configure --enable-shared \
+        --disable-static
+build       : |
+    %make
+install     : |
+    %make_install
