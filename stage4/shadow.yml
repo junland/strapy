@@ -1,0 +1,16 @@
+name        : shadow
+version     : 4.8.1
+release     : 1
+summary     : PAM-using login and passwd utilities
+license     : BSD-3-Clause
+homepage    : https://github.com/shadow-maint/shadow
+description : |
+    PAM-using login and passwd utilities
+upstreams   :
+    - https://github.com/shadow-maint/shadow/releases/download/4.8.1/shadow-4.8.1.tar.xz: a3ad4630bdc41372f02a647278a8c3514844295d36eefe68ece6c3a641c1ae62
+setup       : |
+    %configure
+build       : |
+    %make
+install     : |
+    %make_install

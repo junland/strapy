@@ -27,4 +27,4 @@ install     : |
     %make_install
 
     # Additonal symlink support
-    echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libncurses.so"
+    echo "INPUT(-lncursesw)" > "%(installdir)/usr/lib/libncurses.so"

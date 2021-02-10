@@ -9,12 +9,12 @@ description : |
 upstreams   :
     - https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.12.tar.xz: 1d454f2817ab4f34cf313ea680ab75e20f79c6431b3bd3ea3bcd39353030c4aa
 build       : |
-    export ARCH="${SERPENT_TARGET_ARCH}"
+    export ARCH="x86_64"
     make mrproper
     make headers
     find usr/include -name '.*' -delete
     rm -vf usr/include/Makefile
 install     : |
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/usr/include"
-    cp -Rv usr/include "${SERPENT_INSTALL_DIR}/usr/."
+    install -D -d -m 00755 "%(installdir)/usr/include"
+    cp -Rv usr/include "%(installdir)/usr/."
 toolchain   : gnu

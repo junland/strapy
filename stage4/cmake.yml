@@ -1,0 +1,17 @@
+name        : cmake
+version     : 3.19.4
+release     : 1
+summary     : Cross-platform build system
+license     : BSD-3-Clause
+homepage    : https://cmake.org
+description : |
+    Cross-platform build system
+upstreams   :
+    - https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4.tar.gz: 7d0232b9f1c57e8de81f38071ef8203e6820fe7eec8ae46a1df125d88dbcc2e1
+setup       : |
+    %configure --parallel=6 \
+        -- -DCMAKE_USE_OPENSSL=OFF
+build       : |
+    %make
+install     : |
+    %make_install

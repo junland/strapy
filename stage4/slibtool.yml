@@ -16,4 +16,4 @@ install     : |
     %make_install
 
     # Use slibtool for all libtool purposes
-    ln -svf slibtool "${SERPENT_INSTALL_DIR}/usr/bin/libtool"
+    ln -svf slibtool "%(installdir)/usr/bin/libtool"
