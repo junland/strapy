@@ -74,6 +74,7 @@ COMPONENTS=(
     "systemd"
     "dbus-broker"
     "toolchain"
+    "libxml2"
     "ldc"
     "zstd"
     "boulder"
