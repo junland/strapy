@@ -27,8 +27,7 @@ if [[ "${SERPENT_LIBC}" == "musl" ]]; then
     patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
     export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
-    export SYMLINKS="-DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
-    -DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
+    export SYMLINKS="-DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
 fi
 
 mkdir -p llvm/build
@@ -52,6 +51,7 @@ export llvmopts="
     -DCLANG_DEFAULT_LINKER=lld \
     -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
     -DCLANG_DEFAULT_RTLIB=compiler-rt \
+    -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
     ${SYMLINKS} \
     -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
     -DCOMPILER_RT_USE_LIBCXX=ON \
