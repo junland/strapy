@@ -1,0 +1,58 @@
+name        : gcc
+version     : 10.2.0
+release     : 1
+summary     : GNU C++ standard library and compiler
+license     : GPL-3.0-or-later
+homepage    : https://gcc.gnu.org/
+description : |
+    GNU C++ standard library and compiler
+upstreams   :
+    - https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/gcc-10.2.0.tar.xz: b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c
+    - https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.xz:
+        hash: fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2
+        unpack: false
+    - http://isl.gforge.inria.fr/isl-0.21.tar.xz:
+        hash: 777058852a3db9500954361e294881214f6ecd4b594c00da5eee974cd6a54960
+        unpack: false
+    - https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz:
+        hash: 17503d2c395dfcf106b622dc142683c1199431d095367c6aacba6eec30340459
+        unpack: false
+    - https://ftp.gnu.org/gnu/mpfr/mpfr-4.1.0.tar.xz:
+        hash: 0c98a3f1732ff6ca4ea690552079da9c597872d30e96ec28414ee23c95558a7f
+        unpack: false
+setup       : |
+    # Unpack extra sources
+    tar xf %(sources)/gmp-6.2.1.tar.xz -C .
+    #tar xf %(sources)/isl-0.21.tar.xz -C .
+    tar xf %(sources)/mpc-1.2.1.tar.gz -C .
+    tar xf %(sources)/mpfr-4.1.0.tar.xz -C .
+
+    # Create symlinks in source tree
+    ln -sv "gmp-6.2.1" gmp
+    #ln -sv "isl-0.21" isl
+    ln -sv "mpc-1.2.1" mpc
+    ln -sv "mpfr-4.1.0" mpfr
+
+    mkdir build && cd build
+    ../configure --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --libdir=/usr/lib \
+        --sbindir=/usr/sbin \
+        --datadir=/usr/share \
+        --includedir=/usr/include \
+        --disable-bootstrap \
+        --enable-shared \
+        --enable-static \
+        --enable-threads \
+        --disable-multilib \
+        --disable-multiarch \
+        --with-gcc-major-version-only \
+        --enable-languages=c,c++ \
+    PATH="/usr/binutils/bin:/usr/bin"
+build       : |
+    %make -C build -j1
+install     : |
+    %make_install -C build
+    ln -svf /usr/bin/cpp "%(installdir)/lib/cpp"
+toolchain   : gnu
