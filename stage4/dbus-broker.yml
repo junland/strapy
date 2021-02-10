@@ -1,0 +1,16 @@
+name        : dbus-broker
+version     : 26
+release     : 1
+summary     : Linux D-Bus Message Broker
+license     : Apache-2.0
+homepage    : https://github.com/bus1/dbus-broker
+description : |
+    Linux D-Bus Message Broker
+upstreams   :
+    - https://github.com/bus1/dbus-broker/releases/download/v26/dbus-broker-26.tar.xz: 6a6ab82fc398d4bc31b315f4e1c08f17509e4a1969f1cc77a5706db8923c74e1
+setup       : |
+    %meson
+build       : |
+    %meson_build
+install     : |
+    %meson_install
