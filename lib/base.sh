@@ -141,6 +141,20 @@ function serpentChrootCd()
     export SERPENT_CHROOT_DIR="/build/${SERPENT_BUILD_NAME}/$1"
 }
 
+# Take down the mounts again
+function createDownloadStore()
+{
+    for i in ${SERPENT_SOURCES_DIR}/*; do
+        SHASUM=$(sha256sum "${i}" | cut -f1 -d' ')
+        FIRST=$(echo ${SHASUM:0:5})
+        LAST=$(echo ${SHASUM:59:64})
+        if [ ! -f "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}" ]; then
+            mkdir -p "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}"
+            cp ${i} "${SERPENT_BUILD_DIR}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}"
+        fi
+    done
+}
+
 # Tightly control the path
 export PATH="/usr/bin:/bin/:/sbin:/usr/sbin"
 
