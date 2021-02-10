@@ -17,4 +17,5 @@ install     : |
     %make_install -j3
 
     # Make bash the default sh
-    ln -svf bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
+    install -dm00755 "%(installdir)/usr/bin"
+    ln -svf bash "%(installdir)/usr/bin/sh"
