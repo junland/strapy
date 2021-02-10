@@ -69,20 +69,21 @@ function bringUpMounts()
     createMountDirs
 
     local stage2tree=$(getInstallDir 2)
+    local stage3tree=$(getInstallDir 3)
 
-    mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
-    mount -v --bind /sys "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to bind-mount /sys"
-    mount -v --bind /proc "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to bind-mount /proc"
+    mount -v --bind /dev/pts "${stage3tree}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
+    mount -v --bind /sys "${stage3tree}/sys" || serpentFail "Failed to bind-mount /sys"
+    mount -v --bind /proc "${stage3tree}/proc" || serpentFail "Failed to bind-mount /proc"
 
     if [ "${SERPENT_STAGE_NAME}" == "stage3" ]; then
-        mount -v --bind -o ro "${stage2tree}" "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to bind-mount /serpent"
-        mount -v -o remount,ro,bind "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to make /serpent read-only"
-        mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to bind-mount /build"
+        mount -v --bind -o ro "${stage2tree}" "${stage3tree}/serpent" || serpentFail "Failed to bind-mount /serpent"
+        mount -v -o remount,ro,bind "${stage3tree}/serpent" || serpentFail "Failed to make /serpent read-only"
+        mount -v --bind "${SERPENT_BUILD_DIR}" "${stage3tree}/build" || serpentFail "Failed to bind-mount /build"
     fi
 
     if [ "${SERPENT_STAGE_NAME}" == "stage4" ]; then
-        mount -v --bind "${SERPENT_BUILD_DIR}/os" "${SERPENT_INSTALL_DIR}/os" || serpentFail "Failed to bind-mount /os"
-        mount -v --bind "${SERPENT_BUILD_DIR}/stones" "${SERPENT_INSTALL_DIR}/stones" || serpentFail "Failed to bind-mount /stones"
+        mount -v --bind "${SERPENT_BUILD_DIR}/os" "${stage3tree}/os" || serpentFail "Failed to bind-mount /os"
+        mount -v --bind "${SERPENT_BUILD_DIR}/stones" "${stage3tree}/stones" || serpentFail "Failed to bind-mount /stones"
     fi
 
 }
@@ -114,14 +115,16 @@ function serpentUnmount()
 function takeDownMounts()
 {
     set +e
+
+    local stage3tree=$(getInstallDir 3)
     printInfo "Taking down the mounts"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/build"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/serpent"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/dev/pts"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/sys"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/proc"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/os"
-    serpentUnmount "${SERPENT_INSTALL_DIR}/stones"
+    serpentUnmount "${stage3tree}/build"
+    serpentUnmount "${stage3tree}/serpent"
+    serpentUnmount "${stage3tree}/dev/pts"
+    serpentUnmount "${stage3tree}/sys"
+    serpentUnmount "${stage3tree}/proc"
+    serpentUnmount "${stage3tree}/os"
+    serpentUnmount "${stage3tree}/stones"
 }
 
 # chroot helper. In future we should expand to support qemu-static.
