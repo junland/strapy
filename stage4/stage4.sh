@@ -18,58 +18,59 @@ executionPath=$(dirname $(realpath -s $0))
 stage3tree=$(getInstallDir 3)
 
 COMPONENTS=(
-    #"root"
-    "headers" # gnu toolchain needs to set PATH /usr/binutils/bin
-    #"glibc"
-#    "diffutils"
-#    "zlib"
-#    "xz"
-#    "file"
-#    "libarchive"
-    #"binutils"
-    #"gcc"
-#    "attr"
-#    "acl"
-#    "findutils"
-#    "ncurses"
-#    "bash"
-    "dash" # build failure - common:?
-#    "slibtool"
-#    "gzip"
-#    "less"
-#    "sed"
-    "gawk" # Needs ar, so want symlinks in build
-#    "grep"
-#    "patch"
-#    "which"
-    "m4" # patches
-#    "make"
-#    "perl"
-#    "autoconf"
-#    "automake"
-    "pkgconf" # .la make error
-    "coreutils" # patches
-#    "util-linux"
-#    "cmake"
-#    "ninja"
-    "libcap" # Needs ar, so want symlinks in build
-#    "gperf"
-#    "libffi"
-#    "python"
-    #"meson"
-#    "linux-pam"
-#    "shadow"
-#    "expat"
-#    "dbus"
-#    "systemd"
-#    "dbus-broker"
-    #"toolchain"
-    #"libxml2"
-    #"ldc"
-#    "zstd"
-    #"boulder"
-    #"moss"
-#    "nano"
+    #"root" # need some kind of baselayout
+    "headers"
+    #"glibc" # build fails
+    "diffutils"
+    "zlib"
+    "xz"
+    "file"
+    "libarchive"
+    "binutils"
+    #"gcc" # Seems to be some issues with c++ linking
+    "attr"
+    "acl"
+    "findutils"
+    "ncurses"
+    "bash"
+    #"dash" # build failure - common:?
+    "slibtool"
+    "gzip"
+    "less"
+    "sed"
+    "gawk"
+    "grep"
+    "patch"
+    "which"
+    #"m4" # patches
+    "make"
+    "perl"
+    "autoconf"
+    "automake"
+    "pkgconf"
+    #"coreutils" # patches
+    "util-linux"
+    "cmake"
+    "ninja"
+    "libcap"
+    "gperf"
+    "libffi"
+    "python"
+    "meson"
+    "linux-pam"
+    "shadow"
+    "expat"
+    "dbus"
+    "systemd"
+    "dbus-broker"
+    #"toolchain" # needs some tweaking
+    "libxml2"
+    #"ldc" # patches, looks for llvm-ar in wrong PATH
+    "zstd"
+    #"boulder" # needs a release or git support
+    #"moss" # needs a release or git support
+    "nano"
+    "bison"
 )
 
 checkRootUser
