@@ -1,0 +1,16 @@
+name        : bison
+version     : 3.7.5
+release     : 1
+summary     : The GNU general-purpose parser generator
+license     : GPL-3.0-or-later
+homepage    : https://www.gnu.org/software/bison
+description : |
+    The GNU general-purpose parser generator
+upstreams   :
+    - https://mirrors.kernel.org/gnu/bison/bison-3.7.5.tar.xz: e8c53bc5bc396d636622d0f25e31ca92fd53f00b09629f13ef540d564a6b31ab
+setup       : |
+    %configure
+build       : |
+    %make
+install     : |
+    %make_install
