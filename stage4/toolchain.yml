@@ -1,0 +1,80 @@
+name        : toolchain
+version     : 11.0.1
+release     : 1
+summary     : Low Level Virtual Machine
+license     :
+    - Apache-2.0 WITH LLVM-exception
+    - NCSA
+homepage    : https://www.llvm.org
+description : |
+    Low Level Virtual Machine
+upstreams   :
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-11.0.1/llvm-project-11.0.1.src.tar.xz: af95d00f833dd67114b21c3cfe72dff2e1cdab627651f977b087a837136d653b
+install     : |
+    # This is a bit hacky till there's an export for all build stages
+    export llvmopts="
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DLLVM_TARGET_ARCH="X86_64" \
+        -DLLVM_DEFAULT_TARGET_TRIPLE="%(build)" \
+        -DLLVM_TARGETS_TO_BUILD="X86" \
+        -DLLVM_ENABLE_LIBXML2=OFF \
+        -DLLVM_ENABLE_FFI=OFF \
+        -DLLVM_INCLUDE_TESTS=OFF \
+        -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
+        -DCLANG_DEFAULT_LINKER=lld \
+        -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
+        -DCLANG_DEFAULT_RTLIB=compiler-rt \
+        -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+        -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
+        -DCOMPILER_RT_USE_LIBCXX=ON \
+        -DLLVM_ENABLE_LIBCXX=ON \
+        -DSANITIZER_CXX_ABI=libc++ \
+        -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
+        -DLIBCXX_ENABLE_SHARED=ON \
+        -DLIBCXX_ENABLE_STATIC=OFF \
+        -DLIBCXX_USE_COMPILER_RT=ON \
+        -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
+        -DLIBCXXABI_USE_COMPILER_RT=ON \
+        -DLIBCXXABI_ENABLE_SHARED=ON \
+        -DLIBCXXABI_ENABLE_STATIC=OFF \
+        -DLIBCXXABI_INSTALL_LIBRARY=ON \
+        -DLIBUNWIND_ENABLE_SHARED=ON \
+        -DLIBUNWIND_ENABLE_STATIC=ON \
+        -DLIBUNWIND_TARGET_TRIPLE="%(build)" \
+        -DLIBUNWIND_USE_COMPILER_RT=ON \
+        -DCOMPILER_RT_BUILD_LIBFUZZER=OFF \
+        -DCOMPILER_RT_BUILD_PROFILE=OFF \
+        -DCOMPILER_RT_BUILD_SANITIZERS=OFF \
+        -DCOMPILER_RT_BUILD_XRAY=OFF \
+        -DLLVM_USE_SANITIZER=OFF \
+        -DLLVM_ENABLE_UNWIND_TABLES=OFF \
+        -DLLVM_INCLUDE_BENCHMARKS=OFF \
+        -DLLVM_INCLUDE_UTILS=OFF \
+        -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
+        -DLLVM_OPTIMIZED_TABLEGEN=ON \
+        -DLLVM_BUILD_TOOLS=OFF \
+        -DCLANG_BUILD_TOOLS=OFF"
+
+    cd llvm
+    %cmake ${llvmopts} \
+        -DLLVM_BUILD_LLVM_DYLIB=ON \
+        -DLLVM_LINK_LLVM_DYLIB=ON
+
+    %cmake_build
+    %cmake_build llvm-config
+
+    %cmake_install
+
+    %cmake ${llvmopts} \
+        -DLLVM_BUILD_LLVM_DYLIB=OFF \
+        -DLLVM_LINK_LLVM_DYLIB=OFF \
+        -DCLANG_LINK_CLANG_DYLIB=OFF
+
+    # Relink lld and clang statically
+    %cmake_build lld clang
+    cp bin/* "%(installdir)/usr/bin"
+
+    # lld as default linker
+    ln -svf ld.lld "%(installdir)/usr/bin/ld"
