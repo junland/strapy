@@ -1,0 +1,33 @@
+name        : ldc
+version     : 1.24.0
+release     : 1
+summary     : The LLVM-based D Compiler
+license     :
+    - Apache-2.0
+    - BSD-3-Clause
+    - BSL-1.0
+homepage    : https://github.com/ldc-developers/ldc
+description : |
+    The LLVM-based D Compiler
+upstreams   :
+    - https://github.com/ldc-developers/ldc/releases/download/v1.24.0/ldc-1.24.0-src.tar.gz: fd9561ade916e9279bdcc166cf0e4836449c24e695ab4470297882588adbba3c
+    - https://github.com/ldc-developers/ldc/releases/download/v1.24.0/ldc2-1.24.0-linux-x86_64.tar.xz:
+        hash: 868e070fe90b06549f5fb19882a58a920c0052fad29b764eee9f409f08892ba3
+        extract: false
+setup       : |
+    # Extract binary ldc
+    tar xf %(sources)/ldc2-1.24.0-linux-x86_64.tar.xz -C .
+
+    %cmake -DBUILD_SHARED_LIBS=ON \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DD_COMPILER="%(builddir)/ldc2-%(version)-linux-x86_64/bin/ldmd2" \
+        -DLDC_INSTALL_LTOPLUGIN=ON \
+        -DLDC_INSTALL_LLVM_RUNTIME_LIBS=ON \
+        -DLDC_LINK_MANUALLY=OFF \
+        -DLDC_WITH_LLD=ON \
+        -DCMAKE_EXE_LINKER_FLAGS="-fuse-ld=lld"
+build       : |
+    %cmake_build
+install     : |
+    %cmake_install
+    cp "%(builddir)/ldc2-%(version)-linux-x86_64/bin/dub" "%(installdir)/usr/bin/"
