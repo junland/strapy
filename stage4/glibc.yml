@@ -29,6 +29,6 @@ setup       : |
 build       : |
     %make -C build
 install     : |
-    %make_install build DESTDIR="%(installdir)" -C build
-    %make localedata/install-locales DESTDIR="%(installdir)" -C build
+    %make_install build DESTDIR="%(installroot)" -C build
+    %make localedata/install-locales DESTDIR="%(installroot)" -C build
 toolchain   : gnu

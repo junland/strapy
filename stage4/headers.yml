@@ -15,6 +15,6 @@ build       : |
     find usr/include -name '.*' -delete
     rm -vf usr/include/Makefile
 install     : |
-    install -D -d -m 00755 "%(installdir)/usr/include"
-    cp -Rv usr/include "%(installdir)/usr/."
+    install -D -d -m 00755 "%(installroot)/usr/include"
+    cp -Rv usr/include "%(installroot)/usr/."
 toolchain   : gnu

@@ -22,10 +22,10 @@ upstreams   :
         unpack: false
 setup       : |
     # Unpack extra sources
-    tar xf %(sources)/gmp-6.2.1.tar.xz -C .
-    #tar xf %(sources)/isl-0.21.tar.xz -C .
-    tar xf %(sources)/mpc-1.2.1.tar.gz -C .
-    tar xf %(sources)/mpfr-4.1.0.tar.xz -C .
+    tar xf %(sourcedir)/gmp-6.2.1.tar.xz -C .
+    #tar xf %(sourcedir)/isl-0.21.tar.xz -C .
+    tar xf %(sourcedir)/mpc-1.2.1.tar.gz -C .
+    tar xf %(sourcedir)/mpfr-4.1.0.tar.xz -C .
 
     # Create symlinks in source tree
     ln -sv "gmp-6.2.1" gmp
@@ -54,5 +54,5 @@ build       : |
     %make -C build -j1
 install     : |
     %make_install -C build
-    ln -svf /usr/bin/cpp "%(installdir)/lib/cpp"
+    ln -svf /usr/bin/cpp "%(installroot)/lib/cpp"
 toolchain   : gnu

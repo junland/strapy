@@ -18,8 +18,8 @@ install     : |
     %make_install
 
     # Clean up unwanted files
-    rm "%(installdir)/usr/bin/dbus-daemon"
-    rm "%(installdir)/usr/lib/systemd/system/dbus.service"
-    rm "%(installdir)/usr/lib/systemd/system/dbus.socket"
-    rm "%(installdir)/usr/lib/systemd/system/sockets.target.wants/dbus.socket"
-    rm "%(installdir)/usr/lib/systemd/system/multi-user.target.wants/dbus.service"
+    rm "%(installroot)/usr/bin/dbus-daemon"
+    rm "%(installroot)/usr/lib/systemd/system/dbus.service"
+    rm "%(installroot)/usr/lib/systemd/system/dbus.socket"
+    rm "%(installroot)/usr/lib/systemd/system/sockets.target.wants/dbus.socket"
+    rm "%(installroot)/usr/lib/systemd/system/multi-user.target.wants/dbus.service"

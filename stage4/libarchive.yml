@@ -21,5 +21,5 @@ install     : |
     %make_install
 
     # Make libarchive default provider of cpio + tar
-    ln -svf bsdtar "%(installdir)/usr/bin/tar"
-    ln -svf bsdcpio "%(installdir)/usr/bin/cpio"
+    ln -svf bsdtar "%(installroot)/usr/bin/tar"
+    ln -svf bsdcpio "%(installroot)/usr/bin/cpio"

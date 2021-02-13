@@ -16,11 +16,11 @@ upstreams   :
         extract: false
 setup       : |
     # Extract binary ldc
-    tar xf %(sources)/ldc2-1.24.0-linux-x86_64.tar.xz -C .
+    tar xf %(sourcedir)/ldc2-1.24.0-linux-x86_64.tar.xz -C .
 
     %cmake -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DD_COMPILER="%(builddir)/ldc2-%(version)-linux-x86_64/bin/ldmd2" \
+        -DD_COMPILER="%(buildroot)/ldc2-%(version)-linux-x86_64/bin/ldmd2" \
         -DLDC_INSTALL_LTOPLUGIN=ON \
         -DLDC_INSTALL_LLVM_RUNTIME_LIBS=ON \
         -DLDC_LINK_MANUALLY=OFF \
@@ -30,4 +30,4 @@ build       : |
     %cmake_build
 install     : |
     %cmake_install
-    cp "%(builddir)/ldc2-%(version)-linux-x86_64/bin/dub" "%(installdir)/usr/bin/"
+    cp "%(buildroot)/ldc2-%(version)-linux-x86_64/bin/dub" "%(installroot)/usr/bin/"

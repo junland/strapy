@@ -17,5 +17,5 @@ install     : |
     %make_install -j3
 
     # Make bash the default sh
-    install -dm00755 "%(installdir)/usr/bin"
-    ln -svf bash "%(installdir)/usr/bin/sh"
+    install -dm00755 "%(installroot)/usr/bin"
+    ln -svf bash "%(installroot)/usr/bin/sh"

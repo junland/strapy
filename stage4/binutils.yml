@@ -9,7 +9,7 @@ description : |
 upstreams   :
     - https://ftp.gnu.org/gnu/binutils/binutils-2.36.tar.xz: 5788292cc5bbcca0848545af05986f6b17058b105be59e99ba7d0f9eb5336fb8
 setup       : |
-    mkdir build && cd build
+    mkdir %(builddir) && cd %(builddir)
     ../configure --prefix=/usr/binutils \
         --sysconfdir=/etc \
         --libdir=/usr/lib \
@@ -26,7 +26,7 @@ setup       : |
         --enable-64-bit-bfd \
         PATH="/usr/binutils/bin:/usr/bin"
 build       : |
-    %make tooldir=/usr/binutils -C build
+    %make tooldir=/usr/binutils -C %(builddir)
 install     : |
-    %make_install tooldir=/usr/binutils -C build
+    %make_install tooldir=/usr/binutils -C %(builddir)
 toolchain   : gnu

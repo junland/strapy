@@ -34,14 +34,14 @@ upstreams   :
         hash: 4d15a21b90e7de2f01296503f6e4b16c50197fbe9c82e7e81f9c07e28bd82ca7
         extract: false
 install     : |
-    tar xf %(sources)/clang-%(version).src.tar.xz -C .
-    tar xf %(sources)/compiler-rt-%(version).src.tar.xz -C .
-    tar xf %(sources)/libcxx-%(version).src.tar.xz -C .
-    tar xf %(sources)/libcxxabi-%(version).src.tar.xz -C .
-    tar xf %(sources)/libunwind-%(version).src.tar.xz -C .
-    tar xf %(sources)/lld-%(version).src.tar.xz -C .
-    tar xf %(sources)/llvm-%(version).src.tar.xz -C .
-    tar xf %(sources)/openmp-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/clang-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/compiler-rt-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/libcxx-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/libcxxabi-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/libunwind-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/lld-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/llvm-%(version).src.tar.xz -C .
+    tar xf %(sourcedir)/openmp-%(version).src.tar.xz -C .
 
     # Setup source tree
     ln -sv "clang-%(version).src" clang
@@ -115,7 +115,7 @@ install     : |
 
     # Relink lld and clang statically
     %cmake_build lld clang
-    cp bin/* "%(installdir)/usr/bin"
+    cp bin/* "%(installroot)/usr/bin"
 
     # lld as default linker
-    ln -svf ld.lld "%(installdir)/usr/bin/ld"
+    ln -svf ld.lld "%(installroot)/usr/bin/ld"
