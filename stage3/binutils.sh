@@ -33,7 +33,7 @@ export CXXFLAGS="${CXXFLAGS} ${LDFLAGS}"
 export PATH="/serpent/usr/binutils/bin:${PATH}"
 
 printInfo "Configuring binutils"
-serpentChroot ../configure --prefix=/usr/binutils \
+serpentChroot ../configure --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --sbindir=/usr/sbin \
@@ -43,7 +43,7 @@ serpentChroot ../configure --prefix=/usr/binutils \
     --includedir=/usr/include \
     --disable-multilib \
     --enable-deterministic-archives \
-    --disable-plugins \
+    --enable-plugins \
     --disable-shared \
     --enable-static \
     --enable-ld=default \
@@ -52,7 +52,7 @@ serpentChroot ../configure --prefix=/usr/binutils \
     PATH="/serpent/usr/binutils/bin:/serpent/usr/bin:/serpent/usr/sbin:/usr/bin:/usr/sbin"
 
 printInfo "Building binutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils
+serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils install
+serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install

@@ -159,6 +159,64 @@ function createDownloadStore()
     done
 }
 
+# Stash binutils binaries in subdir
+function stashBinutils()
+{
+    local stage3tree=$(getInstallDir 3)
+    local stash_dir="${1}"
+
+    binutils_files="addr2line ar as c++filt elfedit gprof ld ld.bfd nm objcopy objdump ranlib readelf size strings strip"
+    mkdir -p ${stage3tree}/usr/bin/${stash_dir}
+    for file in ${binutils_files}; do
+        if [ -f ${stage3tree}/usr/bin/${file} ]; then
+            mv ${stage3tree}/usr/bin/${file} ${stage3tree}/usr/bin/${stash_dir}/
+        fi
+    done
+}
+
+# Restore binutils binaries from subdir
+function restoreBinutils()
+{
+    local stage3tree=$(getInstallDir 3)
+    local stash_dir="${1}"
+
+    binutils_files="addr2line ar as c++filt elfedit gprof ld ld.bfd nm objcopy objdump ranlib readelf size strings strip"
+    for file in ${binutils_files}; do
+        if [ -f ${stage3tree}/usr/bin/${stash_dir}/${file} ]; then
+            cp -f ${stage3tree}/usr/bin/${stash_dir}/${file} ${stage3tree}/usr/bin/
+        fi
+    done
+}
+
+# Stash GCC binaries in subdir
+function stashGcc()
+{
+    local stage3tree=$(getInstallDir 3)
+    local stash_dir="${1}"
+
+    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-serpent-linux-c++ x86_64-serpent-linux-g++ x86_64-serpent-linux-gcc x86_64-serpent-linux-gcc-10 x86_64-serpent-linux-gcc-ar x86_64-serpent-linux-gcc-nm x86_64-serpent-linux-gcc-ranlib"
+    mkdir -p ${stage3tree}/usr/bin/${stash_dir}
+    for file in ${gcc_files}; do
+        if [ -f ${stage3tree}/usr/bin/${file} ]; then
+            mv ${stage3tree}/usr/bin/${file} ${stage3tree}/usr/bin/${stash_dir}/
+        fi
+    done
+}
+
+# Restore GCC binaries from subdir
+function restoreGcc()
+{
+    local stage3tree=$(getInstallDir 3)
+    local stash_dir="${1}"
+
+    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-serpent-linux-c++ x86_64-serpent-linux-g++ x86_64-serpent-linux-gcc x86_64-serpent-linux-gcc-10 x86_64-serpent-linux-gcc-ar x86_64-serpent-linux-gcc-nm x86_64-serpent-linux-gcc-ranlib"
+    for file in ${gcc_files}; do
+        if [ -f ${stage3tree}/usr/bin/${stash_dir}/${file} ]; then
+            cp -f ${stage3tree}/usr/bin/${stash_dir}/${file} ${stage3tree}/usr/bin/
+        fi
+    done
+}
+
 # Tightly control the path
 export PATH="/usr/bin:/bin/:/sbin:/usr/sbin"
 

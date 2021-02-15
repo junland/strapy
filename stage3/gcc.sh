@@ -72,3 +72,6 @@ serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 printInfo "Installing gcc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
 ln -svf /usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
+
+stashBinutils gnu-binutils
+stashGcc gnu-gcc

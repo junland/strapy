@@ -109,3 +109,8 @@ if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
     printInfo "Setting ld.lld as default ld"
     ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
 fi
+
+stashBinutils llvm-llvm
+stashGcc llvm-llvm
+restoreBinutils llvm-llvm
+restoreGcc llvm-llvm

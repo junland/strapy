@@ -17,17 +17,20 @@ export SERPENT_STAGE_NAME="stage4"
 executionPath=$(dirname $(realpath -s $0))
 stage3tree=$(getInstallDir 3)
 
-COMPONENTS=(
-    #"root" # need some kind of baselayout
+GNUCOMPONENTS=(
     "headers"
     #"glibc" # build fails
+    "binutils"
+    #"gcc" # Seems to be some issues with c++ linking
+)
+
+COMPONENTS=(
+    #"root" # need some kind of baselayout
     "diffutils"
     "zlib"
     "xz"
     "file"
     "libarchive"
-    "binutils"
-    #"gcc" # Seems to be some issues with c++ linking
     "attr"
     "acl"
     "findutils"
@@ -85,6 +88,17 @@ mkdir -p "${stage3tree}/root" || serpentFail "Failed to create directory ${stage
 createDownloadStore
 
 bringUpMounts
+
+restoreBinutils gnu-binutils
+restoreGcc gnu-gcc
+
+for component in ${GNUCOMPONENTS[@]} ; do
+    cp "${executionPath}/${component}.yml" "${SERPENT_BUILD_DIR}/stones/"
+    chroot "${stage3tree}" /bin/bash -c "cd /stones; boulder build ${component}.yml;"
+done
+
+restoreBinutils llvm-llvm
+restoreGcc llvm-llvm
 
 for component in ${COMPONENTS[@]} ; do
     cp "${executionPath}/${component}.yml" "${SERPENT_BUILD_DIR}/stones/"
