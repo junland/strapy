@@ -160,7 +160,10 @@ function activateStage1Compiler()
     export CC="clang"
     export CXX="clang++"
     export AR="llvm-ar"
+    export NM="llvm-nm"
+    export OBJDUMP="llvm-objdump"
     export RANLIB="llvm-ranlib"
+    export READELF="llvm-readelf"
     export STRIP="llvm-strip"
 
     # Handle libc specifics for stage1
