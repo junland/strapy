@@ -63,6 +63,12 @@ serpentChroot ../configure --prefix=/usr \
     --disable-multilib \
     --disable-multiarch \
     --with-gcc-major-version-only \
+    --enable-gnu-indirect-function \
+    --enable-plugin \
+    --enable-ld=default \
+    --enable-clocale=gnu \
+    --with-linker-hash-style=both \
+    --with-gnu-ld \
     --enable-languages=c,c++ \
     PATH="/usr/binutils/bin:/serpent/usr/bin:/serpent/usr/sbin:/usr/bin:/usr/sbin"
 

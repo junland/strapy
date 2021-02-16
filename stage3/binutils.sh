@@ -23,6 +23,9 @@ export AR="ar"
 export RANLIB="ranlib"
 export AS="as"
 export NM="nm"
+export OBJDUMP="objdump"
+export READELF="readelf"
+export STRIP="strip"
 export CC="gcc"
 export CPP="clang-cpp"
 export CXX="g++"
@@ -45,7 +48,10 @@ serpentChroot ../configure --prefix=/usr \
     --enable-deterministic-archives \
     --enable-plugins \
     --disable-shared \
+    --disable-gdb \
     --enable-static \
+    --enable-lto \
+    --enable-threads \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd \
@@ -56,3 +62,6 @@ serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install
+
+serpentChroot install -Dm00644 ../include/libiberty.h /usr/include/libiberty.h
+serpentChroot install -Dm00644 libiberty/libiberty.a /usr/lib/libiberty.a

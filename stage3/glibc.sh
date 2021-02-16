@@ -28,6 +28,14 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --sysconfdir=/etc \
     --disable-multilib \
+    --enable-threads=posix \
+    --enable-gnu-indirect-function \
+    --enable-plugin \
+    --enable-ld=default \
+    --enable-clocale=gnu \
+    --enable-lto \
+    --with-linker-hash-style=both \
+    --with-gnu-ld \
     ac_cv_slibdir=/usr/lib \
     ac_cv_prog_LD=ld.bfd \
     ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
