@@ -102,6 +102,7 @@ install     : |
     %cmake ${llvmopts} \
         -DLLVM_BUILD_LLVM_DYLIB=ON \
         -DLLVM_LINK_LLVM_DYLIB=ON
+    cd ..
 
     %cmake_build
     %cmake_build llvm-config
@@ -112,10 +113,11 @@ install     : |
         -DLLVM_BUILD_LLVM_DYLIB=OFF \
         -DLLVM_LINK_LLVM_DYLIB=OFF \
         -DCLANG_LINK_CLANG_DYLIB=OFF
+    cd ..
 
     # Relink lld and clang statically
     %cmake_build lld clang
-    cp bin/* "%(installroot)/usr/bin"
+    cp %(builddir)/bin/* "%(installroot)/usr/bin"
 
     # lld as default linker
     ln -svf ld.lld "%(installroot)/usr/bin/ld"
