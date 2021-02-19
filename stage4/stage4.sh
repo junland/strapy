@@ -68,7 +68,7 @@ COMPONENTS=(
     "dbus-broker"
     #"toolchain" # needs some tweaking
     "libxml2"
-    #"ldc" # patches, looks for llvm-ar in wrong PATH
+    #"ldc" # patches
     "zstd"
     #"boulder" # needs a release or git support
     #"moss" # needs a release or git support
