@@ -1,5 +1,5 @@
 name        : glibc
-version     : 2.32
+version     : 2.33
 release     : 1
 summary     : The GNU libc libraries
 license     :
@@ -10,25 +10,36 @@ homepage    : https://www.gnu.org/software/libc
 description : |
     The GNU libc libraries
 upstreams   :
-    - https://ftp.gnu.org/gnu/glibc/glibc-2.32.tar.xz: 1627ea54f5a1a8467032563393e0901077626dc66f37f10ee6363bb722222836
+    - https://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.xz: 2e2556000e105dbd57f0b6b2a32ff2cf173bde4f0d85dffccfd8b7e51a0677ff
 setup       : |
+    unset CFLAGS CXXFLAGS LDFLAGS CC CXX CPP
+
+    # Build only US UTF-8 locale for now
+    echo "SUPPORTED_LOCALES=\
+    en_US.UTF-8/UTF-8
+    " > localedata/SUPPORTED
+
     mkdir build && cd build
+    echo "slibdir=/usr/lib" >> configparms
+    echo "rtlddir=/usr/lib" >> configparms
+    echo "AS=as" >> configparms
+
     ../configure --prefix=/usr \
         --target="${SERPENT_TRIPLET}" \
         --host="${SERPENT_HOST}" \
         --libdir=/usr/lib \
         --sysconfdir=/etc \
         --disable-multilib \
-        ac_cv_slibdir=/usr/lib \
         ac_cv_prog_LD=ld.bfd \
         ac_cv_prog_AR=ar \
         ac_cv_prog_RANLIB=ranlib \
         ac_cv_prog_AS=as \
-        ac_cv_prog_NM=nm \
-        libc_cv_forced_unwind=yes
+        ac_cv_prog_NM=nm
 build       : |
+    unset CFLAGS CXXFLAGS LDFLAGS CC CXX CPP
     %make -C build
 install     : |
+    unset CFLAGS CXXFLAGS LDFLAGS CC CXX CPP
     %make_install build DESTDIR="%(installroot)" -C build
     %make localedata/install-locales DESTDIR="%(installroot)" -C build
 toolchain   : gnu
