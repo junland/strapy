@@ -23,13 +23,13 @@ upstreams   :
 setup       : |
     # Unpack extra sources
     tar xf %(sourcedir)/gmp-6.2.1.tar.xz -C .
-    #tar xf %(sourcedir)/isl-0.21.tar.xz -C .
+    tar xf %(sourcedir)/isl-0.21.tar.xz -C .
     tar xf %(sourcedir)/mpc-1.2.1.tar.gz -C .
     tar xf %(sourcedir)/mpfr-4.1.0.tar.xz -C .
 
     # Create symlinks in source tree
     ln -sv "gmp-6.2.1" gmp
-    #ln -sv "isl-0.21" isl
+    ln -sv "isl-0.21" isl
     ln -sv "mpc-1.2.1" mpc
     ln -sv "mpfr-4.1.0" mpfr
 
@@ -48,11 +48,11 @@ setup       : |
         --disable-multilib \
         --disable-multiarch \
         --with-gcc-major-version-only \
-        --enable-languages=c,c++ \
-    PATH="/usr/binutils/bin:/usr/bin"
+        --enable-languages=c,c++
 build       : |
-    %make -C build -j1
+    %make -C build
 install     : |
     %make_install -C build
+    install -dm00755 "%(installroot)/lib"
     ln -svf /usr/bin/cpp "%(installroot)/lib/cpp"
 toolchain   : gnu
