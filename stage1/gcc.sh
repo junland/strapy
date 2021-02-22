@@ -40,8 +40,8 @@ mkdir build && pushd build
     --disable-bootstrap \
     --with-newlib \
     --disable-shared \
+    --enable-lto \
     --disable-threads \
-    --without-headers \
     --enable-initfini-array \
     --with-gcc-major-version-only \
     --enable-languages=c,c++ \

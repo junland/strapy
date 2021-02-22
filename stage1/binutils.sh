@@ -27,7 +27,8 @@ mkdir build && pushd build
     --includedir=/usr/include \
     --disable-multilib \
     --enable-deterministic-archives \
-    --disable-plugins \
+    --enable-plugins \
+    --enable-lto \
     --disable-shared \
     --enable-static \
     --enable-ld=default \

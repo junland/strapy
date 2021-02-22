@@ -20,13 +20,17 @@ export CXXFLAGS="-O2"
 
 printInfo "Configuring glibc"
 mkdir build && pushd build
+echo "slibdir=/usr/lib" >> configparms
+echo "rtlddir=/usr/lib" >> configparms
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
+    --libexecdir=/usr/lib/glibc \
     --build="${SERPENT_HOST}" \
     --host="${SERPENT_TRIPLET}" \
     --with-headers="${SERPENT_INSTALL_DIR}/usr/include" \
     --disable-multilib \
-    ac_cv_slibdir=/usr/lib \
+    --enable-lto \
+    --enable-multi-arch \
     ac_cv_prog_LD=ld.bfd \
     ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
     ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
