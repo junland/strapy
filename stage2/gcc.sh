@@ -11,6 +11,10 @@ fi
 extractSource gcc
 cd gcc-*
 
+# Add include dirs to libgcc
+sed -i "s|^LIBGCC2_INCLUDES =|LIBGCC2_INCLUDES = -B${SERPENT_INSTALL_DIR}/usr/lib|" libgcc/Makefile.in
+
+
 printInfo "Extracting gcc requirements"
 extractSource mpfr
 extractSource mpc
@@ -25,8 +29,10 @@ export AR="ar"
 export RANLIB="ranlib"
 export AS="as"
 export NM="nm"
+export OBJDUMP="objdump"
+export READELF="readelf"
+export STRIP="strip"
 export CC="gcc"
-export CPP="clang-cpp"
 export CXX="g++"
 
 export SERPENT_STAGE1_TREE=$(getInstallDir "1")
@@ -41,9 +47,7 @@ mkdir buildcxx && pushd buildcxx
     --libdir=/usr/lib \
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
-    --disable-shared \
-    --disable-multilib \
-    --disable-libstdcxx-pch
+    --disable-multilib
 
 printInfo "Building libstdcxx"
 make -j "${SERPENT_BUILD_JOBS}"
@@ -52,7 +56,7 @@ printInfo "Installing libstdcxx"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 popd
 
-export CXXFLAGS="-I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export CXXFLAGS="-O2 -fPIC -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
 printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
@@ -60,24 +64,24 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --disable-bootstrap \
-    --disable-shared \
     --disable-threads \
+    --disable-libatomic \
+    --disable-libgomp \
+    --disable-libquadmath \
+    --disable-libstdcxx \
+    --disable-libssp \
+    --disable-libvtv \
     --disable-multilib \
     --disable-multiarch \
+    --enable-lto \
     --with-gcc-major-version-only \
     --enable-languages=c,c++
 
 printInfo "Building gcc compiler only"
-make -j "${SERPENT_BUILD_JOBS}" all-gcc
+make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install-gcc DESTDIR="${SERPENT_INSTALL_DIR}"
-
-printInfo "Building target libgcc"
-make -j "${SERPENT_BUILD_JOBS}" all-target-libgcc
-
-printInfo "Installing target libgcc"
-make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 
 printInfo "Installing default compiler links"
 for i in "gcc" "g++" ; do
