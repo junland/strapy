@@ -16,8 +16,10 @@ export AR="ar"
 export RANLIB="ranlib"
 export AS="as"
 export NM="nm"
+export OBJDUMP="objdump"
+export READELF="readelf"
+export STRIP="strip"
 export CC="gcc"
-export CPP="clang-cpp"
 export CXX="g++"
 
 export CFLAGS="${SERPENT_TARGET_CFLAGS}"
@@ -35,9 +37,11 @@ mkdir build && pushd build
     --includedir=/usr/include \
     --disable-multilib \
     --enable-deterministic-archives \
-    --disable-plugins \
+    --enable-plugins \
+    --enable-lto \
     --disable-shared \
     --enable-static \
+    --without-debuginfod \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd
