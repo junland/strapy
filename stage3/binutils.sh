@@ -33,7 +33,7 @@ export CXX="g++"
 export LDFLAGS="-L/usr/lib -L/serpent/usr/lib -B/usr/lib -B/serpent/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
 export CFLAGS="${CFLAGS} ${LDFLAGS}"
 export CXXFLAGS="${CXXFLAGS} ${LDFLAGS}"
-export PATH="/serpent/usr/binutils/bin:${PATH}"
+export PATH="/serpent/usr/binutils/bin:/serpent/usr/bin:/usr/bin"
 
 printInfo "Configuring binutils"
 serpentChroot ../configure --prefix=/usr \
@@ -47,6 +47,7 @@ serpentChroot ../configure --prefix=/usr \
     --disable-multilib \
     --enable-deterministic-archives \
     --enable-plugins \
+    --without-debuginfod \
     --disable-shared \
     --disable-gdb \
     --enable-static \

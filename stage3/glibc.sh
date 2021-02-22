@@ -11,6 +11,14 @@ echo "SUPPORTED_LOCALES=\
 en_US.UTF-8/UTF-8
 " > localedata/SUPPORTED
 
+export LD="ld.bfd"
+export AR="ar"
+export RANLIB="ranlib"
+export AS="as"
+export NM="nm"
+export OBJDUMP="objdump"
+export READELF="readelf"
+export STRIP="strip"
 export CC="gcc"
 export CXX="g++"
 
@@ -26,17 +34,17 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --host="${SERPENT_HOST}" \
     --libdir=/usr/lib \
+    --libexecdir=/usr/lib/glibc \
     --sysconfdir=/etc \
     --disable-multilib \
     --enable-threads=posix \
     --enable-gnu-indirect-function \
+    --enable-multi-arch \
     --enable-plugin \
     --enable-ld=default \
     --enable-clocale=gnu \
     --enable-lto \
-    --with-linker-hash-style=both \
     --with-gnu-ld \
-    ac_cv_slibdir=/usr/lib \
     ac_cv_prog_LD=ld.bfd \
     ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
     ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \

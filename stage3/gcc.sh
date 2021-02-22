@@ -15,17 +15,15 @@ printInfo "Extracting gcc requirements"
 extractSource mpfr
 extractSource mpc
 extractSource gmp
-extractSource isl
+#extractSource isl
 
 ln -sv "mpfr-4.1.0" mpfr
 ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
-ln -sv "isl-0.21" isl
+#ln -sv "isl-0.21" isl
 
-mkdir build
+mkdir -p build
 popd
-
-serpentChrootCd gcc-*/build
 
 unset CONFIG_SITE
 export LD="ld.bfd"
@@ -33,6 +31,9 @@ export AR="ar"
 export RANLIB="ranlib"
 export AS="as"
 export NM="nm"
+export OBJDUMP="objdump"
+export READELF="readelf"
+export STRIP="strip"
 export CC="gcc -B/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
 export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /serpent/usr/include/c++/10.2.0 -isystem /serpent/usr/include/c++/10.2.0/x86_64-linux-gnu"
 
@@ -45,6 +46,8 @@ export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /serpent/usr/include/c++/10.2.0
 export PATH="/usr/binutils/bin:${PATH}"
 export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/serpent/usr/bin"
 export LIBRARY_PATH="/usr/lib"
+
+serpentChrootCd gcc-*/build
 
 printInfo "Configuring gcc"
 serpentChroot ../configure --prefix=/usr \
@@ -61,7 +64,7 @@ serpentChroot ../configure --prefix=/usr \
     --enable-static \
     --enable-threads \
     --disable-multilib \
-    --disable-multiarch \
+    --disable-werror \
     --with-gcc-major-version-only \
     --enable-gnu-indirect-function \
     --enable-plugin \
