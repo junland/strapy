@@ -19,9 +19,9 @@ stage3tree=$(getInstallDir 3)
 
 GNUCOMPONENTS=(
     "headers"
-    #"glibc" # assembler issue - Error: changed section attributes for .eh_frame
+    "glibc"
     "binutils"
-    #"gcc" # undefined reference to `__cxa_pure_virtual' libstdc++ abi issue
+    "gcc"
 )
 
 COMPONENTS=(
