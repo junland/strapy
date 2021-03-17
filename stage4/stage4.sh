@@ -66,7 +66,7 @@ COMPONENTS=(
     "dbus"
     "systemd"
     "dbus-broker"
-    "toolchain"
+    "llvm"
     "libxml2"
     #"ldc" # patches
     "zstd"
