@@ -1,5 +1,5 @@
 name        : ldc
-version     : 1.24.0
+version     : 1.25.1
 release     : 1
 summary     : The LLVM-based D Compiler
 license     :
@@ -10,9 +10,9 @@ homepage    : https://github.com/ldc-developers/ldc
 description : |
     The LLVM-based D Compiler
 upstreams   :
-    - https://github.com/ldc-developers/ldc/releases/download/v1.24.0/ldc-1.24.0-src.tar.gz: fd9561ade916e9279bdcc166cf0e4836449c24e695ab4470297882588adbba3c
-    - https://github.com/ldc-developers/ldc/releases/download/v1.24.0/ldc2-1.24.0-linux-x86_64.tar.xz:
-        hash: 868e070fe90b06549f5fb19882a58a920c0052fad29b764eee9f409f08892ba3
+    - https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc-1.25.1-src.tar.gz : 0e3716fe9927be91264d1fde5c41071026f6c44262735e9ebda538089b612d40
+    - https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc2-1.25.1-linux-x86_64.tar.xz:
+        hash: d059c853db0313d9cdbc6c5c0f021b60e150f19ae68b4c53251ad0292767c095
         extract: false
 setup       : |
     # Extract binary ldc
