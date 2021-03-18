@@ -1,5 +1,5 @@
 name        : binutils
-version     : 2.36
+version     : 2.36.1
 release     : 1
 summary     : A GNU collection of binary utilities
 license     : GPL-3.0-or-later
@@ -7,7 +7,7 @@ homepage    : https://sourceware.org/binutils
 description : |
     A GNU collection of binary utilities
 upstreams   :
-    - https://ftp.gnu.org/gnu/binutils/binutils-2.36.tar.xz: 5788292cc5bbcca0848545af05986f6b17058b105be59e99ba7d0f9eb5336fb8
+    - https://ftp.gnu.org/gnu/binutils/binutils-2.36.1.tar.xz : e81d9edf373f193af428a0f256674aea62a9d74dfe93f65192d4eae030b0f3b0
 setup       : |
     mkdir %(builddir) && cd %(builddir)
     ../configure --prefix=/usr/binutils \

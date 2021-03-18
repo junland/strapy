@@ -1,5 +1,5 @@
 name        : llvm
-version     : 12.0.0
+version     : 12.0.0rc3
 release     : 1
 summary     : Low Level Virtual Machine
 license     :
