@@ -151,9 +151,9 @@ function createDownloadStore()
         SHASUM=$(sha256sum "${i}" | cut -f1 -d' ')
         FIRST=$(echo ${SHASUM:0:5})
         LAST=$(echo ${SHASUM:59:64})
-        if [ ! -f "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}" ]; then
-            mkdir -p "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}"
-            install -D ${i} "${stage3tree}/os/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}"
+        if [ ! -f "${stage3tree}/.moss/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}" ]; then
+            mkdir -p "${stage3tree}/.moss/store/downloads/v1/${FIRST}/${LAST}"
+            install -D ${i} "${stage3tree}/.moss/store/downloads/v1/${FIRST}/${LAST}/${SHASUM}"
         fi
         unset SHASUM FIRST LAST
     done
