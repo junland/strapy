@@ -81,6 +81,7 @@ COMPONENTS=(
     "moss"
     "nano"
     "bison"
+    "flex"
 )
 
 checkRootUser

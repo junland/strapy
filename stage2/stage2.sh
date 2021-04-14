@@ -46,6 +46,7 @@ COMPONENTS=(
     "less"
     "which"
     "slibtool"
+    "flex"
 )
 
 prefetchSources

@@ -74,6 +74,7 @@ COMPONENTS=(
     #"moss" # needs a release or git support
     "nano"
     "bison"
+    "flex"
 )
 
 checkRootUser
