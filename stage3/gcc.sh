@@ -21,6 +21,7 @@ ln -sv "mpfr-4.1.0" mpfr
 ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
 #ln -sv "isl-0.21" isl
+export GCC_VERS="10.2.0"
 
 mkdir -p build
 popd
@@ -35,14 +36,14 @@ export OBJDUMP="objdump"
 export READELF="readelf"
 export STRIP="strip"
 export CC="gcc -B/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
-export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /serpent/usr/include/c++/10.2.0 -isystem /serpent/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /serpent/usr/include/c++/${GCC_VERS} -isystem /serpent/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 
 ln -svf /serpent/usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
 
 export LDFLAGS="-L/usr/lib -L/serpent/usr/lib -B/usr/lib -B/serpent/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
 export CFLAGS="${CFLAGS} ${LDFLAGS}"
 export CPPFLAGS="${CFLAGS} ${LDFLAGS}"
-export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /serpent/usr/include/c++/10.2.0 -isystem /serpent/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /serpent/usr/include/c++/${GCC_VERS} -isystem /serpent/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 export PATH="/usr/binutils/bin:${PATH}"
 export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/serpent/usr/bin"
 export LIBRARY_PATH="/usr/lib"

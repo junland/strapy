@@ -23,6 +23,7 @@ extractSource gmp
 ln -sv "mpfr-4.1.0" mpfr
 ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
+export GCC_VERS="10.2.0"
 
 export LD="ld.bfd"
 export AR="ar"
@@ -56,7 +57,7 @@ printInfo "Installing libstdcxx"
 make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
 popd
 
-export CXXFLAGS="-O2 -fPIC -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export CXXFLAGS="-O2 -fPIC -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/${GCC_VERS} -I${SERPENT_INSTALL_DIR}/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
