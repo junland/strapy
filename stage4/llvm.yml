@@ -1,5 +1,5 @@
 name        : llvm
-version     : 12.0.0rc3
+version     : 12.0.0
 release     : 1
 summary     : Low Level Virtual Machine
 license     :
@@ -9,29 +9,29 @@ homepage    : https://www.llvm.org
 description : |
     Low Level Virtual Machine
 upstreams   :
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/clang-12.0.0rc3.src.tar.xz:
-        hash: 1267b88d4590d638bab598cc5b54ba0b7520c9aa35d931206941b66f90e7e2f5
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang-12.0.0.src.tar.xz:
+        hash: e26e452e91d4542da3ebbf404f024d3e1cbf103f4cd110c26bf0a19621cca9ed
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/compiler-rt-12.0.0rc3.src.tar.xz:
-        hash: 6b5f6fab7a35160271c368c5aadf76c948dcc80454f6c3dc0678484e197092d8
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/compiler-rt-12.0.0.src.tar.xz:
+        hash: 85a8cd0a62413eaa0457d8d02f8edac38c4dc0c96c00b09dc550260c23268434
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/libcxx-12.0.0rc3.src.tar.xz:
-        hash: f34130fbff5f5ebc388097b86ba7679e1d070bd067e51e260eb3f11bd7f62484
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxx-12.0.0.src.tar.xz:
+        hash: 7dcb75ca4f6aae2c677d128460c48a57398c8b6791b77b74bea7cf9e04e7c3f1
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/libcxxabi-12.0.0rc3.src.tar.xz:
-        hash: 18584002451dd61be4e3514f81e25d8a85692ad0dd01d7efca8be6d2e837aced
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxxabi-12.0.0.src.tar.xz:
+        hash: 6ab8e8cd148a7d5103067e05c36e36ef36e27634fc8e73b5712853c9affe75b1
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/libunwind-12.0.0rc3.src.tar.xz:
-        hash: df877d783d7ec23d11addd9903599d24c4b73e1322866faffedb5fe3a698c3a2
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libunwind-12.0.0.src.tar.xz:
+        hash: 9ed2a5b28853f7f58be9d04836ff43d6e4132df5a2c058b690dc3e9d75bd1cf5
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/lld-12.0.0rc3.src.tar.xz:
-        hash: 81ef3fcfdaf5456e804207b4d1d7006d6d5da2431891b8d128f9c6074febf724
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/lld-12.0.0.src.tar.xz:
+        hash: 2cb7d497f3ce33ce8a2c50ad26ec93a8c45f57268d4d96953cd0f25566f753fd
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/llvm-12.0.0rc3.src.tar.xz:
-        hash: e51984ff9c7869c3af38f9b4cd9047f22083cac5f4a52d3dbb9da1259b9dedd2
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/llvm-12.0.0.src.tar.xz:
+        hash: 49dc47c8697a1a0abd4ee51629a696d7bfe803662f2a7252a3b16fc75f3a8b50
         extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0-rc3/openmp-12.0.0rc3.src.tar.xz:
-        hash: 0560afdbd06eef26b9c88902817e776e2718d0ada5b4d2e97920f2ddec79814f
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/openmp-12.0.0.src.tar.xz:
+        hash: eb1b7022a247332114985ed155a8fb632c28ce7c35a476e2c0caf865150f167d
         extract: false
 install     : |
     tar xf %(sourcedir)/clang-%(version).src.tar.xz -C .
