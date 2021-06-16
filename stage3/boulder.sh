@@ -7,7 +7,7 @@ set -e
 serpentChrootCd boulder
 
 printInfo "Cloning boulder"
-git clone --recurse-submodules https://github.com/serpent-linux/boulder.git
+git clone --recurse-submodules https://gitlab.com/serpent-os/core/boulder.git
 
 printInfo "Building boulder"
 serpentChroot ./scripts/build.sh

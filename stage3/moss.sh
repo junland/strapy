@@ -7,7 +7,7 @@ set -e
 serpentChrootCd moss
 
 printInfo "Cloning moss"
-git clone --recurse-submodules https://github.com/serpent-linux/moss.git
+git clone --recurse-submodules https://gitlab.com/serpent-os/core/moss.git
 
 printInfo "Building moss"
 serpentChroot ./scripts/build.sh
