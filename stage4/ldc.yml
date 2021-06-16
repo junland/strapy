@@ -16,7 +16,7 @@ upstreams   :
         extract: false
 setup       : |
     # Extract binary ldc
-    tar xf %(sourcedir)/ldc2-1.26.0-linux-x86_64.tar.xz -C .
+    tar xf %(sourcedir)/ldc2-%(version)-linux-x86_64.tar.xz -C .
 
     %cmake -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
