@@ -1,5 +1,5 @@
 name        : systemd
-version     : 247.4
+version     : 248.3
 release     : 1
 summary     : A System and Service Manager
 license     :
@@ -10,7 +10,7 @@ homepage    : http://www.freedesktop.org/wiki/Software/systemd
 description : |
     A System and Service Manager
 upstreams   :
-    - https://github.com/systemd/systemd-stable/archive/v247.4.tar.gz : 576da4520f28240b9ea1394ba2dda3aabab524ca73cc03c70393766aa29d3b34
+    - https://github.com/systemd/systemd-stable/archive/v248.3.tar.gz : cc372aeed563379a734901ed73d6fbb6b75c171251e1d69c0b5650aaf9c15d06
 setup       : |
     %meson -Dtests=false \
         -Dfuzz-tests=false \

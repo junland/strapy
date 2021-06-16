@@ -1,5 +1,5 @@
 name        : python
-version     : 3.9.2
+version     : 3.9.5
 release     : 1
 summary     : Python language interpreter
 license     : Python-2.0
@@ -7,7 +7,7 @@ homepage    : https://www.python.org
 description : |
     Python language interpreter
 upstreams   :
-    - https://www.python.org/ftp/python/3.9.2/Python-3.9.2.tar.xz : 3c2034c54f811448f516668dce09d24008a0716c3a794dd8639b5388cbde247d
+    - https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tar.xz : 0c5a140665436ec3dbfbb79e2dfb6d192655f26ef4a29aeffcb6d1820d716d83
 setup       : |
     %configure --without-cxx-main \
         --disable-ipv6

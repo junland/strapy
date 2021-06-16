@@ -1,5 +1,5 @@
 name        : ldc
-version     : 1.25.1
+version     : 1.26.0
 release     : 1
 summary     : The LLVM-based D Compiler
 license     :
@@ -10,13 +10,13 @@ homepage    : https://github.com/ldc-developers/ldc
 description : |
     The LLVM-based D Compiler
 upstreams   :
-    - https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc-1.25.1-src.tar.gz : 0e3716fe9927be91264d1fde5c41071026f6c44262735e9ebda538089b612d40
-    - https://github.com/ldc-developers/ldc/releases/download/v1.25.1/ldc2-1.25.1-linux-x86_64.tar.xz:
-        hash: d059c853db0313d9cdbc6c5c0f021b60e150f19ae68b4c53251ad0292767c095
+    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc-1.26.0-src.tar.gz : c18f4c76869f0196b459dcd6196c7eaea1b097cc422cf3771de394f6c0ef7474
+    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz:
+        hash: 06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e
         extract: false
 setup       : |
     # Extract binary ldc
-    tar xf %(sourcedir)/ldc2-1.24.0-linux-x86_64.tar.xz -C .
+    tar xf %(sourcedir)/ldc2-1.26.0-linux-x86_64.tar.xz -C .
 
     %cmake -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
