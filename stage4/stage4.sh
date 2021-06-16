@@ -36,7 +36,7 @@ COMPONENTS=(
     "findutils"
     "ncurses"
     "bash"
-    #"dash" # build failure - common:?
+    "dash" # build failure - common:?
     "slibtool"
     "gzip"
     "less"
@@ -45,13 +45,13 @@ COMPONENTS=(
     "grep"
     "patch"
     "which"
-    #"m4" # patches
+    "m4"
     "make"
     "perl"
     "autoconf"
     "automake"
     "pkgconf"
-    #"coreutils" # patches
+    "coreutils" # patches
     "util-linux"
     "cmake"
     "ninja"
@@ -68,10 +68,10 @@ COMPONENTS=(
     "dbus-broker"
     "llvm"
     "libxml2"
-    #"ldc" # patches
+    "ldc" # patches
     "zstd"
-    #"boulder" # needs a release or git support
-    #"moss" # needs a release or git support
+    "boulder" # needs a release or git support
+    "moss" # needs a release or git support
     "nano"
     "bison"
     "flex"

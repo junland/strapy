@@ -6,8 +6,6 @@ set -e
 extractSource m4
 cd m4-*
 
-patch -p1 < "${SERPENT_PATCHES_DIR}/m4/m4-1.4.18-glibc-change-work-around.patch"
-
 printInfo "Configuring m4"
 ./configure --prefix=/usr \
     --target="${SERPENT_TRIPLET}" \
