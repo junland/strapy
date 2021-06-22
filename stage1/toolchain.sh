@@ -6,29 +6,15 @@ set -e
 export TOOLCHAIN_VERSION="12.0.0"
 
 printInfo "Extracting toolchain requirements"
-extractSource clang
-extractSource compiler-rt
-extractSource libcxx
-extractSource libcxxabi
-extractSource libunwind
-extractSource lld
-extractSource llvm
-
-ln -sv "clang-${TOOLCHAIN_VERSION}.src" clang
-ln -sv "compiler-rt-${TOOLCHAIN_VERSION}.src" compiler-rt
-ln -sv "libcxx-${TOOLCHAIN_VERSION}.src" libcxx
-ln -sv "libcxxabi-${TOOLCHAIN_VERSION}.src" libcxxabi
-ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
-ln -sv "lld-${TOOLCHAIN_VERSION}.src" lld
-ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
+extractSource llvmorg
 
 if [[ "${SERPENT_LIBC}" == "musl" ]]; then
-    pushd clang
+    pushd llvm-project-${TOOLCHAIN_VERSION}.src/clang
     patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
 fi
 
-pushd llvm
+pushd llvm-project-${TOOLCHAIN_VERSION}.src/llvm
 
 mkdir build && pushd build
 
@@ -98,7 +84,7 @@ cmake -G Ninja ../ \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
     -DCLANG_LINK_CLANG_DYLIB=OFF
 ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
-cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
+cp "${SERPENT_BUILD_DIR}"/llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
 # Only install if binutils ld not already present
 if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
