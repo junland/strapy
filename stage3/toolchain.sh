@@ -6,32 +6,19 @@ set -e
 export TOOLCHAIN_VERSION="12.0.0"
 
 printInfo "Extracting toolchain requirements"
-extractSource clang
-extractSource compiler-rt
-extractSource libcxx
-extractSource libcxxabi
-extractSource libunwind
-extractSource lld
-extractSource llvm
-
-ln -sv "clang-${TOOLCHAIN_VERSION}.src" clang
-ln -sv "compiler-rt-${TOOLCHAIN_VERSION}.src" compiler-rt
-ln -sv "libcxx-${TOOLCHAIN_VERSION}.src" libcxx
-ln -sv "libcxxabi-${TOOLCHAIN_VERSION}.src" libcxxabi
-ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
-ln -sv "lld-${TOOLCHAIN_VERSION}.src" lld
-ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
+extractSource llvmorg
 
 if [[ "${SERPENT_LIBC}" == "musl" ]]; then
-    pushd clang
+    pushd llvm-project-${TOOLCHAIN_VERSION}.src/clang
     patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
     export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
     export SYMLINKS="-DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
 fi
 
-mkdir -p llvm/build
-serpentChrootCd llvm/build
+
+mkdir -p  llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
+serpentChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 
 unset CFLAGS CXXFLAGS
 
@@ -39,13 +26,15 @@ unset CFLAGS CXXFLAGS
 # in future, so we should follow: https://reviews.llvm.org/D63785
 export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
+    -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;polly' \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_TARGET_ARCH="${SERPENT_TARGET_ARCH}" \
     -DLLVM_DEFAULT_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
     -DLLVM_TARGETS_TO_BUILD="${SERPENT_TARGET_LLVM_BACKEND}" \
     -DLLVM_ENABLE_LIBXML2=OFF \
     -DLLVM_ENABLE_FFI=OFF \
+    -DLLVM_ENABLE_LTO=Thin \
+    -DENABLE_EXPERIMENTAL_NEW_PASS_MANAGER=ON \
     -DLLVM_INCLUDE_TESTS=OFF \
     -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
     -DCLANG_DEFAULT_LINKER=lld \
@@ -78,7 +67,7 @@ export llvmopts="
     -DLLVM_USE_SANITIZER=OFF \
     -DLLVM_ENABLE_UNWIND_TABLES=OFF \
     -DLLVM_INCLUDE_BENCHMARKS=OFF \
-    -DLLVM_INCLUDE_UTILS=OFF \
+    -DLLVM_INCLUDE_UTILS=ON \
     -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
     -DLLVM_BUILD_TOOLS=OFF \
@@ -102,7 +91,7 @@ serpentChroot cmake -G Ninja ../ \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
     -DCLANG_LINK_CLANG_DYLIB=OFF
 serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
-cp "${SERPENT_BUILD_DIR}"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
+cp "${SERPENT_BUILD_DIR}/llvm-project-${TOOLCHAIN_VERSION}.src"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
 
 # Only install if binutils ld not already present
 if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
