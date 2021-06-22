@@ -36,7 +36,10 @@ mkdir build && pushd build
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
     --target="${SERPENT_TRIPLET}" \
-    --disable-multilib \
+    --enable-multilib \
+    --enable-multilib \
+    --with-multilib-list=m32,m64 \
+    --with-arch_32=i686 \
     --disable-bootstrap \
     --with-newlib \
     --disable-shared \

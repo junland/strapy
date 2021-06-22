@@ -24,8 +24,9 @@ mkdir build && pushd build
     --target="${SERPENT_TRIPLET}" \
     --with-sysroot="${SERPENT_INSTALL_DIR}" \
     --libdir=/usr/lib \
+    --with-lib-path="/usr/lib:/usr/lib32" \
     --includedir=/usr/include \
-    --disable-multilib \
+    --enable-multilib \
     --enable-deterministic-archives \
     --enable-plugins \
     --enable-lto \
