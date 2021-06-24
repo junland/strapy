@@ -32,6 +32,7 @@ COMPONENTS=(
     "file"
     "findutils"
     "libarchive"
+    "zstd"
     "binutils"
     "gcc"
     "attr"
@@ -76,7 +77,6 @@ COMPONENTS=(
     "toolchain"
     "libxml2"
     "ldc"
-    "zstd"
     "boulder"
     "moss"
     "nano"
@@ -103,6 +103,21 @@ cp "${executionPath}/config.site" "${SERPENT_INSTALL_DIR}/"
 for component in ${COMPONENTS[@]} ; do
     /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh"  || serpentFail "Building ${component} failed"
 done
+
+# Add in 32bit support into Serpent
+rm "${SERPENT_INSTALL_DIR}/config.site"
+restoreBinutils gnu-binutils
+restoreGcc gnu-gcc
+
+printInfo "Taking down the mounts"
+serpentUnmount "$(getInstallDir 3)/serpent"
+
+/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32.sh" || serpentFail "Building gcc32 failed"
+/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/glibc32.sh" || serpentFail "Building glibc32 failed"
+/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32-2.sh" || serpentFail "Building gcc32-2 failed"
+
+restoreBinutils llvm-llvm
+restoreGcc llvm-llvm
 
 takeDownMounts
 
