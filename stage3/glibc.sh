@@ -36,7 +36,6 @@ mkdir build && pushd build
     --libdir=/usr/lib \
     --libexecdir=/usr/lib/glibc \
     --sysconfdir=/etc \
-    --disable-multilib \
     --enable-threads=posix \
     --enable-gnu-indirect-function \
     --enable-multi-arch \
