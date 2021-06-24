@@ -39,12 +39,13 @@ printInfo "Configuring binutils"
 serpentChroot ../configure --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
+    --with-lib-path="/usr/lib:/usr/lib32" \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
     --includedir=/usr/include \
-    --disable-multilib \
+    --enable-multilib \
     --enable-deterministic-archives \
     --enable-plugins \
     --without-debuginfod \
