@@ -73,6 +73,8 @@ serpentChroot ../configure \
     --with-gcc-major-version-only \
     --enable-languages=c,c++ \
     --disable-werror \
+    --with-multilib-list=m32,m64 \
+    --with-arch_32=i686 \
     PATH="/usr/bin:/usr/sbin"
 
 printInfo "Building gcc"

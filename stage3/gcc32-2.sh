@@ -74,6 +74,8 @@ serpentChroot ../configure --prefix=/usr \
     --with-linker-hash-style=both \
     --with-gnu-ld \
     --enable-languages=c,c++ \
+    --with-multilib-list=m32,m64 \
+    --with-arch_32=i686 \
     PATH="/usr/binutils/bin:/usr/bin:/usr/sbin"
 
 printInfo "Building gcc"
