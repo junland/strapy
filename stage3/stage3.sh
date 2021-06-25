@@ -77,6 +77,7 @@ COMPONENTS=(
     "toolchain"
     "libxml2"
     "ldc"
+    "rocksdb"
     "boulder"
     "moss"
     "nano"
@@ -116,11 +117,12 @@ serpentUnmount "$(getInstallDir 3)/serpent"
 /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/glibc32.sh" || serpentFail "Building glibc32 failed"
 /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32-2.sh" || serpentFail "Building gcc32-2 failed"
 /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32.sh" || serpentFail "Building toolchain32 failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain.sh" || serpentFail "Building toolchain failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32-2.sh" || serpentFail "Building toolchain32-2 failed"
 
 restoreBinutils llvm-llvm
 restoreGcc llvm-llvm
+
+/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain.sh" || serpentFail "Building toolchain failed"
+/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32-2.sh" || serpentFail "Building toolchain32-2 failed"
 
 takeDownMounts
 
