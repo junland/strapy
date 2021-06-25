@@ -29,14 +29,15 @@ export LIBRARY_PATH="/usr/lib"
 extractSource glibc
 pushd glibc-*
 mkdir build
-echo "slibdir=/usr/lib32" >> build/configparms
-echo "rtlddir=/usr/lib32" >> build/configparms
+mkdir build32
+echo "slibdir=/usr/lib32" >> build32/configparms
+echo "rtlddir=/usr/lib32" >> build32/configparms
+echo "slibdir=/usr/lib" >> build/configparms
+echo "rtlddir=/usr/lib" >> build/configparms
 
-# Workaround binutils version check failing
-sed -i 's/test -n "$critic_missing/test -n "$zcritic_missing/' configure
 popd
 
-serpentChrootCd glibc-*/build
+serpentChrootCd glibc-*/build32
 
 export CC="gcc -m32"
 export CXX="g++ -m32"
@@ -56,11 +57,6 @@ serpentChroot ../configure --prefix=/usr \
     --enable-clocale=gnu \
     --enable-lto \
     --with-gnu-ld \
-    ac_cv_prog_LD=ld.bfd \
-    ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
-    ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
-    ac_cv_prog_AS=${SERPENT_TRIPLET}-as \
-    ac_cv_prog_NM=${SERPENT_TRIPLET}-nm \
     libc_cv_forced_unwind=yes \
     libc_cv_include_x86_isa_level=no
 
@@ -68,4 +64,35 @@ printInfo "Building glibc 32bit"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing glibc 32bit"
+serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+
+
+
+serpentChrootCd glibc-*/build
+
+export CC="gcc"
+export CXX="g++"
+
+printInfo "Configuring glibc"
+serpentChroot ../configure --prefix=/usr \
+    --host="${SERPENT_TRIPLET}" \
+    --target="${SERPENT_TRIPLET}" \
+    --libdir=/usr/lib \
+    --libexecdir=/usr/lib/glibc \
+    --sysconfdir=/etc \
+    --enable-threads=posix \
+    --enable-gnu-indirect-function \
+    --enable-multi-arch \
+    --enable-plugin \
+    --enable-ld=default \
+    --enable-clocale=gnu \
+    --enable-lto \
+    --with-gnu-ld \
+    libc_cv_forced_unwind=yes \
+    libc_cv_include_x86_isa_level=no
+
+printInfo "Building glibc"
+serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+
+printInfo "Installing glibc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
