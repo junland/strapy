@@ -19,8 +19,8 @@ export READELF="readelf"
 export STRIP="strip"
 
 unset LDFLAGS CFLAGS CXXFLAGS
-export CFLAGS="-O2 -L/usr/lib/gcc/x86_64-serpent-linux/11/32"
-export CXXFLAGS="-O2 -L/usr/lib/gcc/x86_64-serpent-linux/11/32"
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 export PATH="/usr/bin:${PATH}"
 export COMPILER_PATH="/usr/bin"
 export LIBRARY_PATH="/usr/lib"
@@ -28,12 +28,9 @@ export LIBRARY_PATH="/usr/lib"
 
 extractSource glibc
 pushd glibc-*
-mkdir build
 mkdir build32
 echo "slibdir=/usr/lib32" >> build32/configparms
 echo "rtlddir=/usr/lib32" >> build32/configparms
-echo "slibdir=/usr/lib" >> build/configparms
-echo "rtlddir=/usr/lib" >> build/configparms
 
 popd
 
@@ -64,35 +61,4 @@ printInfo "Building glibc 32bit"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing glibc 32bit"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
-
-
-
-serpentChrootCd glibc-*/build
-
-export CC="gcc"
-export CXX="g++"
-
-printInfo "Configuring glibc"
-serpentChroot ../configure --prefix=/usr \
-    --host="${SERPENT_TRIPLET}" \
-    --target="${SERPENT_TRIPLET}" \
-    --libdir=/usr/lib \
-    --libexecdir=/usr/lib/glibc \
-    --sysconfdir=/etc \
-    --enable-threads=posix \
-    --enable-gnu-indirect-function \
-    --enable-multi-arch \
-    --enable-plugin \
-    --enable-ld=default \
-    --enable-clocale=gnu \
-    --enable-lto \
-    --with-gnu-ld \
-    libc_cv_forced_unwind=yes \
-    libc_cv_include_x86_isa_level=no
-
-printInfo "Building glibc"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
-
-printInfo "Installing glibc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
