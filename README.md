@@ -82,7 +82,7 @@ Clone the bootstrap-scripts somewhere appropriate, then
 cd bootstrap-scripts/
 time stage1/stage1.sh > stage1.log 2>&1
 time stage2/stage2.sh > stage2.log 2>&1
-time sudo stage3/stage3.sh > stage2.log 2>&1
+time sudo stage3/stage3.sh > stage3.log 2>&1
 ```
 
 ##### Rebuilding a bootstrap stage
