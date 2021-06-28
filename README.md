@@ -53,3 +53,50 @@ You'll need to ensure `binfmt_misc` is configured appropriately, for example, as
 ```bash
 echo ':aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-aarch64-static:' > /proc/sys/fs/binfmt_misc/register
 ```
+
+### Bootstrap build instructions
+
+#### Build Requirements
+
+*Note that glibc-2.33 is required for successful build (Fedora 34 uses glibc-2.32)*
+
+##### Arch
+
+```
+sudo pacman -Syu base-devel
+sudo pacman -Syu cmake ldc meson ninja
+```
+
+##### Fedora
+
+```
+sudo dnf group install 'Development Tools'
+sudo dnf install automake bison cmake gettext-devel ldc meson ninja-build
+```
+
+#### Build the bootstrap stages
+
+Clone the bootstrap-scripts somewhere appropriate, then
+
+```
+cd bootstrap-scripts/
+time stage1/stage1.sh > stage1.log 2>&1
+time stage2/stage2.sh > stage2.log 2>&1
+time sudo stage3/stage3.sh > stage2.log 2>&1
+```
+
+##### Rebuilding a bootstrap stage
+
+If you need to rebuild a stage, do a `sudo rm -rf install/<arch>/<libc>/<stage>` first.
+
+##### Tips and Tricks for watching the bootstrap builds
+
+During the build, you can use either `tail -f <stage>.log` or `less -R <stage>.log` in a different terminal.
+
+When using `less`, press `F` to follow the build status in real-time.
+
+Press <CTRL+C> to quit follow mode and press ´q´ to quit less.
+
+#### Chroot-ing into the freshly built stage3/4
+
+`sudo stage4/chroot.sh`
