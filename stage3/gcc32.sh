@@ -83,6 +83,7 @@ serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 printInfo "Installing gcc"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
 
+mkdir -p ${SERPENT_INSTALL_DIR}/usr/lib32
 for file in libgcc.a crtbegin.o crtbeginS.o crtend.o crtendS.o; do
     ln -sf /usr/lib/gcc/x86_64-serpent-linux/11/$file ${SERPENT_INSTALL_DIR}/usr/lib/$file
     ln -sf /usr/lib/gcc/x86_64-serpent-linux/11/32/$file ${SERPENT_INSTALL_DIR}/usr/lib32/$file
