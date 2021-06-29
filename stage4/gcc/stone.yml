@@ -41,18 +41,16 @@ setup       : |
         --sbindir=/usr/sbin \
         --datadir=/usr/share \
         --includedir=/usr/include \
-        --disable-bootstrap \
         --enable-shared \
         --enable-static \
         --enable-threads \
-        --disable-multilib \
-        --disable-multiarch \
+        --enable-multilib \
+        --with-multilib-list=m32,m64 \
+        --with-arch_32=i686 \
         --with-gcc-major-version-only \
         --enable-languages=c,c++
 build       : |
     %make -C build
 install     : |
     %make_install -C build
-    install -dm00755 "%(installroot)/lib"
-    ln -svf /usr/bin/cpp "%(installroot)/lib/cpp"
 toolchain   : gnu
