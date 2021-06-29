@@ -94,16 +94,16 @@ restoreBinutils gnu-binutils
 restoreGcc gnu-gcc
 
 for component in ${GNUCOMPONENTS[@]} ; do
-    cp "${executionPath}/${component}.yml" "${SERPENT_BUILD_DIR}/stones/"
-    chroot "${stage3tree}" /bin/bash -c "cd /stones; boulder build ${component}.yml;"
+    cp -a "${executionPath}/${component}" "${SERPENT_BUILD_DIR}/stones/"
+    chroot "${stage3tree}" /bin/bash -c "cd /stones/${component}; boulder build stone.yml;"
 done
 
 restoreBinutils llvm-llvm
 restoreGcc llvm-llvm
 
 for component in ${COMPONENTS[@]} ; do
-    cp "${executionPath}/${component}.yml" "${SERPENT_BUILD_DIR}/stones/"
-    chroot "${stage3tree}" /bin/bash -c "cd /stones; boulder build ${component}.yml;"
+    cp -a "${executionPath}/${component}" "${SERPENT_BUILD_DIR}/stones/"
+    chroot "${stage3tree}" /bin/bash -c "cd /stones/${component}; boulder build stone.yml;"
 done
 
 takeDownMounts
