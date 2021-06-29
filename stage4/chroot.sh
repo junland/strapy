@@ -33,6 +33,7 @@ mkdir -p "${SERPENT_BUILD_DIR}/stones" || serpentFail "Failed to create director
 mkdir -p "${SERPENT_BUILD_DIR}/os" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/os"
 createDownloadStore
 
+takeDownMounts
 bringUpMounts
 
 echo 'export PS1="(chroot/bash-\v/${SERPENT_TRIPLET}) : [\w]\n\\$ "' > "${stage3tree}/etc/profile"
