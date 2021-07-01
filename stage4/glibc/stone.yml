@@ -13,6 +13,7 @@ upstreams   :
     - https://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.xz: 2e2556000e105dbd57f0b6b2a32ff2cf173bde4f0d85dffccfd8b7e51a0677ff
 setup       : |
     unset CFLAGS CXXFLAGS LDFLAGS
+    export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
 
     # Build only US UTF-8 locale for now
     echo "SUPPORTED_LOCALES=\
@@ -40,10 +41,12 @@ setup       : |
         libc_cv_include_x86_isa_level=no
 build       : |
     unset CFLAGS CXXFLAGS LDFLAGS
+    export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make -C build
 install     : |
     unset CFLAGS CXXFLAGS LDFLAGS
+    export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make_install build DESTDIR="%(installroot)" -C build
     %make localedata/install-locales DESTDIR="%(installroot)" -C build
 toolchain   : gnu
-#emul32      : true
+emul32      : true
