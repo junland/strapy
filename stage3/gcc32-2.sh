@@ -60,7 +60,6 @@ serpentChroot ../configure --prefix=/usr \
     --build="${SERPENT_TRIPLET}" \
     --host="${SERPENT_TRIPLET}" \
     --disable-bootstrap \
-    --disable-shared \
     --enable-shared \
     --enable-static \
     --enable-threads \
