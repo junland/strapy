@@ -21,23 +21,36 @@ setup       : |
     " > localedata/SUPPORTED
 
     mkdir build && cd build
+    echo "LD_SO_CACHE=/var/cache/ldconfig/ld.so.cache" >> configparms
     echo "slibdir=/usr/lib%(libsuffix)" >> configparms
     echo "rtlddir=/usr/lib%(libsuffix)" >> configparms
+    echo "sbindir=/usr/sbin" >> configparms
+    echo "rootsbindir=/usr/sbin" >> configparms
+    # Note this deliberately excludes libsuffix and is not an error
+    echo "complocaledir=/usr/lib/locale" >> configparms
 
     ../configure --prefix=/usr \
         --build=%(build) \
         --host=%(host) \
         --libdir=/usr/lib \
         --sysconfdir=/etc \
-        --enable-threads=posix \
+        --disable-crypt \
+        --disable-obsolete-rpc \
+        --disable-profile \
+        --enable-add-ons \
+        --enable-bind-now \
+        --enable-cet \
         --enable-gnu-indirect-function \
+        --enable-kernel=5.12 \
+        --enable-lock-elision \
         --enable-multi-arch \
         --enable-plugin \
-        --enable-ld=default \
-        --enable-clocale=gnu \
-        --enable-lto \
-        --with-gnu-ld \
-        libc_cv_forced_unwind=yes \
+        --enable-stack-protector \
+        --enable-stackguard-randomization \
+        --enable-static-pie \
+        --enable-threads=posix \
+        --enable-tunables \
+        --without-selinux \
         libc_cv_include_x86_isa_level=no
 build       : |
     unset CFLAGS CXXFLAGS LDFLAGS
@@ -48,5 +61,7 @@ install     : |
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make_install build DESTDIR="%(installroot)" -C build
     %make localedata/install-locales DESTDIR="%(installroot)" -C build
+
+    # Make stateless dirs for glibc /var/cache/locale /var/db /var/run
 toolchain   : gnu
 emul32      : true
