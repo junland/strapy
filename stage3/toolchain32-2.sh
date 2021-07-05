@@ -15,6 +15,7 @@ serpentChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 pushd llvm-project-${TOOLCHAIN_VERSION}.src
 patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch"
 patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch"
+popd
 
 unset CFLAGS CXXFLAGS
 export CC="clang"
