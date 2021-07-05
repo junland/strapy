@@ -1,4 +1,4 @@
-From 1017863b8908a6ce9acff52f6ec065c6df9f50c2 Mon Sep 17 00:00:00 2001
+From 18ed484e8a085c822af4754dc570f2c7e94276e1 Mon Sep 17 00:00:00 2001
 From: Peter O'Connor <sunnyflunk@serpentos.com>
 Date: Mon, 5 Jul 2021 15:10:29 +1000
 Subject: [PATCH] Use correct Serpent OS multilib paths for ld
@@ -9,7 +9,7 @@ Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
-index 09c9821cb..c2a875785 100644
+index 09c9821cb..dd6d530fb 100644
 --- a/clang/lib/Driver/ToolChains/Linux.cpp
 +++ b/clang/lib/Driver/ToolChains/Linux.cpp
 @@ -542,13 +542,13 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
@@ -33,7 +33,7 @@ index 09c9821cb..c2a875785 100644
         Triple.getVendor() == llvm::Triple::PC))
      return "/usr/" + Triple.str() + "/lib/" + Loader;
 -  return "/" + LibDir + "/" + Loader;
-+  return "/usr" + LibDir + "/" + Loader;
++  return "/usr/" + LibDir + "/" + Loader;
  }
  
  void Linux::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
