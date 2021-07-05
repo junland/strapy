@@ -11,6 +11,9 @@ fi
 extractSource gcc
 pushd gcc-*
 
+# Add default toolchain patches into S3
+patch -p1 < "${SERPENT_PATCHES_DIR}/gcc/0001-Use-modern-linker-locations-for-Serpent-OS.patch"
+
 printInfo "Extracting gcc requirements"
 extractSource mpfr
 extractSource mpc

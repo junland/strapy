@@ -28,6 +28,10 @@ export LIBRARY_PATH="/usr/lib"
 
 extractSource glibc
 pushd glibc-*
+# Add default toolchain patches into S3
+patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-Force-correct-RTLDLIST-for-ldd.patch"
+patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-sysdeps-Add-support-for-default-directories.patch"
+
 mkdir build32
 echo "slibdir=/usr/lib32" >> build32/configparms
 echo "rtlddir=/usr/lib32" >> build32/configparms

@@ -6,6 +6,10 @@ set -e
 extractSource glibc
 cd glibc-*
 
+# Add default toolchain patches into S3
+patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-Force-correct-RTLDLIST-for-ldd.patch"
+patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-sysdeps-Add-support-for-default-directories.patch"
+
 # Build only US UTF-8 locale for now
 echo "SUPPORTED_LOCALES=\
 en_US.UTF-8/UTF-8

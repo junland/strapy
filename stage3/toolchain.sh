@@ -16,9 +16,13 @@ if [[ "${SERPENT_LIBC}" == "musl" ]]; then
     export SYMLINKS="-DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
 fi
 
-
 mkdir -p  llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 serpentChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
+
+# Add default toolchain patches into S3
+pushd llvm-project-${TOOLCHAIN_VERSION}.src
+patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch"
+patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch"
 
 unset CFLAGS CXXFLAGS
 

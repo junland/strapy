@@ -11,6 +11,11 @@ extractSource llvmorg
 mkdir -p  llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 serpentChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 
+# Add default toolchain patches into S3
+pushd llvm-project-${TOOLCHAIN_VERSION}.src
+patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch"
+patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch"
+
 unset CFLAGS CXXFLAGS
 export CC="clang"
 export CXX="clang++"
@@ -46,8 +51,7 @@ echo "cmake -G Ninja ../ \
     -DLIBUNWIND_USE_COMPILER_RT=ON \
     -DLIBUNWIND_INSTALL_LIBRARY=ON" > llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build/build.sh
 chmod +x llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build/build.sh
-serpentChroot ./build.sh 
-
+serpentChroot ./build.sh
 
 printInfo "Building toolchain"
 serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v cxx cxxabi unwind
