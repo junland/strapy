@@ -9,49 +9,8 @@ homepage    : https://www.llvm.org
 description : |
     Low Level Virtual Machine
 upstreams   :
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/clang-12.0.0.src.tar.xz:
-        hash: e26e452e91d4542da3ebbf404f024d3e1cbf103f4cd110c26bf0a19621cca9ed
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/compiler-rt-12.0.0.src.tar.xz:
-        hash: 85a8cd0a62413eaa0457d8d02f8edac38c4dc0c96c00b09dc550260c23268434
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxx-12.0.0.src.tar.xz:
-        hash: 7dcb75ca4f6aae2c677d128460c48a57398c8b6791b77b74bea7cf9e04e7c3f1
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libcxxabi-12.0.0.src.tar.xz:
-        hash: 6ab8e8cd148a7d5103067e05c36e36ef36e27634fc8e73b5712853c9affe75b1
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/libunwind-12.0.0.src.tar.xz:
-        hash: 9ed2a5b28853f7f58be9d04836ff43d6e4132df5a2c058b690dc3e9d75bd1cf5
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/lld-12.0.0.src.tar.xz:
-        hash: 2cb7d497f3ce33ce8a2c50ad26ec93a8c45f57268d4d96953cd0f25566f753fd
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/llvm-12.0.0.src.tar.xz:
-        hash: 49dc47c8697a1a0abd4ee51629a696d7bfe803662f2a7252a3b16fc75f3a8b50
-        extract: false
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/openmp-12.0.0.src.tar.xz:
-        hash: eb1b7022a247332114985ed155a8fb632c28ce7c35a476e2c0caf865150f167d
-        extract: false
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/llvm-project-12.0.0.src.tar.xz : 9ed1688943a4402d7c904cc4515798cdb20080066efa010fe7e1f2551b423628
 install     : |
-    tar xf %(sourcedir)/clang-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/compiler-rt-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/libcxx-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/libcxxabi-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/libunwind-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/lld-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/llvm-%(version).src.tar.xz -C .
-    tar xf %(sourcedir)/openmp-%(version).src.tar.xz -C .
-
-    # Setup source tree
-    ln -sv "clang-%(version).src" clang
-    ln -sv "compiler-rt-%(version).src" compiler-rt
-    ln -sv "libcxx-%(version).src" libcxx
-    ln -sv "libcxxabi-%(version).src" libcxxabi
-    ln -sv "libunwind-%(version).src" libunwind
-    ln -sv "lld-%(version).src" lld
-    ln -sv "llvm-%(version).src" llvm
-
     # This is a bit hacky till there's an export for all build stages
     export llvmopts="
         -DCMAKE_INSTALL_PREFIX=/usr \
