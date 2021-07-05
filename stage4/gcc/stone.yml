@@ -41,14 +41,32 @@ setup       : |
         --sbindir=/usr/sbin \
         --datadir=/usr/share \
         --includedir=/usr/include \
+        --disable-libmpx \
+        --disable-libssp \
+        --disable-libunwind-exceptions \
+        --disable-vtable-verify \
+        --enable-__cxa_atexit \
+        --enable-clocale=gnu \
+        --enable-default-pie \
+        --enable-gnu-indirect-function \
+        --enable-languages=c,c++,lto \
+        --enable-libstdcxx-pch \
+        --enable-linker-build-id \
+        --enable-lto \
+        --enable-multilib \
+        --enable-plugin \
         --enable-shared \
         --enable-static \
-        --enable-threads \
-        --enable-multilib \
-        --with-multilib-list=m32,m64 \
-        --with-arch_32=i686 \
+        --enable-threads=posix \
+        --with-arch=x86-64-v3 \
+        --with-arch_32=x86-64-v2 \
         --with-gcc-major-version-only \
-        --enable-languages=c,c++
+        --with-isl \
+        --with-linker-hash-style=gnu \
+        --with-multilib-list=m32,m64 \
+        --with-system-zlib \
+        --with-tune=skylake \
+        --with-tune_32=skylake \
 build       : |
     %make -C build
 install     : |
