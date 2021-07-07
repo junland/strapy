@@ -5,8 +5,8 @@ which we then use to produce the first self hosting repositories. As explained p
 our timescale means that proper development isn't **yet** at full cadence.
 
 Eventually we're looking at simple, configurable shell scripts to automatically build
-stage1 + stage2 toolchains, and a corresponding chrootable image which we'll use as a
-simple base to flesh out basic requirements, package management, etc.
+stage1 + stage2 + stage3 toolchains, and a corresponding chrootable image which
+we'll use as a simple base to flesh out basic requirements, package management, etc.
 
 When package management features are complete, including build tools, one will need to
 use a bootstrap image to complete a full bootstrap for a self hosting image.
@@ -17,8 +17,9 @@ x86_64 hardware.
 
 ### Requirements
 
- - Host zlib
- - Working host toolchain (gcc or clang)
+ - `glibc-2.33`
+ - Host `zlib`
+ - Working host toolchain (`gcc`or `clang`)
  - `curl`  binary in path
  - non-stupid `tar`
  - `bash` - Yes, these are bash scripts.
@@ -34,17 +35,21 @@ Use stage1 to cross-compile essentials for a working chroot, and freshly cross-c
 
 #### stage3
 
-Reuse stage1 to build musl + headers.
-Reusage stage2 at `/serpent` in a chroot to build a clean stage3 install.
+Reuse stage1 to build glibc + headers.
+Reuse stage2 at `/serpent` in a chroot to build a clean stage3 install.
 
+#### stage4
+
+Rely on the stage3 image and use `moss` and `boulder` tooling to build the initial native SerpentOS
+image from `stone.yml` recipes.
 
 ### Multiarch testing
 
 It is advised you install the correct qemu-user-static within your path so that the cross-compilation
 stages can make use of it.
 
-For example, fetch `x86_64_qemu-aarch64-static.tar.gz` from the [multiarch](https://github.com/multiarch/qemu-user-static/releases) project, to be able to
-chroot into an AArch64 environment from an x86_64 host.
+For example, fetch `x86_64_qemu-aarch64-static.tar.gz` from the [multiarch](https://github.com/multiarch/qemu-user-static/releases) project,
+to be able to chroot into an AArch64 environment from an x86_64 host.
 
 Extract the archive, and install `qemu-aarch64-static` to `/usr/bin` or similar.
 
@@ -58,7 +63,7 @@ echo ':aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x0
 
 #### Build Requirements
 
-*Note that glibc-2.33 is required for successful build (Fedora 34 uses glibc-2.32)*
+Check that your distro uses `glibc-2.33` as this is required for a successful bootstrap.
 
 ##### Arch
 
