@@ -122,6 +122,7 @@ function takeDownMounts()
     serpentUnmount "${stage3tree}/build"
     serpentUnmount "${stage3tree}/serpent"
     serpentUnmount "${stage3tree}/dev/pts"
+    serpentUnmount "${stage3tree}/dev/shm"
     serpentUnmount "${stage3tree}/sys"
     serpentUnmount "${stage3tree}/proc"
     serpentUnmount "${stage3tree}/stones"
