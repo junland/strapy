@@ -66,3 +66,6 @@ serpentChroot make -j "${SERPENT_BUILD_JOBS}"
 
 printInfo "Installing glibc 32bit"
 serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+
+# Make a symlink for the ld loader
+ln -sf /usr/lib32/ld-linux.so.2 "${SERPENT_INSTALL_DIR}/usr/lib/ld-linux.so.2"
