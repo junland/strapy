@@ -54,6 +54,7 @@ function createMountDirs()
     [ ! -z "${SERPENT_INSTALL_DIR}" ] || serpentFail "Missing SERPENT_INSTALL_DIR"
 
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/dev/pts"
+    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/dev/shm" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/dev/shm"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/proc"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/sys"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
@@ -72,6 +73,7 @@ function bringUpMounts()
     local stage3tree=$(getInstallDir 3)
 
     mount -v --bind /dev/pts "${stage3tree}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
+    mount -v --bind /dev/shm "${stage3tree}/dev/shm" || serpentFail "Failed to bind-mount /dev/shm"
     mount -v --bind /sys "${stage3tree}/sys" || serpentFail "Failed to bind-mount /sys"
     mount -v --bind /proc "${stage3tree}/proc" || serpentFail "Failed to bind-mount /proc"
 

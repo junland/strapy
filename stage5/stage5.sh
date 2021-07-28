@@ -35,6 +35,7 @@ set +e
 printInfo "Taking down the mounts"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/build"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
+umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
 set -e
@@ -47,7 +48,6 @@ rm -rf ${SERPENT_INSTALL_DIR}/*
 
 ### Extract stones
 pushd ${SERPENT_INSTALL_DIR}
-    rm ${executionPath}/../build/stage4/stones/headers/headers-5*.stone
     for i in $(ls ${executionPath}/../build/stage4/stones/*/*.stone); do
         /home/sunnyflunk/moss/bin/moss extract ${i}
     done
@@ -62,11 +62,13 @@ cp "${executionPath}/test.sh" "${SERPENT_INSTALL_DIR}/mossInstall/"
 
 printInfo "Bringing up the mounts"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts" || serpentFail "Failed to construct /dev/pts"
+install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm" || serpentFail "Failed to construct /dev/shm"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/proc" || serpentFail "Failed to construct /proc"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/sys" || serpentFail "Failed to construct /sys"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/build" || serpentFail "Failed to construct /build"
 
 mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
+mount -v --bind /dev/shm "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm" || serpentFail "Failed to bind-mount /dev/shm"
 mount -v --bind /sys "${SERPENT_INSTALL_DIR}/mossInstall/sys" || serpentFail "Failed to bind-mount /sys"
 mount -v --bind /proc "${SERPENT_INSTALL_DIR}/mossInstall/proc" || serpentFail "Failed to bind-mount /proc"
 
@@ -84,6 +86,7 @@ set +e
 printInfo "Taking down the mounts"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/build"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
+umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
 
