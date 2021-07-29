@@ -20,7 +20,7 @@ extractSource isl
 ln -sv "mpfr-4.1.0" mpfr
 ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
-ln -sv "isl-0.21" isl
+ln -sv "isl-0.24" isl
 
 export PATH="${SERPENT_INSTALL_DIR}/usr/binutils/bin:$PATH"
 export CC="gcc"

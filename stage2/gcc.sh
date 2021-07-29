@@ -23,7 +23,7 @@ extractSource gmp
 ln -sv "mpfr-4.1.0" mpfr
 ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
-export GCC_VERS="11.1.0"
+export GCC_VERS="11.2.0"
 
 export LD="ld.bfd"
 export AR="ar"
