@@ -9,7 +9,7 @@ description : |
 upstreams   :
     - https://github.com/midipix-project/slibtool/archive/v0.5.31.tar.gz : 2f611e477a282b147e2c877764a27e58b90e5b546b4479844503827a587d7a7a
 setup       : |
-    %configure  --all-shared
+    %configure --all-shared
 build       : |
     %make
 install     : |

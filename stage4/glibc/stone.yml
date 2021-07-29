@@ -11,6 +11,9 @@ description : |
     The GNU libc libraries
 upstreams   :
     - https://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.xz: 2e2556000e105dbd57f0b6b2a32ff2cf173bde4f0d85dffccfd8b7e51a0677ff
+environment : |
+    # Fix build to use actual flags for more tuned glibc
+    unset CFLAGS CXXFLAGS LDFLAGS
 setup       : |
     unset CFLAGS CXXFLAGS LDFLAGS
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
@@ -29,11 +32,7 @@ setup       : |
     # Note this deliberately excludes libsuffix and is not an error
     echo "complocaledir=/usr/lib/locale" >> configparms
 
-    ../configure --prefix=/usr \
-        --build=%(build) \
-        --host=%(host) \
-        --libdir=/usr/lib \
-        --sysconfdir=/etc \
+    ../configure %(options_configure) \
         --disable-crypt \
         --disable-obsolete-rpc \
         --disable-profile \
@@ -53,11 +52,9 @@ setup       : |
         --without-selinux \
         libc_cv_include_x86_isa_level=no
 build       : |
-    unset CFLAGS CXXFLAGS LDFLAGS
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make -C build
 install     : |
-    unset CFLAGS CXXFLAGS LDFLAGS
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make_install build DESTDIR="%(installroot)" -C build
     %make localedata/install-locales DESTDIR="%(installroot)" -C build

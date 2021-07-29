@@ -13,12 +13,12 @@ upstreams   :
 setup       : |
     ./Configure -des \
         -Dprefix=/usr \
-        -Dvendorprefix=/usr \
         -Dscriptdir=/usr/bin \
+        -Dvendorprefix=/usr \
+        -Dcc=clang \
+        -Dnoextensions=Encode \
         -Duseshrplib \
         -Dusethreads \
-        -Dcc=clang \
-        -Dnoextensions=Encode
 build       : |
     %make
 install     : |

@@ -12,10 +12,10 @@ description : |
 upstreams   :
     - https://github.com/systemd/systemd-stable/archive/v248.3.tar.gz : cc372aeed563379a734901ed73d6fbb6b75c171251e1d69c0b5650aaf9c15d06
 setup       : |
-    %meson -Dtests=false \
-        -Dfuzz-tests=false \
+    %meson -Dfuzz-tests=false \
+        -Dinstall-tests=false \
         -Dslow-tests=false \
-        -Dinstall-tests=false
+        -Dtests=false \
 build       : |
     %meson_build
 install     : |

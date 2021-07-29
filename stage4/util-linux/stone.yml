@@ -16,6 +16,7 @@ description : |
 upstreams   :
     - https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.tar.xz : bd07b7e98839e0359842110525a3032fdb8eaf3a90bedde3dd1652d32d15cce5
 setup       : |
+    # Can fix these issues once fakeroot is implemented
     %configure --disable-makeinstall-chown \
         --disable-makeinstall-setuid
 build       : |

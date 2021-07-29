@@ -26,13 +26,7 @@ upstreams   :
         unpackdir: "%(name)-%(version)/mpfr/"
 setup       : |
     mkdir build && cd build
-    ../configure --prefix=/usr \
-        --bindir=/usr/bin \
-        --sysconfdir=/etc \
-        --libdir=/usr/lib \
-        --sbindir=/usr/sbin \
-        --datadir=/usr/share \
-        --includedir=/usr/include \
+    ../configure %(options_configure) \
         --disable-libmpx \
         --disable-libssp \
         --disable-libunwind-exceptions \

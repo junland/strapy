@@ -10,13 +10,7 @@ upstreams   :
     - https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz : 820d9724f020a3e69cb337893a0b63c2db161dadcb0e06fc11dc29eb1e84a32c
 setup       : |
     mkdir %(builddir) && cd %(builddir)
-    ../configure --prefix=/usr \
-        --sysconfdir=/etc \
-        --libdir=/usr/lib \
-        --with-lib-path="/usr/lib:/usr/lib32" \
-        --sbindir=/usr/sbin \
-        --datadir=/usr/share \
-        --includedir=/usr/include \
+    ../configure %(options_configure) \
         --disable-gdb \
         --disable-shared \
         --enable-64-bit-bfd \
@@ -28,8 +22,9 @@ setup       : |
         --enable-secureplt \
         --enable-static \
         --enable-threads \
+        --with-lib-path="/usr/lib:/usr/lib32" \
         --with-system-zlib \
-        --without-debuginfod \
+        --without-debuginfod
 build       : |
     %make tooldir=/usr -C %(builddir)
 install     : |
