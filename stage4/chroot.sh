@@ -30,7 +30,6 @@ requireTools "mknod"
 # Ensure that mounts already exist
 prefetchSources
 mkdir -p "${SERPENT_BUILD_DIR}/stones" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/stones"
-mkdir -p "${SERPENT_BUILD_DIR}/os" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}/os"
 createDownloadStore
 
 takeDownMounts

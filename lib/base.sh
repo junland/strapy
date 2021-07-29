@@ -59,7 +59,6 @@ function createMountDirs()
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/sys"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/build"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/os" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/os"
     install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/stones" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/stones"
 }
 
