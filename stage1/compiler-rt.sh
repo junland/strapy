@@ -19,9 +19,9 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 export AR="llvm-ar"
 export RANLIB="llvm-ranlib"
 export STRIP="llvm-strip"
-export TOOLCHAIN_VERSION="11.0.1"
+export TOOLCHAIN_VERSION="12.0.1"
 
-extractSource compiler-rt
+extractSource llvmorg
 
 # Handle musl-specific bootstrap of compiler-rt
 if [[ "${SERPENT_LIBC}" == "musl" ]]; then
@@ -46,7 +46,7 @@ if [[ "${SERPENT_LIBC}" == "musl" ]]; then
 fi
 
 printInfo "Configuring compiler-rt builtins"
-pushd compiler-rt*
+pushd llvm-project-${TOOLCHAIN_VERSION}.src/compiler-rt
 mkdir build && pushd build
 cmake .. -G Ninja  \
     -DCOMPILER_RT_BUILD_BUILTINS=ON \

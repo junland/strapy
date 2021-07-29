@@ -27,26 +27,18 @@ export STRIP="llvm-strip"
 
 export TOOLCHAIN_VERSION="12.0.1"
  
-extractSource libcxx
-extractSource libcxxabi
-extractSource libunwind
-extractSource llvm
-
-ln -sv "libcxx-${TOOLCHAIN_VERSION}.src" libcxx
-ln -sv "libcxxabi-${TOOLCHAIN_VERSION}.src" libcxxabi
-ln -sv "libunwind-${TOOLCHAIN_VERSION}.src" libunwind
-ln -sv "llvm-${TOOLCHAIN_VERSION}.src" llvm
+extractSource llvmorg
 
 # Stop using glibc functionality through failed test
 # Prevents HAVE___CXA_THREAD_ATEXIT_IMPL being defined and the ensuing linking errors
 if [[ "${SERPENT_LIBC}" == "musl" ]]; then
-    pushd libcxxabi
+    pushd llvm-project-${TOOLCHAIN_VERSION}.src/libcxxabi
     patch -p1 < "${SERPENT_PATCHES_DIR}/libcxxabi_musl_exit.patch"
     popd
     export TOOLCHAIN_EXTRA_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
 fi
 
-pushd llvm
+pushd llvm-project-${TOOLCHAIN_VERSION}.src/llvm
 
 
 mkdir build && pushd build
