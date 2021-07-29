@@ -10,59 +10,69 @@ description : |
     Low Level Virtual Machine
 upstreams   :
     - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/llvm-project-12.0.1.src.tar.xz : 129cb25cd13677aad951ce5c2deb0fe4afc1e9d98950f53b51bdcfb5a73afa0e
-install     : |
-    # This is a bit hacky till there's an export for all build stages
+environment : |
     export llvmopts="
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
         -DCMAKE_BUILD_TYPE=Release \
-        -DLLVM_TARGET_ARCH="X86_64" \
-        -DLLVM_DEFAULT_TARGET_TRIPLE="%(build)" \
-        -DLLVM_TARGETS_TO_BUILD="X86" \
-        -DLLVM_ENABLE_LIBXML2=OFF \
-        -DLLVM_ENABLE_FFI=OFF \
-        -DLLVM_INCLUDE_TESTS=OFF \
+        -DCMAKE_CXX_STANDARD=20 \
+        -DCLANG_BUILD_TOOLS=OFF \
         -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
         -DCLANG_DEFAULT_LINKER=lld \
         -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
         -DCLANG_DEFAULT_RTLIB=compiler-rt \
-        -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+        -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
         -DCOMPILER_RT_HAS_ATOMIC_KEYWORD=ON \
         -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
         -DCOMPILER_RT_USE_LIBCXX=ON \
-        -DLLVM_ENABLE_LIBCXX=ON \
-        -DSANITIZER_CXX_ABI=libc++ \
-        -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
-        -DLIBCXX_ENABLE_SHARED=ON \
-        -DLIBCXX_ENABLE_STATIC=OFF \
-        -DLIBCXX_USE_COMPILER_RT=ON \
-        -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
+        -DENABLE_EXPERIMENTAL_NEW_PASS_MANAGER=ON \
+        -DENABLE_LINKER_BUILD_ID=ON \
+        -DLIBCXXABI_ENABLE_SHARED=OFF \
+        -DLIBCXXABI_ENABLE_STATIC_UNWINDER=ON \
+        -DLIBCXXABI_INSTALL_LIBRARY=OFF \
+        -DLIBCXXABI_STATICALLY_LINK_UNWINDER_IN_SHARED_LIBRARY=ON \
+        -DLIBCXXABI_STATICALLY_LINK_UNWINDER_IN_STATIC_LIBRARY=ON \
         -DLIBCXXABI_USE_COMPILER_RT=ON \
-        -DLIBCXXABI_ENABLE_SHARED=ON \
-        -DLIBCXXABI_ENABLE_STATIC=OFF \
-        -DLIBCXXABI_INSTALL_LIBRARY=ON \
-        -DLIBUNWIND_ENABLE_SHARED=ON \
+        -DLIBCXXABI_USE_LLVM_UNWINDER=ON \
+        -DLIBCXX_ENABLE_PARALLEL_ALGORITHMS=ON \
+        -DLIBCXX_ENABLE_SHARED=ON \
+        -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON \
+        -DLIBCXX_ENABLE_STATIC=ON \
+        -DLIBCXX_HAS_ATOMIC_LIB=ON \
+        -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
+        -DLIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY=ON \
+        -DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON \
+        -DLIBCXX_USE_COMPILER_RT=ON \
+        -DLIBUNWIND_ENABLE_SHARED=OFF \
         -DLIBUNWIND_ENABLE_STATIC=ON \
-        -DLIBUNWIND_TARGET_TRIPLE="%(build)" \
-        -DLIBUNWIND_USE_COMPILER_RT=ON \
-        -DLLVM_USE_SANITIZER=OFF \
-        -DLLVM_ENABLE_UNWIND_TABLES=OFF \
+        -DLIBUNWIND_INSTALL_LIBRARY=OFF \
+        -DLIBUNWIND_USE_COMPILER_RT=ON
+        -DLLVM_BUILD_32_BITS=OFF \
+        -DLLVM_BUILD_TOOLS=ON \
+        -DLLVM_DEFAULT_TARGET_TRIPLE="%(build)" \
+        -DLLVM_ENABLE_FFI=OFF \
+        -DLLVM_ENABLE_LIBCXX=ON \
+        -DLLVM_ENABLE_LIBXML2=OFF \
+        -DLLVM_ENABLE_PIC=ON \
+        -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;polly;pstl' \
+        -DLLVM_ENABLE_UNWIND_TABLES=ON \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
+        -DLLVM_INCLUDE_TESTS=OFF \
         -DLLVM_INCLUDE_UTILS=OFF \
-        -DCLANG_DEFAULT_UNWINDLIB="libunwind" \
+        -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+        -DLLVM_LIBDIR_SUFFIX=%(libsuffix) \
         -DLLVM_OPTIMIZED_TABLEGEN=ON \
-        -DLLVM_BUILD_TOOLS=OFF \
-        -DCLANG_BUILD_TOOLS=OFF"
+        -DLLVM_TARGET_ARCH="X86_64" \
+        -DLLVM_TARGETS_TO_BUILD="X86" \
+        -DLLVM_USE_SANITIZER=OFF \
+        -DSANITIZER_CXX_ABI=libc++"
 
     cd llvm
+setup       : |
     %cmake ${llvmopts} \
         -DLLVM_BUILD_LLVM_DYLIB=ON \
         -DLLVM_LINK_LLVM_DYLIB=ON
-    cd ..
-
+build       : |
     %cmake_build
-    %cmake_build llvm-config
-
+install     : |
     %cmake_install
 
     %cmake ${llvmopts} \
@@ -73,7 +83,11 @@ install     : |
 
     # Relink lld and clang statically
     %cmake_build lld clang
-    cp %(builddir)/bin/* "%(installroot)/usr/bin"
+    cp %(builddir)/bin/{clang,lld} "%(installroot)/usr/bin"
 
-    # lld as default linker
+    # Set some support symlinks
     ln -svf ld.lld "%(installroot)/usr/bin/ld"
+    ln -svf libc++.so.1 "%(installroot)/usr/lib/libunwind.so"
+    ln -svf libc++.so.1 "%(installroot)/usr/lib/libunwind.so.1"
+    ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so"
+    ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so.1"
