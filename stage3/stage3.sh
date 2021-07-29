@@ -123,7 +123,6 @@ restoreBinutils llvm-llvm
 restoreGcc llvm-llvm
 
 /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain.sh" || serpentFail "Building toolchain failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32-2.sh" || serpentFail "Building toolchain32-2 failed"
 
 takeDownMounts
 
