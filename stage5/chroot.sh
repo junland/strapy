@@ -32,13 +32,16 @@ checkRootUser
 
 printInfo "Bringing up the mounts"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts" || serpentFail "Failed to construct /dev/pts"
+install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm" || serpentFail "Failed to construct /dev/shm"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/proc" || serpentFail "Failed to construct /proc"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/sys" || serpentFail "Failed to construct /sys"
 install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/mossInstall/build" || serpentFail "Failed to construct /build"
 
 mount -v --bind /dev/pts "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
+mount -v --bind /dev/shm "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm" || serpentFail "Failed to bind-mount /dev/shm"
 mount -v --bind /sys "${SERPENT_INSTALL_DIR}/mossInstall/sys" || serpentFail "Failed to bind-mount /sys"
 mount -v --bind /proc "${SERPENT_INSTALL_DIR}/mossInstall/proc" || serpentFail "Failed to bind-mount /proc"
+mount -t tmpfs tmpfs "${SERPENT_INSTALL_DIR}/mossInstall/tmp" || serpentFail "Failed to mount /tmp"
 
 mount -v --bind "${SERPENT_BUILD_DIR}" "${SERPENT_INSTALL_DIR}/mossInstall/build" || serpentFail "Failed to bind-mount /build"
 ###
@@ -56,5 +59,6 @@ umount "${SERPENT_INSTALL_DIR}/mossInstall/build"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
 umount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
+umount "${SERPENT_INSTALL_DIR}/mossInstall/tmp"
 
 ###
