@@ -9,9 +9,17 @@ description : |
 upstreams   :
     - https://www.python.org/ftp/python/3.9.5/Python-3.9.5.tar.xz : 0c5a140665436ec3dbfbb79e2dfb6d192655f26ef4a29aeffcb6d1820d716d83
 setup       : |
-    %configure --without-cxx-main \
-        --disable-ipv6
+    %configure --disable-ipv6 \
+        --enable-lto \
+        --with-computed-gotos \
+        --with-threads \
+        --without-cxx-main
 build       : |
     %make
 install     : |
     %make_install
+workload    : |
+    LD_LIBRARY_PATH=%(workdir) ./python -m test --pgo-extended -j%(jobs) -x test_httpservers \
+        -x test_asyncio -x test_logging -x test_xmlrpc || true
+tuning      :
+    - harden: lvl1
