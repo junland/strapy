@@ -17,3 +17,8 @@ build       : |
     %make
 install     : |
     %make_install
+workload    : |
+    %make check
+check       : |
+    %make check
+cspgo       : false
