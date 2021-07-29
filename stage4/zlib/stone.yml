@@ -16,3 +16,7 @@ build       : |
     %make
 install     : |
     %make_install
+workload    : |
+    for i in $(seq 1 9); do
+        cat *.c | ./minigzip -${i} | ./minigzip -d > /dev/null
+    done
