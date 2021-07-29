@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-export TOOLCHAIN_VERSION="12.0.0"
+export TOOLCHAIN_VERSION="12.0.1"
 
 printInfo "Extracting toolchain requirements"
 extractSource llvmorg

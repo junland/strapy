@@ -1,5 +1,5 @@
-name        : headers
-version     : 5.12.10
+name        : linux-headers
+version     : 5.13.6
 release     : 1
 summary     : Kernel's libc headers
 license     : GPL-2.0-only
@@ -7,7 +7,7 @@ homepage    : https://www.kernel.org/
 description : |
     Kernel's libc headers
 upstreams   :
-    - https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.12.10.tar.xz : c8d499fc53ed14838994ec2f51591ae40d64cce68559cd897be8acbeeee7630f
+    - https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.13.6.tar.xz : a62c1720efff2692a29da4c07748088f766cc43e275d165611e4d2581ba25276
 build       : |
     export ARCH="x86_64"
     make mrproper
@@ -18,3 +18,7 @@ install     : |
     install -D -d -m 00755 "%(installroot)/usr/include"
     cp -Rv usr/include "%(installroot)/usr/."
 toolchain   : gnu
+packages    :
+    - "%(name)":
+         paths:
+             - "*"

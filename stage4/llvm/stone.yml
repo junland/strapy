@@ -1,5 +1,5 @@
 name        : llvm
-version     : 12.0.0
+version     : 12.0.1
 release     : 1
 summary     : Low Level Virtual Machine
 license     :
@@ -9,7 +9,7 @@ homepage    : https://www.llvm.org
 description : |
     Low Level Virtual Machine
 upstreams   :
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.0/llvm-project-12.0.0.src.tar.xz : 9ed1688943a4402d7c904cc4515798cdb20080066efa010fe7e1f2551b423628
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/llvm-project-12.0.1.src.tar.xz : 129cb25cd13677aad951ce5c2deb0fe4afc1e9d98950f53b51bdcfb5a73afa0e
 install     : |
     # This is a bit hacky till there's an export for all build stages
     export llvmopts="
@@ -27,6 +27,7 @@ install     : |
         -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
         -DCLANG_DEFAULT_RTLIB=compiler-rt \
         -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
+        -DCOMPILER_RT_HAS_ATOMIC_KEYWORD=ON \
         -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
         -DCOMPILER_RT_USE_LIBCXX=ON \
         -DLLVM_ENABLE_LIBCXX=ON \
@@ -44,10 +45,6 @@ install     : |
         -DLIBUNWIND_ENABLE_STATIC=ON \
         -DLIBUNWIND_TARGET_TRIPLE="%(build)" \
         -DLIBUNWIND_USE_COMPILER_RT=ON \
-        -DCOMPILER_RT_BUILD_LIBFUZZER=OFF \
-        -DCOMPILER_RT_BUILD_PROFILE=OFF \
-        -DCOMPILER_RT_BUILD_SANITIZERS=OFF \
-        -DCOMPILER_RT_BUILD_XRAY=OFF \
         -DLLVM_USE_SANITIZER=OFF \
         -DLLVM_ENABLE_UNWIND_TABLES=OFF \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
