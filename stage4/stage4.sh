@@ -18,7 +18,7 @@ executionPath=$(dirname $(realpath -s $0))
 stage3tree=$(getInstallDir 3)
 
 GNUCOMPONENTS=(
-    "headers"
+    "linux-headers"
     "glibc"
     "binutils"
     "gcc"
