@@ -14,3 +14,8 @@ build       : |
     %make
 install     : |
     %make_install PREFIX=/usr LIBDIR=/usr/lib
+workload    : |
+    for i in $(seq 1 22); do
+        cat */*/*.c */* | programs/zstd --ultra -${i} | programs/zstd -d > /dev/null
+        cat */*/*.c */* | programs/zstd --ultra --long -${i} | programs/zstd -d > /dev/null
+    done
