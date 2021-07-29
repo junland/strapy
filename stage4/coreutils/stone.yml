@@ -13,7 +13,8 @@ setup       : |
     echo '# deleted' > m4/std-gnu11.m4
 
     export FORCE_UNSAFE_CONFIGURE=1
-    %configure --enable-single-binary
+    %configure --enable-no-install-program=kill,groups \
+        --enable-single-binary
 build       : |
     export FORCE_UNSAFE_CONFIGURE=1
     %make
