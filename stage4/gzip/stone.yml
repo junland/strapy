@@ -14,3 +14,7 @@ build       : |
     %make
 install     : |
     %make_install
+workload    : |
+    %make check
+chcek       : |
+    %make check
