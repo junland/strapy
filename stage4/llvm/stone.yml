@@ -13,7 +13,7 @@ upstreams   :
 environment : |
     export llvmopts="
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_CXX_STANDARD=20 \
+        -DCMAKE_CXX_STANDARD=17 \
         -DCLANG_BUILD_TOOLS=OFF \
         -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
         -DCLANG_DEFAULT_LINKER=lld \
@@ -37,7 +37,6 @@ environment : |
         -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=ON \
         -DLIBCXX_ENABLE_STATIC=ON \
         -DLIBCXX_HAS_ATOMIC_LIB=ON \
-        -DLIBCXX_INSTALL_SUPPORT_HEADERS=ON \
         -DLIBCXX_STATICALLY_LINK_ABI_IN_SHARED_LIBRARY=ON \
         -DLIBCXX_STATICALLY_LINK_ABI_IN_STATIC_LIBRARY=ON \
         -DLIBCXX_USE_COMPILER_RT=ON \
@@ -51,12 +50,13 @@ environment : |
         -DLLVM_ENABLE_FFI=OFF \
         -DLLVM_ENABLE_LIBCXX=ON \
         -DLLVM_ENABLE_LIBXML2=OFF \
+        -DLLVM_ENABLE_LTO=Thin \
         -DLLVM_ENABLE_PIC=ON \
-        -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;polly;pstl' \
+        -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;pstl' \
         -DLLVM_ENABLE_UNWIND_TABLES=ON \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
-        -DLLVM_INCLUDE_TESTS=OFF \
-        -DLLVM_INCLUDE_UTILS=OFF \
+        -DLLVM_INCLUDE_TESTS=ON \
+        -DLLVM_INCLUDE_UTILS=ON \
         -DLLVM_INSTALL_BINUTILS_SYMLINKS=ON \
         -DLLVM_LIBDIR_SUFFIX=%(libsuffix) \
         -DLLVM_OPTIMIZED_TABLEGEN=ON \
@@ -91,3 +91,5 @@ install     : |
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libunwind.so.1"
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so"
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so.1"
+workload     : |
+    %cmake_build check-clang check-cxx check-cxxabi check-unwind check-llvm check-lld check-pstl -k 10000 ||:
