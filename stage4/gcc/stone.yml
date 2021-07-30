@@ -54,7 +54,7 @@ setup       : |
         --with-tune=skylake \
         --with-tune_32=skylake \
 build       : |
-    %make -C build
+    %make -C build profiledbootstrap
 install     : |
     %make_install -C build
 toolchain   : gnu
