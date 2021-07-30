@@ -14,3 +14,9 @@ build       : |
     %cmake_build
 install     : |
     %cmake_install
+tuning      :
+    - icf: all
+    - lto
+    - noplt
+    - nosemantic
+    - symbolic
