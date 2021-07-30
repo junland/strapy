@@ -15,7 +15,3 @@ build       : |
     %make -j3
 install     : |
     %make_install -j3
-
-    # Make bash the default sh
-    install -dm00755 "%(installroot)/usr/bin"
-    ln -svf bash "%(installroot)/usr/bin/sh"

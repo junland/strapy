@@ -9,8 +9,12 @@ description : |
 upstreams   :
     - http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.11.4.tar.gz: 4e15b7ba5363bcc2a443549910cdc15b5ad601df8196b5f294c712eff037e08d
 setup       : |
-    %configure --enable-static
+    %configure
 build       : |
     %make
 install     : |
     %make_install
+
+    # Make dash the default sh
+    install -dm00755 "%(installroot)/usr/bin"
+    ln -svf dash "%(installroot)/usr/bin/sh"
