@@ -14,10 +14,8 @@ upstreams   :
 environment : |
     # Fix build to use actual flags for more tuned glibc
     unset CFLAGS CXXFLAGS LDFLAGS
-setup       : |
-    unset CFLAGS CXXFLAGS LDFLAGS
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
-
+setup       : |
     # Build only US UTF-8 locale for now
     echo "SUPPORTED_LOCALES=\
     en_US.UTF-8/UTF-8
@@ -46,16 +44,13 @@ setup       : |
         --enable-plugin \
         --enable-stack-protector \
         --enable-stackguard-randomization \
-        --enable-static-pie \
         --enable-threads=posix \
         --enable-tunables \
         --without-selinux \
         libc_cv_include_x86_isa_level=no
 build       : |
-    export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make -C build
 install     : |
-    export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
     %make_install build DESTDIR="%(installroot)" -C build
     %make localedata/install-locales DESTDIR="%(installroot)" -C build
 
