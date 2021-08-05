@@ -23,6 +23,20 @@ export SERPENT_INSTALL_ROOT="${SERPENT_ROOT_DIR}/install"
 export SERPENT_BUILD_DIR="${SERPENT_BUILD_ROOT}/${SERPENT_STAGE_NAME}"
 export SERPENT_INSTALL_DIR="${SERPENT_INSTALL_ROOT}/${SERPENT_TARGET}/${SERPENT_LIBC}/${SERPENT_STAGE_NAME}"
 
+### takeDownMounts
+set +e
+
+printInfo "Taking down the mounts"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/build"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/tmp"
+
+set -e
+###
+
 install -D -d -m 00755 "${SERPENT_BUILD_DIR}"
 requireTools "mknod"
 
@@ -55,10 +69,11 @@ chroot "${SERPENT_INSTALL_DIR}/mossInstall" /bin/bash -i
 set +e
 
 printInfo "Taking down the mounts"
-umount "${SERPENT_INSTALL_DIR}/mossInstall/build"
-umount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
-umount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
-umount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
-umount "${SERPENT_INSTALL_DIR}/mossInstall/tmp"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/build"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/dev/pts"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/dev/shm"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/sys"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/proc"
+serpentUnmount "${SERPENT_INSTALL_DIR}/mossInstall/tmp"
 
 ###
