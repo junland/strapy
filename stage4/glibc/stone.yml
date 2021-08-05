@@ -13,9 +13,18 @@ upstreams   :
     - https://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.xz: 2e2556000e105dbd57f0b6b2a32ff2cf173bde4f0d85dffccfd8b7e51a0677ff
 environment : |
     # Fix build to use actual flags for more tuned glibc
-    unset CFLAGS CXXFLAGS LDFLAGS
     export CC="${CC} -B/usr/lib/gcc/x86_64-serpent-linux/11/%(libsuffix)"
+    export LDFLAGS="${LDFLAGS} -Wl,-O2,-z,max-page-size=0x1000,--sort-common"
 setup       : |
+    # Patches ahoy!
+    %patch %(pkgdir)/perf/fix-ld-audit-performance.patch
+    %patch %(pkgdir)/serpent/0001-sysdeps-Add-support-for-default-directories.patch
+    %patch %(pkgdir)/serpent/0001-Force-correct-RTLDLIST-for-ldd.patch
+    %patch %(pkgdir)/stateless/make-hosts-file-stateless.patch
+    %patch %(pkgdir)/stateless/Support-fallback-stateless-shells-path.patch
+    %patch %(pkgdir)/stateless/Use-a-stateless-ld.so.conf.patch
+    %patch %(pkgdir)/stateless/make-locale-cache-stateless.patch
+
     # Build only US UTF-8 locale for now
     echo "SUPPORTED_LOCALES=\
     en_US.UTF-8/UTF-8
@@ -40,7 +49,6 @@ setup       : |
         --enable-gnu-indirect-function \
         --enable-kernel=5.12 \
         --enable-lock-elision \
-        --enable-multi-arch \
         --enable-plugin \
         --enable-stack-protector \
         --enable-stackguard-randomization \
@@ -48,6 +56,9 @@ setup       : |
         --enable-tunables \
         --without-selinux \
         libc_cv_include_x86_isa_level=no
+        # Need support in linker
+        #--enable-multi-arch \
+        #--enable-static-pie \
 build       : |
     %make -C build
 install     : |
@@ -57,3 +68,10 @@ install     : |
     # Make stateless dirs for glibc /var/cache/locale /var/db /var/run
 toolchain   : gnu
 emul32      : true
+tuning      :
+    - asneeded: false
+    #- avxwidth: false
+    - base: false
+    - bindnow: false
+    - fortify: false
+    - harden: false
