@@ -25,6 +25,9 @@ upstreams   :
         stripdirs: 1
         unpackdir: "%(name)-%(version)/mpfr/"
 setup       : |
+    %patch %(pkgdir)/perf/use-highest-optimize-value.patch
+    %patch %(pkgdir)/serpent/0001-Use-modern-linker-locations-for-Serpent-OS.patch
+
     mkdir build && cd build
     ../configure %(options_configure) \
         --disable-libmpx \
@@ -33,7 +36,6 @@ setup       : |
         --disable-vtable-verify \
         --enable-__cxa_atexit \
         --enable-clocale=gnu \
-        --enable-default-pie \
         --enable-gnu-indirect-function \
         --enable-languages=c,c++,lto \
         --enable-libstdcxx-pch \
@@ -42,7 +44,6 @@ setup       : |
         --enable-multilib \
         --enable-plugin \
         --enable-shared \
-        --enable-static \
         --enable-threads=posix \
         --with-arch=x86-64-v3 \
         --with-arch_32=x86-64-v2 \
@@ -58,3 +59,6 @@ build       : |
 install     : |
     %make_install -C build
 toolchain   : gnu
+tuning      :
+    - nosemantic
+    - symbolic
