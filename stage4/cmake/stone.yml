@@ -17,6 +17,5 @@ install     : |
 tuning      :
     - icf: all
     - lto
-    - noplt
     - nosemantic
     - symbolic
