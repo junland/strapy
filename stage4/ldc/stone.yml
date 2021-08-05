@@ -11,12 +11,9 @@ description : |
     The LLVM-based D Compiler
 upstreams   :
     - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc-1.26.0-src.tar.gz : c18f4c76869f0196b459dcd6196c7eaea1b097cc422cf3771de394f6c0ef7474
-    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz:
-        hash: 06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e
-        extract: false
+    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz: 06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e
 setup       : |
-    # Extract binary ldc
-    tar xf %(sourcedir)/ldc2-%(version)-linux-x86_64.tar.xz -C .
+    %patch %(pkgdir)/0001-Default-to-lld-but-don-t-pass-linker-to-compiler.patch
 
     %cmake -DBUILD_SHARED_LIBS=ON \
         -DCMAKE_INSTALL_PREFIX=/usr \
