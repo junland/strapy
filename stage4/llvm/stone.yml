@@ -67,6 +67,11 @@ environment : |
 
     cd llvm
 setup       : |
+    cd ..
+    %patch %(pkgdir)/serpent/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch
+    %patch %(pkgdir)/serpent/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch
+    cd llvm
+
     %cmake ${llvmopts} \
         -DLLVM_BUILD_LLVM_DYLIB=ON \
         -DLLVM_LINK_LLVM_DYLIB=ON
@@ -93,3 +98,9 @@ install     : |
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so.1"
 workload     : |
     %cmake_build check-clang check-cxx check-cxxabi check-unwind check-llvm check-lld check-pstl -k 10000 ||:
+# LTO needs to be set in LLVM cmake flags so it adds -fno-lto where needed
+tuning      :
+    - icf: all
+    - lto: false
+#    - nosemantic
+    - symbolic
