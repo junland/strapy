@@ -14,3 +14,8 @@ build       : |
     %make
 install     : |
     %make_install
+
+    # Stateless: Move profile.d dir to stateless default path
+    install -Dm00644 %(installroot)/etc/profile.d/* -t %(installroot)/usr/share/defaults/profile.d/
+    rm %(installroot)/etc/profile.d/*
+    rmdir %(installroot)/etc/{profile.d,}
