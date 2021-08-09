@@ -10,10 +10,10 @@ cd glibc-*
 patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-Force-correct-RTLDLIST-for-ldd.patch"
 patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-sysdeps-Add-support-for-default-directories.patch"
 
-# Build only US UTF-8 locale for now
-echo "SUPPORTED_LOCALES=\
-en_US.UTF-8/UTF-8
-" > localedata/SUPPORTED
+# Keep only the UTF-8 locales...
+supported=./localedata/SUPPORTED
+sed -nr '/^(#|SUPPORTED-LOCALES=|.*\/UTF-8)/p' $supported > $supported.new
+mv -v $supported.new $supported
 
 export LD="ld.bfd"
 export AR="ar"
