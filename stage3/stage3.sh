@@ -26,6 +26,7 @@ COMPONENTS=(
     "root"
     "headers"
     "${SERPENT_LIBC}"
+    "gettext"
     "diffutils"
     "zlib"
     "xz"
