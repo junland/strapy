@@ -16,6 +16,8 @@ setup       : |
         -Dscriptdir=/usr/bin \
         -Dvendorprefix=/usr \
         -Dcc=clang \
+        -Dman1dir=/usr/share/man/man1 \
+        -Dman3dir=/usr/share/man/man3 \
         -Dnoextensions=Encode \
         -Duseshrplib \
         -Dusethreads \
