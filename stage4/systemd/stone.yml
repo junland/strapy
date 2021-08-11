@@ -20,3 +20,12 @@ build       : |
     %meson_build
 install     : |
     %meson_install
+
+    # Stateless: Clean up /var directories, they are created via tmpfiles already
+    rm %(installroot)/var/log/README
+    rmdir %(installroot)/var/{lib/systemd,lib,log/journal,log,}
+
+    # Stateless: Clean up /etc, contains mostly example configs to learn from that we should put somewhere
+    # Actual vendor files can go in /usr/lib/systemd/journald.conf.d for example
+    # Test via systemd-analyze cat-config systemd/journald.conf
+    rm -rf %(installroot)/etc
