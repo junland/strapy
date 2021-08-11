@@ -17,9 +17,16 @@ build       : |
 install     : |
     %make_install
 
-    # Clean up unwanted files
+    # dbus-broker handles dbus in Serpent OS, remove dbus equivalent
     rm "%(installroot)/usr/bin/dbus-daemon"
-    rm "%(installroot)/usr/lib/systemd/system/dbus.service"
-    rm "%(installroot)/usr/lib/systemd/system/dbus.socket"
-    rm "%(installroot)/usr/lib/systemd/system/sockets.target.wants/dbus.socket"
-    rm "%(installroot)/usr/lib/systemd/system/multi-user.target.wants/dbus.service"
+    rm -rf  "%(installroot)/usr/lib/systemd"
+
+    # Stateless: /etc/dbus-1 is no longer used
+    # /var/{lib,run}/dbus are created by tmpfiles
+    rm %(installroot)/etc/dbus-1/*
+    rmdir %(installroot)/etc/{dbus-1,}
+    rmdir %(installroot)/var/{lib/dbus,lib,run/dbus,run,}
+
+    # Need to ensure /var/run becomes a symlink to /run for compatibility
+    %tmpfiles "# Create /var/run/dbus directory"
+    %tmpfiles "d /var/run/dbus 0755 - - -"
