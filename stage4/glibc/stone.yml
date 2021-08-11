@@ -24,18 +24,19 @@ setup       : |
     %patch %(pkgdir)/stateless/Support-fallback-stateless-shells-path.patch
     %patch %(pkgdir)/stateless/Use-a-stateless-ld.so.conf.patch
     %patch %(pkgdir)/stateless/make-locale-cache-stateless.patch
+    %patch %(pkgdir)/stateless/ld-so-cache-in-var.patch
 
-    # Build only US UTF-8 locale for now
-    echo "SUPPORTED_LOCALES=\
-    en_US.UTF-8/UTF-8
-    " > localedata/SUPPORTED
+    # Keep only the UTF-8 locales...
+    supported=./localedata/SUPPORTED
+    sed -nr '/^(#|SUPPORTED-LOCALES=|.*\/UTF-8)/p' $supported > $supported.new
+    mv -v $supported.new $supported
 
     mkdir build && cd build
     echo "LD_SO_CACHE=/var/cache/ldconfig/ld.so.cache" >> configparms
     echo "slibdir=/usr/lib%(libsuffix)" >> configparms
     echo "rtlddir=/usr/lib%(libsuffix)" >> configparms
-    echo "sbindir=/usr/sbin" >> configparms
-    echo "rootsbindir=/usr/sbin" >> configparms
+    echo "sbindir=/usr/bin" >> configparms
+    echo "rootsbindir=/usr/bin" >> configparms
     # Note this deliberately excludes libsuffix and is not an error
     echo "complocaledir=/usr/lib/locale" >> configparms
 
@@ -63,9 +64,26 @@ build       : |
     %make -C build
 install     : |
     %make_install build DESTDIR="%(installroot)" -C build
-    %make localedata/install-locales DESTDIR="%(installroot)" -C build
 
-    # Make stateless dirs for glibc /var/cache/locale /var/db /var/run
+    if [[ -z "%(libsuffix)" ]]; then
+        %make localedata/install-locale-files DESTDIR="%(installroot)" -C build
+
+        # Stateless: Remove obsolete rpc
+        rm %(installroot)/var/db/Makefile %(installroot)/etc/rpc
+        rmdir %(installroot)/var/{db,} %(installroot)/etc
+
+        install -Dm00644 %(pkgdir)/ld.so.conf  %(installroot)/%(vendordir)/ld.so.conf
+    else
+        # Support old compiled 32bit binaries
+        install -dm00755 %(installroot)/usr/lib
+        ln -sv /usr/lib32/ld-linux.so.2 %(installroot)/usr/lib/ld-linux.so.2
+    fi
+
+    # Stateless: Make stateless dirs for glibc
+    %tmpfiles "# Create needed /var directories"
+    %tmpfiles "d /var/cache/ldconfig 0755 - - -"
+    %tmpfiles "d /var/cache/locale 0755 - - -"
+    %tmpfiles "d /var/db 0755 - - -"
 toolchain   : gnu
 emul32      : true
 tuning      :
