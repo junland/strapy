@@ -18,7 +18,8 @@ upstreams   :
 setup       : |
     # Can fix these issues once fakeroot is implemented
     %configure --disable-makeinstall-chown \
-        --disable-makeinstall-setuid
+        --disable-makeinstall-setuid \
+        --with-vendordir=%(vendordir)
 build       : |
     %make
 install     : |
