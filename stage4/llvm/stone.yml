@@ -85,6 +85,7 @@ setup       : |
             -DCLANG_DEFAULT_LINKER=lld \
             -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
             -DLLVM_DEFAULT_TARGET_TRIPLE='%(build)' \
+            -DLLVM_ENABLE_LTO=Thin \
             -DLLVM_ENABLE_PROJECTS='clang;lld;llvm' \
             -DLLVM_ENABLE_RUNTIMES='compiler-rt' \
             -DLLVM_INCLUDE_TESTS=OFF \
@@ -115,9 +116,9 @@ install     : |
     cp %(builddir)/bin/{clang,lld} "%(installroot)/usr/bin"
 
     # Set some support symlinks
-    ln -svf libc++.so.1 "%(installroot)/usr/lib/libunwind.so"
+    echo "INPUT(libc++.so.1)" > "%(installroot)/usr/lib/libunwind.so"
+    echo "INPUT(libc++.so.1)" > "%(installroot)/usr/lib/libc++abi.so"
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libunwind.so.1"
-    ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so"
     ln -svf libc++.so.1 "%(installroot)/usr/lib/libc++abi.so.1"
 workload    : |
     # check-cxx check-cxxabi check-unwind check-compiler-rt need sanitizer changes
