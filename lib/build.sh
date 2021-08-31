@@ -193,6 +193,8 @@ export SERPENT_ARCH=$(uname -m)
 
 if [[ -e '/lib/ld-linux-x86-64.so.2' ]] || [[ -e '/lib64/ld-linux-x86-64.so.2' ]]; then
     export SERPENT_HOST="${SERPENT_ARCH}-linux-gnu"
+elif [[ -e '/lib/ld-linux-aarch64.so.1' ]] || [[ -e '/lib64/ld-linux-aarch64.so.1' ]]; then
+	export SERPENT_HOST="${SERPENT_ARCH}-linux-gnu"
 else
     printError "Unsupported host configuration"
     exit 1
