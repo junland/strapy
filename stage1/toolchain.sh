@@ -19,6 +19,12 @@ pushd llvm-project-${TOOLCHAIN_VERSION}.src/llvm
 mkdir build && pushd build
 
 export CFLAGS="-fPIC -O2 -pipe"
+
+# GNU toolchain may cause -moutline-atomics on aarch64, so disable until stage2.
+if [[ "${SERPENT_TARGET_LLVM_BACKEND}" == "AArch64" ]]; then
+	export CFLAGS="${CFLAGS} -mno-outline-atomics"
+fi
+
 export CXXFLAGS="${CFLAGS}"
 
 export llvmopts="
