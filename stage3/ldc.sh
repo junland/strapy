@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-export LDC_VERSION="1.26.0"
+export LDC_VERSION="1.27.1"
 
 printInfo "Extracting ldc"
 extractSource ldc

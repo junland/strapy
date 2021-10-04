@@ -19,7 +19,7 @@ export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
 export AR="llvm-ar"
 export RANLIB="llvm-ranlib"
 export STRIP="llvm-strip"
-export TOOLCHAIN_VERSION="12.0.1"
+export TOOLCHAIN_VERSION="13.0.0"
 
 extractSource llvmorg
 
