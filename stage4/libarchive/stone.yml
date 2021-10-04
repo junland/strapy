@@ -1,5 +1,5 @@
 name        : libarchive
-version     : 3.5.1
+version     : 3.5.2
 release     : 1
 summary     : Multi-format archive and compression library
 license     : BSD-2-Clause
@@ -7,7 +7,7 @@ homepage    : https://www.libarchive.org
 description : |
     Multi-format archive and compression library
 upstreams   :
-    - https://www.libarchive.org/downloads/libarchive-3.5.1.tar.gz: 9015d109ec00bb9ae1a384b172bf2fc1dff41e2c66e5a9eeddf933af9db37f5a
+    - https://www.libarchive.org/downloads/libarchive-3.5.2.tar.gz: 5f245bd5176bc5f67428eb0aa497e09979264a153a074d35416521a5b8e86189
 setup       : |
     %configure --disable-hardlink \
         --disable-rpath \

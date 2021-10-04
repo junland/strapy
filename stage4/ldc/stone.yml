@@ -1,5 +1,5 @@
 name        : ldc
-version     : 1.26.0
+version     : 1.27.1
 release     : 1
 summary     : The LLVM-based D Compiler
 license     :
@@ -10,8 +10,8 @@ homepage    : https://github.com/ldc-developers/ldc
 description : |
     The LLVM-based D Compiler
 upstreams   :
-    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc-1.26.0-src.tar.gz : c18f4c76869f0196b459dcd6196c7eaea1b097cc422cf3771de394f6c0ef7474
-    - https://github.com/ldc-developers/ldc/releases/download/v1.26.0/ldc2-1.26.0-linux-x86_64.tar.xz: 06063a92ab2d6c6eebc10a4a9ed4bef3d0214abc9e314e0cd0546ee0b71b341e
+    - https://github.com/ldc-developers/ldc/releases/download/v1.27.1/ldc-1.27.1-src.tar.gz : 93c8f500b39823dcdabbd73e1bcb487a1b93cb9a60144b0de1c81ab50200e59c
+    - https://github.com/ldc-developers/ldc/releases/download/v1.27.1/ldc2-1.27.1-linux-x86_64.tar.xz: 48d68e0747dc17b9b0d2799a2fffdc5ddaf986c649283c784830f19c4c82830c
 setup       : |
     %patch %(pkgdir)/serpent/0001-Default-to-lld-but-don-t-pass-linker-to-compiler.patch
     %patch %(pkgdir)/stateless/0001-Fixups-for-packaging-and-stateless-config.patch

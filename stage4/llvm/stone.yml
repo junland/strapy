@@ -1,5 +1,5 @@
 name        : llvm
-version     : 12.0.1
+version     : 13.0.0
 release     : 1
 summary     : Low Level Virtual Machine
 license     :
@@ -9,7 +9,7 @@ homepage    : https://www.llvm.org
 description : |
     Low Level Virtual Machine
 upstreams   :
-    - https://github.com/llvm/llvm-project/releases/download/llvmorg-12.0.1/llvm-project-12.0.1.src.tar.xz : 129cb25cd13677aad951ce5c2deb0fe4afc1e9d98950f53b51bdcfb5a73afa0e
+    - https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.0/llvm-project-13.0.0.src.tar.xz : 6075ad30f1ac0e15f07c1bf062c1e1268c241d674f11bd32cdf0e040c71f2bf3
 environment : |
     export PATH="%(pkgdir)/bootstrap/bin:${PATH}"
 

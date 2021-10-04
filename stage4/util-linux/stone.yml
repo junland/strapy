@@ -1,5 +1,5 @@
 name        : util-linux
-version     : 2.37
+version     : 2.37.2
 release     : 1
 summary     : Random collection of Linux utilities
 license     :
@@ -14,7 +14,7 @@ homepage    : https://www.kernel.org/pub/linux/utils/util-linux
 description : |
     Random collection of Linux utilities
 upstreams   :
-    - https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.tar.xz : bd07b7e98839e0359842110525a3032fdb8eaf3a90bedde3dd1652d32d15cce5
+    - https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.2.tar.xz : 6a0764c1aae7fb607ef8a6dd2c0f6c47d5e5fd27aa08820abaad9ec14e28e9d9
 setup       : |
     # Can fix these issues once fakeroot is implemented
     %configure --disable-makeinstall-chown \

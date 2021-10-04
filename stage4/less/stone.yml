@@ -1,5 +1,5 @@
 name        : less
-version     : 563
+version     : 590
 release     : 1
 summary     : Text File Browser and Pager
 license     : 
@@ -9,7 +9,7 @@ homepage    : http://www.greenwoodsoftware.com/less
 description : |
     Text File Browser and Pager
 upstreams   :
-    - http://www.greenwoodsoftware.com/less/less-563.tar.gz: ce5b6d2b9fc4442d7a07c93ab128d2dff2ce09a1d4f2d055b95cf28dd0dc9a9a
+    - http://www.greenwoodsoftware.com/less/less-590.tar.gz: 6aadf54be8bf57d0e2999a3c5d67b1de63808bb90deb8f77b028eafae3a08e10
 setup       : |
     %configure
 build       : |
