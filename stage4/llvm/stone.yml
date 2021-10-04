@@ -23,8 +23,11 @@ environment : |
         -DCLANG_TABLEGEN=%(pkgdir)/bootstrap/bin/clang-tblgen \
         -DLLVM_TABLEGEN=%(pkgdir)/bootstrap/bin/llvm-tblgen \
         -DCLANG_BUILD_TOOLS=OFF \
+        -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
         -DCLANG_DEFAULT_LINKER=lld \
         -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
+        -DCLANG_DEFAULT_RTLIB=compiler-rt \
+        -DCLANG_DEFAULT_UNWINDLIB=libunwind \
         -DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON \
         -DCOMPILER_RT_USE_LIBCXX=ON \
         -DENABLE_EXPERIMENTAL_NEW_PASS_MANAGER=ON \
@@ -54,7 +57,6 @@ environment : |
         -DLLVM_ENABLE_LIBCXX=ON \
         -DLLVM_ENABLE_LIBXML2=ON \
         -DLLVM_ENABLE_LTO=Thin \
-        -DLLVM_ENABLE_PIC=ON \
         -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;pstl' \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DLLVM_INCLUDE_TESTS=ON \
@@ -76,7 +78,6 @@ setup       : |
     export LDFLAGS="${LDFLAGS/-fprofile-generate=*IR/}"
 
     # Build a bootstrap stage1 compiler if it doesn't exist already
-    # This is compiled with flat C/CXXFLAGS as the bootstrap compiler doesn't want profiling included
     if [[ ! -d %(pkgdir)/bootstrap ]]; then
         mkdir -p %(pkgdir)/bootstrap
         cd %(pkgdir)/bootstrap
