@@ -1,6 +1,6 @@
-From 18ed484e8a085c822af4754dc570f2c7e94276e1 Mon Sep 17 00:00:00 2001
+From 453b6bec9f9a5494ad6c28057501303a120ce874 Mon Sep 17 00:00:00 2001
 From: Peter O'Connor <sunnyflunk@serpentos.com>
-Date: Mon, 5 Jul 2021 15:10:29 +1000
+Date: Tue, 5 Oct 2021 09:43:05 +1100
 Subject: [PATCH] Use correct Serpent OS multilib paths for ld
 
 Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
@@ -9,10 +9,10 @@ Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/clang/lib/Driver/ToolChains/Linux.cpp b/clang/lib/Driver/ToolChains/Linux.cpp
-index 09c9821cb..dd6d530fb 100644
+index c9360fc67..20489666d 100644
 --- a/clang/lib/Driver/ToolChains/Linux.cpp
 +++ b/clang/lib/Driver/ToolChains/Linux.cpp
-@@ -542,13 +542,13 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
+@@ -508,13 +508,13 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
      Loader = "ld64.so.1";
      break;
    case llvm::Triple::x86:
@@ -21,14 +21,14 @@ index 09c9821cb..dd6d530fb 100644
      Loader = "ld-linux.so.2";
      break;
    case llvm::Triple::x86_64: {
-     bool X32 = Triple.getEnvironment() == llvm::Triple::GNUX32;
+     bool X32 = Triple.isX32();
  
 -    LibDir = X32 ? "libx32" : "lib64";
 +    LibDir = X32 ? "libx32" : "lib";
      Loader = X32 ? "ld-linux-x32.so.2" : "ld-linux-x86-64.so.2";
      break;
    }
-@@ -560,7 +560,7 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
+@@ -526,7 +526,7 @@ std::string Linux::getDynamicLinker(const ArgList &Args) const {
        (Triple.getVendor() == llvm::Triple::UnknownVendor ||
         Triple.getVendor() == llvm::Triple::PC))
      return "/usr/" + Triple.str() + "/lib/" + Loader;
