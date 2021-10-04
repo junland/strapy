@@ -11,9 +11,10 @@ upstreams   :
 setup       : |
     %configure --disable-ipv6 \
         --enable-lto \
+        --enable-shared \
         --with-computed-gotos \
-        --with-threads \
-        --without-cxx-main
+        --without-cxx-main \
+        ax_cv_c_float_words_bigendian=no
 build       : |
     %make
 install     : |
@@ -22,4 +23,8 @@ workload    : |
     LD_LIBRARY_PATH=%(workdir) ./python -m test --pgo-extended -j%(jobs) -x test_httpservers \
         -x test_asyncio -x test_logging -x test_xmlrpc || true
 tuning      :
-    - harden: lvl1
+    - icf: all
+    - lto
+    - nosemantic
+    - optimize: speed
+    - symbolic
