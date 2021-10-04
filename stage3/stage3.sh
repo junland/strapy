@@ -84,6 +84,7 @@ COMPONENTS=(
     "nano"
     "bison"
     "flex"
+    "openssl"
 )
 
 checkRootUser
