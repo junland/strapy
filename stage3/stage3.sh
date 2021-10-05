@@ -85,6 +85,7 @@ COMPONENTS=(
     "bison"
     "flex"
     "openssl"
+    "jansson"
 )
 
 checkRootUser
