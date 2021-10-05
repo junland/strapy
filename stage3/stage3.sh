@@ -87,6 +87,7 @@ COMPONENTS=(
     "openssl"
     "jansson"
     "nghttp2"
+    "curl"
 )
 
 checkRootUser
