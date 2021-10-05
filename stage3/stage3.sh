@@ -89,6 +89,7 @@ COMPONENTS=(
     "nghttp2"
     "curl"
     "perf"
+    "llvm-bolt"
 )
 
 checkRootUser
