@@ -86,6 +86,7 @@ COMPONENTS=(
     "flex"
     "openssl"
     "jansson"
+    "nghttp2"
 )
 
 checkRootUser
