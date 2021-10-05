@@ -11,6 +11,7 @@ printInfo "Configuring jansson"
 serpentChroot cmake . \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DJANSSON_BUILD_SHARED_LIBS=ON
 
 
 printInfo "Building jansson"
