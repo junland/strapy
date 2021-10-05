@@ -88,6 +88,7 @@ COMPONENTS=(
     "jansson"
     "nghttp2"
     "curl"
+    "perf"
 )
 
 checkRootUser
