@@ -12,6 +12,7 @@ printInfo "Configuring rocksdb"
 serpentChroot cmake . -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DFAIL_ON_WARNINGS=OFF \
     -DWITH_GFLAGS=OFF
 
 printInfo "Building ninja"
