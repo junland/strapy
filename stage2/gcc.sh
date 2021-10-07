@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
     printInfo "Skipping gcc with musl libc"
     exit 0
 fi
@@ -12,7 +12,7 @@ extractSource gcc
 cd gcc-*
 
 # Add include dirs to libgcc
-sed -i "s|^LIBGCC2_INCLUDES =|LIBGCC2_INCLUDES = -B${SERPENT_INSTALL_DIR}/usr/lib|" libgcc/Makefile.in
+sed -i "s|^LIBGCC2_INCLUDES =|LIBGCC2_INCLUDES = -B${STRAPY_INSTALL_DIR}/usr/lib|" libgcc/Makefile.in
 
 
 printInfo "Extracting gcc requirements"
@@ -36,8 +36,8 @@ export STRIP="strip"
 export CC="gcc"
 export CXX="g++"
 
-export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+export STRAPY_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${STRAPY_STAGE1_TREE}/usr/binutils/bin:${PATH}"
 
 export CFLAGS="-O2 -fPIC"
 export CXXFLAGS="-O2 -fPIC"
@@ -46,24 +46,24 @@ printInfo "Configuring libstdc++"
 mkdir buildcxx && pushd buildcxx
 ../libstdc++-v3/configure --prefix=/usr \
     --libdir=/usr/lib \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --disable-multilib
 
 printInfo "Building libstdcxx"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing libstdcxx"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
 popd
 
-export CXXFLAGS="-O2 -fPIC -I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/${GCC_VERS} -I${SERPENT_INSTALL_DIR}/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
+export CXXFLAGS="-O2 -fPIC -I${STRAPY_INSTALL_DIR}/usr/include -L${STRAPY_INSTALL_DIR}/usr/lib -L${STRAPY_INSTALL_DIR}/usr/lib64 -I${STRAPY_INSTALL_DIR}/usr/include/c++/${GCC_VERS} -I${STRAPY_INSTALL_DIR}/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --disable-bootstrap \
     --disable-threads \
     --disable-libatomic \
@@ -79,12 +79,12 @@ mkdir build && pushd build
     --enable-languages=c,c++
 
 printInfo "Building gcc compiler only"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
 
 printInfo "Installing default compiler links"
 for i in "gcc" "g++" ; do
-    ln -svf "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
+    ln -svf "${STRAPY_TRIPLET}-${i}" "${STRAPY_INSTALL_DIR}/usr/bin/${i}"
 done

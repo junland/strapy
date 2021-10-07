@@ -6,18 +6,18 @@ set -e
 extractSource libffi
 cd libffi-*
 
-export PATH="${SERPENT_INSTALL_DIR}/usr/bin:$PATH"
+export PATH="${STRAPY_INSTALL_DIR}/usr/bin:$PATH"
 export CC="clang"
 export CXX="clang++"
 export LD="ld.lld"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/lib64"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS} -L${SERPENT_INSTALL_DIR}/lib -L${SERPENT_INSTALL_DIR}/lib64"
+export CFLAGS="${STRAPY_TARGET_CFLAGS} -L${STRAPY_INSTALL_DIR}/lib -L${STRAPY_INSTALL_DIR}/lib64"
+export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS} -L${STRAPY_INSTALL_DIR}/lib -L${STRAPY_INSTALL_DIR}/lib64"
 
 printInfo "Configuring libffi"
 ./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
@@ -27,7 +27,7 @@ printInfo "Configuring libffi"
 
 
 printInfo "Building libffi"
-make -j "${SERPENT_BUILD_JOBS}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip"
+make -j "${STRAPY_BUILD_JOBS}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip"
 
 printInfo "Installing libffi"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}" AR="llvm-ar" RANLIB="llvm-ranlib" STRIP="llvm-strip"

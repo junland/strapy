@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
     printInfo "Skipping binutils with musl libc"
     exit 0
 fi
@@ -22,17 +22,17 @@ export STRIP="strip"
 export CC="gcc"
 export CXX="g++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="${STRAPY_TARGET_CFLAGS}"
+export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS}"
 
-export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+export STRAPY_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${STRAPY_STAGE1_TREE}/usr/binutils/bin:${PATH}"
 
 printInfo "Configuring binutils"
 mkdir build && pushd build
 ../configure --prefix=/usr/binutils \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --includedir=/usr/include \
     --disable-multilib \
@@ -47,7 +47,7 @@ mkdir build && pushd build
     --enable-64-bit-bfd
 
 printInfo "Building binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils
+make -j "${STRAPY_BUILD_JOBS}" tooldir=/usr/binutils
 
 printInfo "Installing binutils"
-make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr/binutils install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" tooldir=/usr/binutils install DESTDIR="${STRAPY_INSTALL_DIR}"

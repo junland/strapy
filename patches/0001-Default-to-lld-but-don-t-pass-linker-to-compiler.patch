@@ -1,11 +1,11 @@
 From d73e8ba00c6104bce334818d949d74aea1c7b121 Mon Sep 17 00:00:00 2001
-From: Peter O'Connor <sunnyflunk@serpentos.com>
+From: Peter O'Connor <sunnyflunk@strapyos.com>
 Date: Tue, 9 Feb 2021 23:34:47 +1100
 Subject: [PATCH] Default to lld, but don't pass linker to compiler
 
 It already knows what it's doing!
 
-Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
+Signed-off-by: Peter O'Connor <sunnyflunk@strapyos.com>
 ---
  driver/linker-gcc.cpp | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)

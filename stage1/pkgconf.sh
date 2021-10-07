@@ -10,8 +10,8 @@ cd pkgconf-*
 # further stages in bootstrap, i.e. we need to be able to execute it.
 printInfo "Configuring pkgconf"
 ./configure --prefix=/usr \
-    --build="${SERPENT_HOST}" \
-    --host="${SERPENT_HOST}" \
+    --build="${STRAPY_HOST}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --with-system-libdir=/usr/lib \
@@ -21,10 +21,10 @@ printInfo "Configuring pkgconf"
     --disable-shared
 
 printInfo "Building pkgconf"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing pkgconf"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
 
 printInfo "Setting pkgconf as default pkg-config"
-ln -svf pkgconf "${SERPENT_INSTALL_DIR}/usr/bin/pkg-config"
+ln -svf pkgconf "${STRAPY_INSTALL_DIR}/usr/bin/pkg-config"

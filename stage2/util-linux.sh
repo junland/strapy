@@ -10,8 +10,8 @@ cd util-linux-*
 printInfo "Configuring util-linux"
 
 ./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --disable-nls \
     --without-systemd \
     --without-udev \
@@ -40,7 +40,7 @@ printInfo "Configuring util-linux"
 
 
 printInfo "Building util-linux"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing util-linux"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"

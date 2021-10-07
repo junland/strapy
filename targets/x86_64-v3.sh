@@ -5,18 +5,18 @@
 # This profile is intended for modern Intel CPUs, and should happily work on
 # AMD Zen+
 
-export SERPENT_TARGET_CFLAGS="-march=haswell -mtune=skylake -O2 -fPIC -pipe -mprefer-vector-width=128"
-export SERPENT_TARGET_CXXFLAGS="${SERPENT_TARGET_CFLAGS}"
-export SERPENT_TARGET_LDFLAGS=""
-export SERPENT_TRIPLET="x86_64-serpent-linux"
-export SERPENT_TRIPLET32="i686-serpent-linux"
+export STRAPY_TARGET_CFLAGS="-march=haswell -mtune=skylake -O2 -fPIC -pipe -mprefer-vector-width=128"
+export STRAPY_TARGET_CXXFLAGS="${STRAPY_TARGET_CFLAGS}"
+export STRAPY_TARGET_LDFLAGS=""
+export STRAPY_TRIPLET="x86_64-strapy-linux"
+export STRAPY_TRIPLET32="i686-strapy-linux"
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
-    export SERPENT_TRIPLET="${SERPENT_TRIPLET}-musl"
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
+    export STRAPY_TRIPLET="${STRAPY_TRIPLET}-musl"
 fi
 
-export SERPENT_TARGET_LLVM_BACKEND="X86"
-export SERPENT_TARGET_ARCH="x86_64"
+export STRAPY_TARGET_LLVM_BACKEND="X86"
+export STRAPY_TARGET_ARCH="x86_64"
 
 # The inlude directory in musl
-export SERPENT_TARGET_MUSL="${SERPENT_TARGET_ARCH}"
+export STRAPY_TARGET_MUSL="${STRAPY_TARGET_ARCH}"

@@ -9,14 +9,14 @@
 # compatibility work is done, such as building musl and the system     #
 # headers.
 #
-# We bind-mount the stage2 support environment to the /serpent tree    #
+# We bind-mount the stage2 support environment to the /strapy tree    #
 # and add it to the end of the PATH environmental variable. This lets  #
 # us use the native compiler, libs, etc, to natively build all of our  #
 # needed software and install to the root of the tree.                 #
 #                                                                      #
 ########################################################################
 
-export SERPENT_STAGE_NAME="stage3"
+export STRAPY_STAGE_NAME="stage3"
 
 . $(dirname $(realpath -s $0))/../lib/build.sh
 
@@ -25,7 +25,7 @@ executionPath=$(dirname $(realpath -s $0))
 COMPONENTS=(
     "root"
     "headers"
-    "${SERPENT_LIBC}"
+    "${STRAPY_LIBC}"
     "gettext"
     "diffutils"
     "zlib"
@@ -64,7 +64,6 @@ COMPONENTS=(
     "libffi"
     "python"
     "meson"
-    "libwildebeest"
     "libc-support"
     "linux-pam"
     "systemd"
@@ -78,8 +77,6 @@ COMPONENTS=(
     "toolchain"
     "libxml2"
     "ldc"
-    "rocksdb"
-    "boulder"
     "moss"
     "nano"
     "bison"
@@ -88,8 +85,6 @@ COMPONENTS=(
     "jansson"
     "nghttp2"
     "curl"
-    "perf"
-    "llvm-bolt"
 )
 
 checkRootUser
@@ -97,39 +92,39 @@ checkRootUser
 requireTools "mknod"
 
 prefetchSources
-mkdir -p "${SERPENT_BUILD_DIR}" || serpentFail "Failed to create directory ${SERPENT_BUILD_DIR}"
+mkdir -p "${STRAPY_BUILD_DIR}" || strapyFail "Failed to create directory ${STRAPY_BUILD_DIR}"
 bringUpMounts
 
-if [[ "${SERPENT_TARGET_ARCH}" != "${SERPENT_ARCH}" ]]; then
-        requireTools "${SERPENT_QEMU_USER_STATIC}"
+if [[ "${STRAPY_TARGET_ARCH}" != "${STRAPY_ARCH}" ]]; then
+        requireTools "${STRAPY_QEMU_USER_STATIC}"
         installQemuStatic
 fi
 
 # Install the config.site file for autotools caching
-cp "${executionPath}/config.site" "${SERPENT_INSTALL_DIR}/"
+cp "${executionPath}/config.site" "${STRAPY_INSTALL_DIR}/"
 
 for component in ${COMPONENTS[@]} ; do
-    /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh"  || serpentFail "Building ${component} failed"
+    /usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh"  || strapyFail "Building ${component} failed"
 done
 
 # Add in 32bit support into Serpent
-rm "${SERPENT_INSTALL_DIR}/config.site"
+rm "${STRAPY_INSTALL_DIR}/config.site"
 restoreBinutils gnu-binutils
 restoreGcc gnu-gcc
 
 printInfo "Taking down the mounts"
-serpentUnmount "$(getInstallDir 3)/serpent"
+strapyUnmount "$(getInstallDir 3)/strapy"
 
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32.sh" || serpentFail "Building gcc32 failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32.sh" || serpentFail "Building gcc32 failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/glibc32.sh" || serpentFail "Building glibc32 failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/gcc32-2.sh" || serpentFail "Building gcc32-2 failed"
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32.sh" || serpentFail "Building toolchain32 failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/gcc32.sh" || strapyFail "Building gcc32 failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/gcc32.sh" || strapyFail "Building gcc32 failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/glibc32.sh" || strapyFail "Building glibc32 failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/gcc32-2.sh" || strapyFail "Building gcc32-2 failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/toolchain32.sh" || strapyFail "Building toolchain32 failed"
 
 restoreBinutils llvm-llvm
 restoreGcc llvm-llvm
 
-/usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/toolchain.sh" || serpentFail "Building toolchain failed"
+/usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/toolchain.sh" || strapyFail "Building toolchain failed"
 
 takeDownMounts
 

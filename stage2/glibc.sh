@@ -22,40 +22,40 @@ export STRIP="strip"
 export CC="gcc"
 export CXX="g++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="${STRAPY_TARGET_CFLAGS}"
+export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS}"
 
-export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+export STRAPY_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${STRAPY_STAGE1_TREE}/usr/binutils/bin:${PATH}"
 
 printInfo "Configuring glibc"
 mkdir build && pushd build
 echo "slibdir=/usr/lib" >> configparms
 echo "rtlddir=/usr/lib" >> configparms
 ../configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --disable-multilib \
     --enable-multi-arch \
     ac_cv_prog_LD=ld.bfd \
-    ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
-    ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
-    ac_cv_prog_AS=${SERPENT_TRIPLET}-as \
-    ac_cv_prog_NM=${SERPENT_TRIPLET}-nm \
+    ac_cv_prog_AR=${STRAPY_TRIPLET}-ar \
+    ac_cv_prog_RANLIB=${STRAPY_TRIPLET}-ranlib \
+    ac_cv_prog_AS=${STRAPY_TRIPLET}-as \
+    ac_cv_prog_NM=${STRAPY_TRIPLET}-nm \
     libc_cv_sdt=no
 
 printInfo "Building glibc"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing glibc"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
-make -j "${SERPENT_BUILD_JOBS}" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" localedata/install-locales DESTDIR="${STRAPY_INSTALL_DIR}"
 
 # Chronically broken .so scripts.
 for broken in "libc.so" "libm.so"; do
-    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib64/@@g'
-    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib/@@g'
-    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib64/@@g'
-    sed -i "${SERPENT_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib/@@g'
+    sed -i "${STRAPY_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib64/@@g'
+    sed -i "${STRAPY_INSTALL_DIR}/usr/lib/${broken}" -e 's@/usr/lib/@@g'
+    sed -i "${STRAPY_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib64/@@g'
+    sed -i "${STRAPY_INSTALL_DIR}/usr/lib/${broken}" -e 's@/lib/@@g'
 done

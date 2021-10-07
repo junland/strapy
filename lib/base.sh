@@ -2,7 +2,7 @@
 
 # Common functionality between all stages
 
-export SERPENT_CHROOT_DIR="/"
+export STRAPY_CHROOT_DIR="/"
 
 # Emit a warning to tty
 function printWarning()
@@ -26,7 +26,7 @@ function printInfo()
 }
 
 # Failed to do a thing. Exit fatally.
-function serpentFail()
+function strapyFail()
 {
     printError $*
     [ "${EUID}" -eq "0" ] && takeDownMounts
@@ -37,29 +37,29 @@ function serpentFail()
 function requireTools()
 {
     for tool in $* ; do
-        which "${tool}" &>/dev/null  || serpentFail "Missing host executable: ${tool}"
+        which "${tool}" &>/dev/null  || strapyFail "Missing host executable: ${tool}"
     done
 }
 
 # Check we're running as the root user
 function checkRootUser()
 {
-    [ "${EUID}" -eq "0" ] || serpentFail "$0: Must be run via sudo"
-    [ ! -z "${SUDO_USER}" ] || serpentFail "SUDO_USER incorrectly set"
+    [ "${EUID}" -eq "0" ] || strapyFail "$0: Must be run via sudo"
+    [ ! -z "${SUDO_USER}" ] || strapyFail "SUDO_USER incorrectly set"
 }
 
 # Create ancillary helpers
 function createMountDirs()
 {
-    [ ! -z "${SERPENT_INSTALL_DIR}" ] || serpentFail "Missing SERPENT_INSTALL_DIR"
+    [ ! -z "${STRAPY_INSTALL_DIR}" ] || strapyFail "Missing STRAPY_INSTALL_DIR"
 
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/dev/pts" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/dev/pts"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/dev/shm" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/dev/shm"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/proc" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/proc"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/sys" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/sys"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/serpent" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/serpent"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/build" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/build"
-    install -D -d -m 00755 "${SERPENT_INSTALL_DIR}/stones" || serpentFail "Failed to construct ${SERPENT_INSTALL_DIR}/stones"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/dev/pts" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/dev/pts"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/dev/shm" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/dev/shm"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/proc" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/proc"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/sys" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/sys"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/strapy" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/strapy"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/build" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/build"
+    install -D -d -m 00755 "${STRAPY_INSTALL_DIR}/stones" || strapyFail "Failed to construct ${STRAPY_INSTALL_DIR}/stones"
 }
 
 # Bring up required bindmounts for functional chroot environment
@@ -71,19 +71,19 @@ function bringUpMounts()
     local stage2tree=$(getInstallDir 2)
     local stage3tree=$(getInstallDir 3)
 
-    mount -v --bind /dev/pts "${stage3tree}/dev/pts" || serpentFail "Failed to bind-mount /dev/pts"
-    mount -v --bind /dev/shm "${stage3tree}/dev/shm" || serpentFail "Failed to bind-mount /dev/shm"
-    mount -v --bind /sys "${stage3tree}/sys" || serpentFail "Failed to bind-mount /sys"
-    mount -v --bind /proc "${stage3tree}/proc" || serpentFail "Failed to bind-mount /proc"
+    mount -v --bind /dev/pts "${stage3tree}/dev/pts" || strapyFail "Failed to bind-mount /dev/pts"
+    mount -v --bind /dev/shm "${stage3tree}/dev/shm" || strapyFail "Failed to bind-mount /dev/shm"
+    mount -v --bind /sys "${stage3tree}/sys" || strapyFail "Failed to bind-mount /sys"
+    mount -v --bind /proc "${stage3tree}/proc" || strapyFail "Failed to bind-mount /proc"
 
-    if [ "${SERPENT_STAGE_NAME}" == "stage3" ]; then
-        mount -v --bind -o ro "${stage2tree}" "${stage3tree}/serpent" || serpentFail "Failed to bind-mount /serpent"
-        mount -v -o remount,ro,bind "${stage3tree}/serpent" || serpentFail "Failed to make /serpent read-only"
-        mount -v --bind "${SERPENT_BUILD_DIR}" "${stage3tree}/build" || serpentFail "Failed to bind-mount /build"
+    if [ "${STRAPY_STAGE_NAME}" == "stage3" ]; then
+        mount -v --bind -o ro "${stage2tree}" "${stage3tree}/strapy" || strapyFail "Failed to bind-mount /strapy"
+        mount -v -o remount,ro,bind "${stage3tree}/strapy" || strapyFail "Failed to make /strapy read-only"
+        mount -v --bind "${STRAPY_BUILD_DIR}" "${stage3tree}/build" || strapyFail "Failed to bind-mount /build"
     fi
 
-    if [ "${SERPENT_STAGE_NAME}" == "stage4" ]; then
-        mount -v --bind "${SERPENT_BUILD_DIR}/stones" "${stage3tree}/stones" || serpentFail "Failed to bind-mount /stones"
+    if [ "${STRAPY_STAGE_NAME}" == "stage4" ]; then
+        mount -v --bind "${STRAPY_BUILD_DIR}/stones" "${stage3tree}/stones" || strapyFail "Failed to bind-mount /stones"
     fi
 
 }
@@ -91,14 +91,14 @@ function bringUpMounts()
 function installQemuStatic()
 {
         printInfo "Installing qemu-user-static for cross-compilation chroot"
-        install -D -m 00755 $(which ${SERPENT_QEMU_USER_STATIC}) "${SERPENT_INSTALL_DIR}/usr/bin/${SERPENT_QEMU_USER_STATIC}" || serpentFail "Failed to install qemu-user-static"
+        install -D -m 00755 $(which ${STRAPY_QEMU_USER_STATIC}) "${STRAPY_INSTALL_DIR}/usr/bin/${STRAPY_QEMU_USER_STATIC}" || strapyFail "Failed to install qemu-user-static"
 }
 
 # Helper to ensure something *does* get unmounted
-function serpentUnmount()
+function strapyUnmount()
 {
     local target="${1}"
-    [ ! -z "${target}" ] || serpentFail "No mountpoint specified"
+    [ ! -z "${target}" ] || strapyFail "No mountpoint specified"
 
     umount "${target}"
     if [[ "$?" != 0 ]]; then
@@ -118,30 +118,30 @@ function takeDownMounts()
 
     local stage3tree=$(getInstallDir 3)
     printInfo "Taking down the mounts"
-    serpentUnmount "${stage3tree}/build"
-    serpentUnmount "${stage3tree}/serpent"
-    serpentUnmount "${stage3tree}/dev/pts"
-    serpentUnmount "${stage3tree}/dev/shm"
-    serpentUnmount "${stage3tree}/sys"
-    serpentUnmount "${stage3tree}/proc"
-    serpentUnmount "${stage3tree}/stones"
+    strapyUnmount "${stage3tree}/build"
+    strapyUnmount "${stage3tree}/strapy"
+    strapyUnmount "${stage3tree}/dev/pts"
+    strapyUnmount "${stage3tree}/dev/shm"
+    strapyUnmount "${stage3tree}/sys"
+    strapyUnmount "${stage3tree}/proc"
+    strapyUnmount "${stage3tree}/stones"
 }
 
 # chroot helper. In future we should expand to support qemu-static.
-function serpentChroot()
+function strapyChroot()
 {
-    if [[ -e "${SERPENT_INSTALL_DIR}/serpent/usr/bin/bash" ]]; then
-        LD_LIBRARY_PATH="/serpent/usr/lib" PATH="${PATH}:/serpent/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /serpent/usr/bin/bash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+    if [[ -e "${STRAPY_INSTALL_DIR}/strapy/usr/bin/bash" ]]; then
+        LD_LIBRARY_PATH="/strapy/usr/lib" PATH="${PATH}:/strapy/usr/bin" chroot "${STRAPY_INSTALL_DIR}" /strapy/usr/bin/bash -c "cd \"${STRAPY_CHROOT_DIR}\"; $*;"
     else
-        LD_LIBRARY_PATH="/usr/lib" PATH="${PATH}:/usr/bin" chroot "${SERPENT_INSTALL_DIR}" /usr/bin/bash -c "cd \"${SERPENT_CHROOT_DIR}\"; $*;"
+        LD_LIBRARY_PATH="/usr/lib" PATH="${PATH}:/usr/bin" chroot "${STRAPY_INSTALL_DIR}" /usr/bin/bash -c "cd \"${STRAPY_CHROOT_DIR}\"; $*;"
 
     fi
 }
 
 # Set the chroot dir
-function serpentChrootCd()
+function strapyChrootCd()
 {
-    export SERPENT_CHROOT_DIR="/build/${SERPENT_BUILD_NAME}/$1"
+    export STRAPY_CHROOT_DIR="/build/${STRAPY_BUILD_NAME}/$1"
 }
 
 # Take down the mounts again
@@ -149,7 +149,7 @@ function createDownloadStore()
 {
     local stage3tree=$(getInstallDir 3)
 
-    for i in ${SERPENT_DOWNLOAD_DIR}/*; do
+    for i in ${STRAPY_DOWNLOAD_DIR}/*; do
         SHASUM=$(sha256sum "${i}" | cut -f1 -d' ')
         FIRST=$(echo ${SHASUM:0:5})
         LAST=$(echo ${SHASUM:59:64})
@@ -196,7 +196,7 @@ function stashGcc()
     local stage3tree=$(getInstallDir 3)
     local stash_dir="${1}"
 
-    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-serpent-linux-c++ x86_64-serpent-linux-g++ x86_64-serpent-linux-gcc x86_64-serpent-linux-gcc-10 x86_64-serpent-linux-gcc-ar x86_64-serpent-linux-gcc-nm x86_64-serpent-linux-gcc-ranlib"
+    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-strapy-linux-c++ x86_64-strapy-linux-g++ x86_64-strapy-linux-gcc x86_64-strapy-linux-gcc-10 x86_64-strapy-linux-gcc-ar x86_64-strapy-linux-gcc-nm x86_64-strapy-linux-gcc-ranlib"
     mkdir -p ${stage3tree}/usr/bin/${stash_dir}
     for file in ${gcc_files}; do
         if [ -f ${stage3tree}/usr/bin/${file} ]; then
@@ -211,7 +211,7 @@ function restoreGcc()
     local stage3tree=$(getInstallDir 3)
     local stash_dir="${1}"
 
-    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-serpent-linux-c++ x86_64-serpent-linux-g++ x86_64-serpent-linux-gcc x86_64-serpent-linux-gcc-10 x86_64-serpent-linux-gcc-ar x86_64-serpent-linux-gcc-nm x86_64-serpent-linux-gcc-ranlib"
+    gcc_files="cc c++ cpp g++ gcc gcc-ar gcc-nm gcc-ranlib gcov gcov-dump gcov-tool lto-dump x86_64-strapy-linux-c++ x86_64-strapy-linux-g++ x86_64-strapy-linux-gcc x86_64-strapy-linux-gcc-10 x86_64-strapy-linux-gcc-ar x86_64-strapy-linux-gcc-nm x86_64-strapy-linux-gcc-ranlib"
     for file in ${gcc_files}; do
         if [ -f ${stage3tree}/usr/bin/${stash_dir}/${file} ]; then
             cp -f ${stage3tree}/usr/bin/${stash_dir}/${file} ${stage3tree}/usr/bin/
@@ -222,16 +222,16 @@ function restoreGcc()
 # Tightly control the path
 export PATH="/usr/bin:/bin/:/sbin:/usr/sbin"
 
-export SERPENT_ROOT_DIR="$(dirname $(dirname $(realpath -s ${BASH_SOURCE[0]})))"
+export STRAPY_ROOT_DIR="$(dirname $(dirname $(realpath -s ${BASH_SOURCE[0]})))"
 
-export SERPENT_BUILD_ROOT="${SERPENT_ROOT_DIR}/build"
-export SERPENT_DOWNLOAD_DIR="${SERPENT_ROOT_DIR}/downloads"
-export SERPENT_INSTALL_ROOT="${SERPENT_ROOT_DIR}/install"
-export SERPENT_SOURCES_DIR="${SERPENT_ROOT_DIR}/sources"
-export SERPENT_PATCHES_DIR="${SERPENT_ROOT_DIR}/patches"
+export STRAPY_BUILD_ROOT="${STRAPY_ROOT_DIR}/build"
+export STRAPY_DOWNLOAD_DIR="${STRAPY_ROOT_DIR}/downloads"
+export STRAPY_INSTALL_ROOT="${STRAPY_ROOT_DIR}/install"
+export STRAPY_SOURCES_DIR="${STRAPY_ROOT_DIR}/sources"
+export STRAPY_PATCHES_DIR="${STRAPY_ROOT_DIR}/patches"
 
 # Basic validation.
-[ -d "${SERPENT_SOURCES_DIR}" ] || serpentFail "Missing source tree"
+[ -d "${STRAPY_SOURCES_DIR}" ] || strapyFail "Missing source tree"
 
 export LANG="C"
 export LC_ALL="C"

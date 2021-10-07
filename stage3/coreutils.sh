@@ -4,15 +4,15 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource coreutils
-serpentChrootCd coreutils-*
+strapyChrootCd coreutils-*
 pushd coreutils-*
 
 
 printInfo "Configuring coreutils"
 export FORCE_UNSAFE_CONFIGURE=1
-serpentChroot ./configure \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+strapyChroot ./configure \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --enable-largefile \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -24,7 +24,7 @@ serpentChroot ./configure \
 
 
 printInfo "Building coreutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing coreutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

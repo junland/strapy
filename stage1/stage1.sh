@@ -10,7 +10,7 @@
 #                                                                      #
 ########################################################################
 
-export SERPENT_STAGE_NAME="stage1"
+export STRAPY_STAGE_NAME="stage1"
 
 . $(dirname $(realpath -s $0))/../lib/build.sh
 
@@ -22,7 +22,7 @@ COMPONENTS=(
     "toolchain"
     "compiler-rt"
     "gcc"
-    "${SERPENT_LIBC}"
+    "${STRAPY_LIBC}"
     "toolchain-extra"
     "libffi"
     "pkgconf"
@@ -31,5 +31,5 @@ COMPONENTS=(
 prefetchSources
 
 for component in ${COMPONENTS[@]} ; do
-    /usr/bin/env -S -i SERPENT_TARGET="${SERPENT_TARGET}" SERPENT_LIBC="${SERPENT_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh" || serpentFail "Building ${component} failed"
+    /usr/bin/env -S -i STRAPY_TARGET="${STRAPY_TARGET}" STRAPY_LIBC="${STRAPY_LIBC}" bash --norc --noprofile "${executionPath}/${component}.sh" || strapyFail "Building ${component} failed"
 done

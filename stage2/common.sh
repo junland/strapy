@@ -1,6 +1,6 @@
 #!/bin/true
 
-export SERPENT_STAGE_NAME="stage2"
+export STRAPY_STAGE_NAME="stage2"
 
 . $(dirname $(realpath -s $0))/../lib/build.sh
 

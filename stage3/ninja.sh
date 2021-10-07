@@ -4,17 +4,17 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource ninja
-serpentChrootCd ninja-*
+strapyChrootCd ninja-*
 
 
 printInfo "Configuring ninja"
 
-serpentChroot cmake . \
+strapyChroot cmake . \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
 
 printInfo "Building ninja"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing ninja"
-serpentChroot cp ninja /usr/bin/ninja
+strapyChroot cp ninja /usr/bin/ninja

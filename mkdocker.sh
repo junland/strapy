@@ -14,7 +14,7 @@ cp -Rav install/x86_64/glibc/stage3 docker/root
 pushd docker
 rm -fv root/config*
 rmdir root/build
-rmdir root/serpent
+rmdir root/strapy
 
 # Trim it.
 set +e
@@ -33,6 +33,6 @@ echo "root:x:0:" >> root/etc/group
 echo "root:x:0:" >> root/etc/group-
 
 install -m 00644 profile root/etc/profile
-docker rmi serpentos/staging:latest || :
+docker rmi strapyos/staging:latest || :
 
-docker build --tag serpentos/staging:latest .
+docker build --tag strapyos/staging:latest .

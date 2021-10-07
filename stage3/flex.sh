@@ -4,14 +4,14 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource flex
-serpentChrootCd flex-*
+strapyChrootCd flex-*
 
 
 printInfo "Configuring flex"
 
-serpentChroot ./configure \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+strapyChroot ./configure \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -21,7 +21,7 @@ serpentChroot ./configure \
 
 
 printInfo "Building flex"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing flex"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

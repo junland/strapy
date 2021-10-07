@@ -7,10 +7,10 @@ extractSource ncurses
 unset CONFIG_SITE
 
 printInfo "Configuring ncurses"
-serpentChrootCd ncurses*
-serpentChroot ./configure \
-    --host="${SERPENT_TRIPLET}" \
-    --build="${SERPENT_TRIPLET}" \
+strapyChrootCd ncurses*
+strapyChroot ./configure \
+    --host="${STRAPY_TRIPLET}" \
+    --build="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -31,8 +31,8 @@ serpentChroot ./configure \
     PKG_CONFIG_LIBDIR=/usr/lib/pkgconfig
 
 printInfo "Building ncurses"
-serpentChroot make -j${SERPENT_BUILD_JOBS}
-serpentChroot make -j${SERPENT_BUILD_JOBS} install
+strapyChroot make -j${STRAPY_BUILD_JOBS}
+strapyChroot make -j${STRAPY_BUILD_JOBS} install
 
-echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libncurses.so"
-echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libcurses.so"
+echo "INPUT(-lncursesw)" > "${STRAPY_INSTALL_DIR}/usr/lib/libncurses.so"
+echo "INPUT(-lncursesw)" > "${STRAPY_INSTALL_DIR}/usr/lib/libcurses.so"

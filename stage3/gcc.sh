@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
+if [[ "${STRAPY_LIBC}" != "glibc" ]]; then
     printInfo "Skipping gcc with non-glibc libc"
     exit 0
 fi
@@ -12,7 +12,7 @@ extractSource gcc
 pushd gcc-*
 
 # Add default toolchain patches into S3
-patch -p1 < "${SERPENT_PATCHES_DIR}/gcc/0001-Use-modern-linker-locations-for-Serpent-OS.patch"
+patch -p1 < "${STRAPY_PATCHES_DIR}/gcc/0001-Use-modern-linker-locations-for-Serpent-OS.patch"
 
 printInfo "Extracting gcc requirements"
 extractSource mpfr
@@ -38,31 +38,31 @@ export NM="nm"
 export OBJDUMP="objdump"
 export READELF="readelf"
 export STRIP="strip"
-export CC="gcc -B/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
-export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /serpent/usr/include/c++/${GCC_VERS} -isystem /serpent/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
+export CC="gcc -B/usr/lib -isystem /usr/include -isystem /strapy/usr/include"
+export CXX="g++ -B/usr/lib -isystem /usr/include -isystem /usr/include -isystem /strapy/usr/include/c++/${GCC_VERS} -isystem /strapy/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 
-ln -svf /serpent/usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
+ln -svf /strapy/usr/bin/cpp "${STRAPY_INSTALL_DIR}/lib/cpp"
 
-export LDFLAGS="-L/usr/lib -L/serpent/usr/lib -B/usr/lib -B/serpent/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
+export LDFLAGS="-L/usr/lib -L/strapy/usr/lib -B/usr/lib -B/strapy/usr/lib -isystem /usr/include -isystem /strapy/usr/include"
 export CFLAGS="${CFLAGS} ${LDFLAGS}"
 export CPPFLAGS="${CFLAGS} ${LDFLAGS}"
-export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /serpent/usr/include/c++/${GCC_VERS} -isystem /serpent/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
+export CXXFLAGS="${CXXFLAGS} ${LDFLAGS} -isystem /strapy/usr/include/c++/${GCC_VERS} -isystem /strapy/usr/include/c++/${GCC_VERS}/x86_64-linux-gnu"
 export PATH="/usr/binutils/bin:${PATH}"
-export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/serpent/usr/bin"
+export COMPILER_PATH="/usr/binutils/bin:/usr/bin:/strapy/usr/bin"
 export LIBRARY_PATH="/usr/lib"
 
-serpentChrootCd gcc-*/build
+strapyChrootCd gcc-*/build
 
 printInfo "Configuring gcc"
-serpentChroot ../configure --prefix=/usr \
+strapyChroot ../configure --prefix=/usr \
     --bindir=/usr/bin \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
     --includedir=/usr/include \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --disable-bootstrap \
     --enable-shared \
     --enable-static \
@@ -77,14 +77,14 @@ serpentChroot ../configure --prefix=/usr \
     --with-linker-hash-style=both \
     --with-gnu-ld \
     --enable-languages=c,c++ \
-    PATH="/usr/binutils/bin:/serpent/usr/bin:/serpent/usr/sbin:/usr/bin:/usr/sbin"
+    PATH="/usr/binutils/bin:/strapy/usr/bin:/strapy/usr/sbin:/usr/bin:/usr/sbin"
 
 printInfo "Building gcc"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing gcc"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
-ln -svf /usr/bin/cpp "${SERPENT_INSTALL_DIR}/lib/cpp"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install
+ln -svf /usr/bin/cpp "${STRAPY_INSTALL_DIR}/lib/cpp"
 
 stashBinutils gnu-binutils
 stashGcc gnu-gcc

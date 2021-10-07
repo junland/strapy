@@ -4,18 +4,18 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource cmake
-serpentChrootCd cmake-*
+strapyChrootCd cmake-*
 
 
 printInfo "Configuring cmake"
 
-serpentChroot ./configure \
+strapyChroot ./configure \
     --prefix=/usr \
-    --parallel="${SERPENT_BUILD_JOBS}" \
+    --parallel="${STRAPY_BUILD_JOBS}" \
     -- -DCMAKE_USE_OPENSSL=OFF
 
 printInfo "Building cmake"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing cmake"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

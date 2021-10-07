@@ -4,12 +4,12 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource perl
-serpentChrootCd perl-*
+strapyChrootCd perl-*
 
 
 printInfo "Configuring perl"
 
-serpentChroot ./Configure \
+strapyChroot ./Configure \
     -des \
     -Dprefix=/usr \
     -Dvendorprefix=/usr \
@@ -20,7 +20,7 @@ serpentChroot ./Configure \
 
 
 printInfo "Building perl"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing perl"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

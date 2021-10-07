@@ -9,8 +9,8 @@ cd make-*
 
 printInfo "Configuring make"
 ./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
@@ -18,10 +18,10 @@ printInfo "Configuring make"
 
 
 printInfo "Building make"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing make"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
 
 # Include for compat purposes, may not be needed
-ln -sv make "${SERPENT_INSTALL_DIR}/usr/bin/gmake"
+ln -sv make "${STRAPY_INSTALL_DIR}/usr/bin/gmake"

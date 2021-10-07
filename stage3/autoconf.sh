@@ -4,12 +4,12 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource autoconf
-serpentChrootCd autoconf-*
+strapyChrootCd autoconf-*
 
 
 printInfo "Configuring autoconf"
 
-serpentChroot ./configure \
+strapyChroot ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -19,7 +19,7 @@ serpentChroot ./configure \
 
 
 printInfo "Building autoconf"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing autoconf"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

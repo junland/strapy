@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
+if [[ "${STRAPY_LIBC}" != "glibc" ]]; then
     printInfo "Skipping bash with non-glibc libc"
     exit 0
 fi
@@ -19,8 +19,8 @@ printInfo "Configuring bash"
     --bindir=/usr/bin \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --without-bash-malloc \
     --enable-nls
 
@@ -28,5 +28,5 @@ printInfo "Building bash"
 make -j3
 
 printInfo "Installing bash"
-make -j3 install DESTDIR="${SERPENT_INSTALL_DIR}"
-ln -svf bash "${SERPENT_INSTALL_DIR}/usr/bin/sh"
+make -j3 install DESTDIR="${STRAPY_INSTALL_DIR}"
+ln -svf bash "${STRAPY_INSTALL_DIR}/usr/bin/sh"

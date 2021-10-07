@@ -4,11 +4,11 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource zstd
-serpentChrootCd zstd-*
+strapyChrootCd zstd-*
 
 
 printInfo "Building zstd"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing zstd"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install PREFIX=/usr LIBDIR=/usr/lib
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install PREFIX=/usr LIBDIR=/usr/lib

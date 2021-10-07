@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
+if [[ "${STRAPY_LIBC}" != "glibc" ]]; then
     printInfo "Skipping gcc with musl libc"
     exit 0
 fi
@@ -22,7 +22,7 @@ ln -sv "mpc-1.2.1" mpc
 ln -sv "gmp-6.2.1" gmp
 ln -sv "isl-0.24" isl
 
-export PATH="${SERPENT_INSTALL_DIR}/usr/binutils/bin:$PATH"
+export PATH="${STRAPY_INSTALL_DIR}/usr/binutils/bin:$PATH"
 export CC="gcc"
 export CXX="g++"
 
@@ -33,9 +33,9 @@ printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --with-sysroot="${SERPENT_INSTALL_DIR}" \
-    --with-build-sysroot="${SERPENT_INSTALL_DIR}" \
-    --target="${SERPENT_TRIPLET}" \
+    --with-sysroot="${STRAPY_INSTALL_DIR}" \
+    --with-build-sysroot="${STRAPY_INSTALL_DIR}" \
+    --target="${STRAPY_TRIPLET}" \
     --disable-multilib \
     --disable-bootstrap \
     --with-newlib \
@@ -48,18 +48,18 @@ mkdir build && pushd build
     LD="ld.bfd"
 
 printInfo "Building gcc compiler only"
-make -j "${SERPENT_BUILD_JOBS}" all-gcc
+make -j "${STRAPY_BUILD_JOBS}" all-gcc
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install-gcc DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install-gcc DESTDIR="${STRAPY_INSTALL_DIR}"
 
 printInfo "Building target libgcc"
-make -j "${SERPENT_BUILD_JOBS}" all-target-libgcc
+make -j "${STRAPY_BUILD_JOBS}" all-target-libgcc
 
 printInfo "Installing target libgcc"
-make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install-target-libgcc DESTDIR="${STRAPY_INSTALL_DIR}"
 
 printInfo "Installing default compiler links"
 for i in "gcc" "g++" ; do
-    ln -sv "${SERPENT_TRIPLET}-${i}" "${SERPENT_INSTALL_DIR}/usr/bin/${i}"
+    ln -sv "${STRAPY_TRIPLET}-${i}" "${STRAPY_INSTALL_DIR}/usr/bin/${i}"
 done

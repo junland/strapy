@@ -4,14 +4,14 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource slibtool
-serpentChrootCd slibtool-*
+strapyChrootCd slibtool-*
 
 
 printInfo "Configuring slibtool"
 
-serpentChroot ./configure \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+strapyChroot ./configure \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -22,10 +22,10 @@ serpentChroot ./configure \
 
 
 printInfo "Building slibtool"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing slibtool"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install
 
 # Use slibtool for all libtool purposes
-ln -svf slibtool "${SERPENT_INSTALL_DIR}/usr/bin/libtool"
+ln -svf slibtool "${STRAPY_INSTALL_DIR}/usr/bin/libtool"

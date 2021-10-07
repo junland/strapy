@@ -4,12 +4,12 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource pkgconf
-serpentChrootCd pkgconf-*
+strapyChrootCd pkgconf-*
 
 printInfo "Configuring pkgconf"
-serpentChroot ./configure \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+strapyChroot ./configure \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -23,9 +23,9 @@ serpentChroot ./configure \
     --disable-shared
 
 printInfo "Building pkgconf"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install
 
 printInfo "Setting pkgconf as default pkg-config"
-ln -svf pkgconf "${SERPENT_INSTALL_DIR}/usr/bin/pkg-config"
+ln -svf pkgconf "${STRAPY_INSTALL_DIR}/usr/bin/pkg-config"

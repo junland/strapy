@@ -36,7 +36,7 @@ Use stage1 to cross-compile essentials for a working chroot, and freshly cross-c
 #### stage3
 
 Reuse stage1 to build glibc + headers.
-Reuse stage2 at `/serpent` in a chroot to build a clean stage3 install.
+Reuse stage2 at `/strapy` in a chroot to build a clean stage3 install.
 
 #### stage4
 

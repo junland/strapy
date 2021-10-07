@@ -5,20 +5,20 @@
 # The ARMv8(a) profile is intended primarily for the Rockchip RK3399, found
 # in the Pinebook Pro. This profile should also support Rasberry Pi 4  too.
 
-export SERPENT_TARGET_CFLAGS="-march=armv8-a+simd+fp+crypto -mtune=cortex-a72 -O2 -pipe -fPIC"
-export SERPENT_TARGET_CXXFLAGS="${SERPENT_TARGET_CFLAGS}"
-export SERPENT_TARGET_LDFLAGS=""
-export SERPENT_TRIPLET="aarch64-serpent-linux"
+export STRAPY_TARGET_CFLAGS="-march=armv8-a+simd+fp+crypto -mtune=cortex-a72 -O2 -pipe -fPIC"
+export STRAPY_TARGET_CXXFLAGS="${STRAPY_TARGET_CFLAGS}"
+export STRAPY_TARGET_LDFLAGS=""
+export STRAPY_TRIPLET="aarch64-strapy-linux"
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
-    export SERPENT_TRIPLET="${SERPENT_TRIPLET}-musl"
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
+    export STRAPY_TRIPLET="${STRAPY_TRIPLET}-musl"
 fi
 
-export SERPENT_TARGET_LLVM_BACKEND="AArch64"
-export SERPENT_TARGET_ARCH="arm64"
+export STRAPY_TARGET_LLVM_BACKEND="AArch64"
+export STRAPY_TARGET_ARCH="arm64"
 
 # The inlude directory in musl
-export SERPENT_TARGET_MUSL="aarch64"
+export STRAPY_TARGET_MUSL="aarch64"
 
 # The qemu-user-static binary we need
-export SERPENT_QEMU_USER_STATIC="qemu-aarch64-static"
+export STRAPY_QEMU_USER_STATIC="qemu-aarch64-static"

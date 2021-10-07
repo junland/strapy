@@ -4,18 +4,18 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource jansson
-serpentChrootCd jansson-*
+strapyChrootCd jansson-*
 
 printInfo "Configuring jansson"
 
-serpentChroot cmake . \
+strapyChroot cmake . \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DJANSSON_BUILD_SHARED_LIBS=ON
 
 
 printInfo "Building jansson"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing jansson"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

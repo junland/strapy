@@ -8,9 +8,9 @@ export TOOLCHAIN_VERSION="13.0.0"
 printInfo "Extracting toolchain requirements"
 extractSource llvmorg
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
     pushd llvm-project-${TOOLCHAIN_VERSION}.src/clang
-    patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+    patch -p1 < "${STRAPY_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
 fi
 
@@ -21,7 +21,7 @@ mkdir build && pushd build
 export CFLAGS="-fPIC -O2 -pipe"
 
 # GNU toolchain may cause -moutline-atomics on aarch64, so disable until stage2.
-if [[ "${SERPENT_TARGET_LLVM_BACKEND}" == "AArch64" ]]; then
+if [[ "${STRAPY_TARGET_LLVM_BACKEND}" == "AArch64" ]]; then
 	export CFLAGS="${CFLAGS} -mno-outline-atomics"
 fi
 
@@ -30,12 +30,12 @@ export CXXFLAGS="${CFLAGS}"
 export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm' \
-    -DDEFAULT_SYSROOT="${SERPENT_INSTALL_DIR}" \
+    -DDEFAULT_SYSROOT="${STRAPY_INSTALL_DIR}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DLLVM_ENABLE_LIBXML2=OFF \
-    -DLLVM_TARGET_ARCH="${SERPENT_TARGET_ARCH}" \
-    -DLLVM_DEFAULT_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
-    -DLLVM_TARGETS_TO_BUILD="${SERPENT_TARGET_LLVM_BACKEND}" \
+    -DLLVM_TARGET_ARCH="${STRAPY_TARGET_ARCH}" \
+    -DLLVM_DEFAULT_TARGET_TRIPLE="${STRAPY_TRIPLET}" \
+    -DLLVM_TARGETS_TO_BUILD="${STRAPY_TARGET_LLVM_BACKEND}" \
     -DLLVM_INCLUDE_TESTS=OFF \
     -DCLANG_DEFAULT_CXX_STDLIB=libc++ \
     -DCLANG_DEFAULT_LINKER=lld \
@@ -72,22 +72,22 @@ cmake -G Ninja ../ \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON
 
-ninja -j "${SERPENT_BUILD_JOBS}" -v
-ninja -j "${SERPENT_BUILD_JOBS}" -v llvm-config
+ninja -j "${STRAPY_BUILD_JOBS}" -v
+ninja -j "${STRAPY_BUILD_JOBS}" -v llvm-config
 
 printInfo "Installing toolchain"
-DESTDIR="${SERPENT_INSTALL_DIR}" ninja install -j "${SERPENT_BUILD_JOBS}" -v
+DESTDIR="${STRAPY_INSTALL_DIR}" ninja install -j "${STRAPY_BUILD_JOBS}" -v
 
 cmake -G Ninja ../ \
     ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=OFF \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
     -DCLANG_LINK_CLANG_DYLIB=OFF
-ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
-cp "${SERPENT_BUILD_DIR}"/llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
+ninja -j "${STRAPY_BUILD_JOBS}" -v lld clang
+cp "${STRAPY_BUILD_DIR}"/llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build/bin/* "${STRAPY_INSTALL_DIR}/usr/bin/"
 
 # Only install if binutils ld not already present
-if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
+if [ ! -f "${STRAPY_INSTALL_DIR}/usr/bin/ld" ]; then
     printInfo "Setting ld.lld as default ld"
-    ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
+    ln -svf ld.lld "${STRAPY_INSTALL_DIR}/usr/bin/ld"
 fi

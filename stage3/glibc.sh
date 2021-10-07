@@ -7,8 +7,8 @@ extractSource glibc
 cd glibc-*
 
 # Add default toolchain patches into S3
-patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-Force-correct-RTLDLIST-for-ldd.patch"
-patch -p1 < "${SERPENT_PATCHES_DIR}/glibc/0001-sysdeps-Add-support-for-default-directories.patch"
+patch -p1 < "${STRAPY_PATCHES_DIR}/glibc/0001-Force-correct-RTLDLIST-for-ldd.patch"
+patch -p1 < "${STRAPY_PATCHES_DIR}/glibc/0001-sysdeps-Add-support-for-default-directories.patch"
 
 # Keep only the UTF-8 locales...
 supported=./localedata/SUPPORTED
@@ -26,17 +26,17 @@ export STRIP="strip"
 export CC="gcc"
 export CXX="g++"
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="${STRAPY_TARGET_CFLAGS}"
+export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS}"
 
-export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${SERPENT_STAGE1_TREE}/usr/bin:${PATH}"
+export STRAPY_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${STRAPY_STAGE1_TREE}/usr/binutils/bin:${STRAPY_STAGE1_TREE}/usr/bin:${PATH}"
 
 printInfo "Configuring glibc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --libdir=/usr/lib \
     --libexecdir=/usr/lib/glibc \
     --sysconfdir=/etc \
@@ -49,15 +49,15 @@ mkdir build && pushd build
     --enable-lto \
     --with-gnu-ld \
     ac_cv_prog_LD=ld.bfd \
-    ac_cv_prog_AR=${SERPENT_TRIPLET}-ar \
-    ac_cv_prog_RANLIB=${SERPENT_TRIPLET}-ranlib \
-    ac_cv_prog_AS=${SERPENT_TRIPLET}-as \
-    ac_cv_prog_NM=${SERPENT_TRIPLET}-nm \
+    ac_cv_prog_AR=${STRAPY_TRIPLET}-ar \
+    ac_cv_prog_RANLIB=${STRAPY_TRIPLET}-ranlib \
+    ac_cv_prog_AS=${STRAPY_TRIPLET}-as \
+    ac_cv_prog_NM=${STRAPY_TRIPLET}-nm \
     libc_cv_forced_unwind=yes
 
 printInfo "Building glibc"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing glibc"
-make -j "${SERPENT_BUILD_JOBS}" install DESTDIR="${SERPENT_INSTALL_DIR}"
-make -j "${SERPENT_BUILD_JOBS}" localedata/install-locales DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install DESTDIR="${STRAPY_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" localedata/install-locales DESTDIR="${STRAPY_INSTALL_DIR}"

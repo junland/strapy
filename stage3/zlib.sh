@@ -4,16 +4,16 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource zlib
-serpentChrootCd zlib-*
+strapyChrootCd zlib-*
 
 
 printInfo "Configuring zlib"
 
-serpentChroot ./configure --prefix=/usr \
+strapyChroot ./configure --prefix=/usr \
     --libdir=/usr/lib \
     --enable-shared
 
 printInfo "Building zlib"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

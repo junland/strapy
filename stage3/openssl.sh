@@ -4,18 +4,18 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource openssl
-serpentChrootCd openssl-*
+strapyChrootCd openssl-*
 
 
 printInfo "Configuring openssl"
 
-serpentChroot ./Configure \
+strapyChroot ./Configure \
     --prefix=/usr \
     --libdir=/usr/lib \
 
 
 printInfo "Building openssl"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing openssl"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

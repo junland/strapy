@@ -4,15 +4,15 @@ set -e
 . $(dirname $(realpath -s $0))/common.sh
 
 extractSource m4
-serpentChrootCd m4-*
+strapyChrootCd m4-*
 
 cd m4-*
 
 printInfo "Configuring m4"
 
-serpentChroot ./configure \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+strapyChroot ./configure \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -22,7 +22,7 @@ serpentChroot ./configure \
 
 
 printInfo "Building m4"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}"
+strapyChroot make -j "${STRAPY_BUILD_JOBS}"
 
 printInfo "Installing m4"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" install

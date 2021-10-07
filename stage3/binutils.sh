@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" != "glibc" ]]; then
+if [[ "${STRAPY_LIBC}" != "glibc" ]]; then
     printInfo "Skipping binutils with non-glibc libc"
     exit 0
 fi
@@ -12,10 +12,10 @@ extractSource binutils
 pushd binutils-*
 mkdir build
 popd
-serpentChrootCd binutils-*/build
+strapyChrootCd binutils-*/build
 
-export CFLAGS="${SERPENT_TARGET_CFLAGS}"
-export CXXFLAGS="${SERPENT_TARGET_CXXFLAGS}"
+export CFLAGS="${STRAPY_TARGET_CFLAGS}"
+export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS}"
 
 unset CONFIG_SITE
 export LD="ld.bfd"
@@ -30,20 +30,20 @@ export CC="gcc"
 export CPP="clang-cpp"
 export CXX="g++"
 
-export LDFLAGS="-L/usr/lib -L/serpent/usr/lib -B/usr/lib -B/serpent/usr/lib -isystem /usr/include -isystem /serpent/usr/include"
+export LDFLAGS="-L/usr/lib -L/strapy/usr/lib -B/usr/lib -B/strapy/usr/lib -isystem /usr/include -isystem /strapy/usr/include"
 export CFLAGS="${CFLAGS} ${LDFLAGS}"
 export CXXFLAGS="${CXXFLAGS} ${LDFLAGS}"
-export PATH="/serpent/usr/binutils/bin:/serpent/usr/bin:/usr/bin"
+export PATH="/strapy/usr/binutils/bin:/strapy/usr/bin:/usr/bin"
 
 printInfo "Configuring binutils"
-serpentChroot ../configure --prefix=/usr \
+strapyChroot ../configure --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
     --with-lib-path="/usr/lib:/usr/lib32" \
     --sbindir=/usr/sbin \
     --datadir=/usr/share \
-    --build="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_TRIPLET}" \
+    --build="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_TRIPLET}" \
     --includedir=/usr/include \
     --enable-multilib \
     --enable-deterministic-archives \
@@ -57,13 +57,13 @@ serpentChroot ../configure --prefix=/usr \
     --enable-ld=default \
     --enable-secureplt \
     --enable-64-bit-bfd \
-    PATH="/serpent/usr/binutils/bin:/serpent/usr/bin:/serpent/usr/sbin:/usr/bin:/usr/sbin"
+    PATH="/strapy/usr/binutils/bin:/strapy/usr/bin:/strapy/usr/sbin:/usr/bin:/usr/sbin"
 
 printInfo "Building binutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" tooldir=/usr
 
 printInfo "Installing binutils"
-serpentChroot make -j "${SERPENT_BUILD_JOBS}" tooldir=/usr install
+strapyChroot make -j "${STRAPY_BUILD_JOBS}" tooldir=/usr install
 
-serpentChroot install -Dm00644 ../include/libiberty.h /usr/include/libiberty.h
-serpentChroot install -Dm00644 libiberty/libiberty.a /usr/lib/libiberty.a
+strapyChroot install -Dm00644 ../include/libiberty.h /usr/include/libiberty.h
+strapyChroot install -Dm00644 libiberty/libiberty.a /usr/lib/libiberty.a

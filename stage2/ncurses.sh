@@ -10,8 +10,8 @@ cd ncurses-*
 printInfo "Configuring ncurses"
 
 ./configure --prefix=/usr \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --without-debug \
     --without-profile \
     --disable-rpath \
@@ -28,14 +28,14 @@ printInfo "Configuring ncurses"
 
 
 printInfo "Building ncurses"
-make -j "${SERPENT_BUILD_JOBS}"
+make -j "${STRAPY_BUILD_JOBS}"
 
 # We don't use tic in this step, however.
-make -j "${SERPENT_BUILD_JOBS}" install TIC_PATH=$(pwd)/progs/tic  DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install TIC_PATH=$(pwd)/progs/tic  DESTDIR="${STRAPY_INSTALL_DIR}"
 
 for item in "clear" "captoinfo" "infocmp" "infotocap" "reset" "tabs" "tic" "toe" "tput" "tset" ; do
-    ln -sv "${SERPENT_TRIPLET}-${item}" "${SERPENT_INSTALL_DIR}/usr/bin/${item}"
+    ln -sv "${STRAPY_TRIPLET}-${item}" "${STRAPY_INSTALL_DIR}/usr/bin/${item}"
 done
 
-echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libncurses.so"
-echo "INPUT(-lncursesw)" > "${SERPENT_INSTALL_DIR}/usr/lib/libcurses.so"
+echo "INPUT(-lncursesw)" > "${STRAPY_INSTALL_DIR}/usr/lib/libncurses.so"
+echo "INPUT(-lncursesw)" > "${STRAPY_INSTALL_DIR}/usr/lib/libcurses.so"

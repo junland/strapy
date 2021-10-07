@@ -3,7 +3,7 @@ set -e
 
 . $(dirname $(realpath -s $0))/common.sh
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
     printInfo "Skipping gcc with musl libc"
     exit 0
 fi
@@ -25,19 +25,19 @@ ln -sv "isl-0.21" isl
 export CC="gcc"
 export CXX="g++"
 
-export SERPENT_STAGE1_TREE=$(getInstallDir "1")
-export PATH="${SERPENT_STAGE1_TREE}/usr/binutils/bin:${PATH}"
+export STRAPY_STAGE1_TREE=$(getInstallDir "1")
+export PATH="${STRAPY_STAGE1_TREE}/usr/binutils/bin:${PATH}"
 
 unset CFLAGS LDFLAGS
-export LDFLAGS="-I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
-export CXXFLAGS="-I${SERPENT_INSTALL_DIR}/usr/include -L${SERPENT_INSTALL_DIR}/usr/lib -L${SERPENT_INSTALL_DIR}/usr/lib64 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0 -I${SERPENT_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export LDFLAGS="-I${STRAPY_INSTALL_DIR}/usr/include -L${STRAPY_INSTALL_DIR}/usr/lib -L${STRAPY_INSTALL_DIR}/usr/lib64 -I${STRAPY_INSTALL_DIR}/usr/include/c++/10.2.0 -I${STRAPY_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
+export CXXFLAGS="-I${STRAPY_INSTALL_DIR}/usr/include -L${STRAPY_INSTALL_DIR}/usr/lib -L${STRAPY_INSTALL_DIR}/usr/lib64 -I${STRAPY_INSTALL_DIR}/usr/include/c++/10.2.0 -I${STRAPY_INSTALL_DIR}/usr/include/c++/10.2.0/x86_64-linux-gnu"
 
 printInfo "Configuring gcc"
 mkdir build && pushd build
 ../configure --prefix=/usr \
     --libdir=/usr/lib \
-    --target="${SERPENT_TRIPLET}" \
-    --host="${SERPENT_HOST}" \
+    --target="${STRAPY_TRIPLET}" \
+    --host="${STRAPY_HOST}" \
     --disable-bootstrap \
     --disable-shared \
     --disable-threads \
@@ -46,7 +46,7 @@ mkdir build && pushd build
     --enable-languages=c,c++
 
 printInfo "Building gcc"
-make -j "${SERPENT_BUILD_JOBS}" all-target-libgcc
+make -j "${STRAPY_BUILD_JOBS}" all-target-libgcc
 
 printInfo "Installing gcc"
-make -j "${SERPENT_BUILD_JOBS}" install-target-libgcc DESTDIR="${SERPENT_INSTALL_DIR}"
+make -j "${STRAPY_BUILD_JOBS}" install-target-libgcc DESTDIR="${STRAPY_INSTALL_DIR}"

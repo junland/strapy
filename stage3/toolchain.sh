@@ -8,21 +8,21 @@ export TOOLCHAIN_VERSION="13.0.0"
 printInfo "Extracting toolchain requirements"
 extractSource llvmorg
 
-if [[ "${SERPENT_LIBC}" == "musl" ]]; then
+if [[ "${STRAPY_LIBC}" == "musl" ]]; then
     pushd llvm-project-${TOOLCHAIN_VERSION}.src/clang
-    patch -p1 < "${SERPENT_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
+    patch -p1 < "${STRAPY_PATCHES_DIR}/clang/0001-ToolChains-Linux-Use-correct-musl-path-on-Serpent-OS.patch"
     popd
     export TOOLCHAIN_FLAGS="-DLIBCXX_HAS_MUSL_LIBC=ON"
     export SYMLINKS="-DLLVM_INSTALL_CCTOOLS_SYMLINKS=ON"
 fi
 
 mkdir -p  llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
-serpentChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
+strapyChrootCd llvm-project-${TOOLCHAIN_VERSION}.src/llvm/build
 
 # Add default toolchain patches into S3
 pushd llvm-project-${TOOLCHAIN_VERSION}.src
-patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch"
-patch -p1 < "${SERPENT_PATCHES_DIR}/llvm/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch"
+patch -p1 < "${STRAPY_PATCHES_DIR}/llvm/0001-Make-gnu-hash-the-default-for-lld-and-clang.patch"
+patch -p1 < "${STRAPY_PATCHES_DIR}/llvm/0001-Use-correct-Serpent-OS-multilib-paths-for-ld.patch"
 popd
 
 unset CFLAGS CXXFLAGS
@@ -33,9 +33,9 @@ export llvmopts="
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLLVM_ENABLE_PROJECTS='clang;compiler-rt;libcxx;libcxxabi;libunwind;lld;llvm;polly' \
     -DCMAKE_BUILD_TYPE=Release \
-    -DLLVM_TARGET_ARCH="${SERPENT_TARGET_ARCH}" \
-    -DLLVM_DEFAULT_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
-    -DLLVM_TARGETS_TO_BUILD="${SERPENT_TARGET_LLVM_BACKEND}" \
+    -DLLVM_TARGET_ARCH="${STRAPY_TARGET_ARCH}" \
+    -DLLVM_DEFAULT_TARGET_TRIPLE="${STRAPY_TRIPLET}" \
+    -DLLVM_TARGETS_TO_BUILD="${STRAPY_TARGET_LLVM_BACKEND}" \
     -DLLVM_ENABLE_LIBXML2=OFF \
     -DLLVM_ENABLE_FFI=OFF \
     -DENABLE_EXPERIMENTAL_NEW_PASS_MANAGER=ON \
@@ -63,7 +63,7 @@ export llvmopts="
     -DLIBCXXABI_INSTALL_LIBRARY=ON \
     -DLIBUNWIND_ENABLE_SHARED=ON \
     -DLIBUNWIND_ENABLE_STATIC=ON \
-    -DLIBUNWIND_TARGET_TRIPLE="${SERPENT_TRIPLET}" \
+    -DLIBUNWIND_TARGET_TRIPLE="${STRAPY_TRIPLET}" \
     -DLIBUNWIND_USE_COMPILER_RT=ON \
     -DLLVM_USE_SANITIZER=OFF \
     -DLLVM_ENABLE_UNWIND_TABLES=OFF \
@@ -74,30 +74,30 @@ export llvmopts="
     -DLLVM_BUILD_TOOLS=ON \
     -DCLANG_BUILD_TOOLS=OFF"
 
-serpentChroot cmake -G Ninja ../ \
+strapyChroot cmake -G Ninja ../ \
     ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=ON \
     -DLLVM_LINK_LLVM_DYLIB=ON
 
 printInfo "Building toolchain"
-serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v
-serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v llvm-config
+strapyChroot ninja -j "${STRAPY_BUILD_JOBS}" -v
+strapyChroot ninja -j "${STRAPY_BUILD_JOBS}" -v llvm-config
 
 printInfo "Installing toolchain"
-serpentChroot ninja install -j "${SERPENT_BUILD_JOBS}" -v
+strapyChroot ninja install -j "${STRAPY_BUILD_JOBS}" -v
 
-serpentChroot cmake -G Ninja ../ \
+strapyChroot cmake -G Ninja ../ \
     ${llvmopts} \
     -DLLVM_BUILD_LLVM_DYLIB=OFF \
     -DLLVM_LINK_LLVM_DYLIB=OFF \
     -DCLANG_LINK_CLANG_DYLIB=OFF
-serpentChroot ninja -j "${SERPENT_BUILD_JOBS}" -v lld clang
-cp "${SERPENT_BUILD_DIR}/llvm-project-${TOOLCHAIN_VERSION}.src"/llvm/build/bin/* "${SERPENT_INSTALL_DIR}/usr/bin/"
+strapyChroot ninja -j "${STRAPY_BUILD_JOBS}" -v lld clang
+cp "${STRAPY_BUILD_DIR}/llvm-project-${TOOLCHAIN_VERSION}.src"/llvm/build/bin/* "${STRAPY_INSTALL_DIR}/usr/bin/"
 
 # Only install if binutils ld not already present
-if [ ! -f "${SERPENT_INSTALL_DIR}/usr/bin/ld" ]; then
+if [ ! -f "${STRAPY_INSTALL_DIR}/usr/bin/ld" ]; then
     printInfo "Setting ld.lld as default ld"
-    ln -svf ld.lld "${SERPENT_INSTALL_DIR}/usr/bin/ld"
+    ln -svf ld.lld "${STRAPY_INSTALL_DIR}/usr/bin/ld"
 fi
 
 stashBinutils llvm-llvm

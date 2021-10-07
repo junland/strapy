@@ -6,10 +6,10 @@ set -e
 extractSource diffutils
 
 printInfo "Configuring diffutils"
-serpentChrootCd diffutils*
-serpentChroot ./configure \
-    --host="${SERPENT_TRIPLET}" \
-    --build="${SERPENT_TRIPLET}" \
+strapyChrootCd diffutils*
+strapyChroot ./configure \
+    --host="${STRAPY_TRIPLET}" \
+    --build="${STRAPY_TRIPLET}" \
     --prefix=/usr \
     --sysconfdir=/etc \
     --libdir=/usr/lib \
@@ -18,5 +18,5 @@ serpentChroot ./configure \
     --datadir=/usr/share
 
 printInfo "Building diffutils"
-serpentChroot make -j${SERPENT_BUILD_JOBS}
-serpentChroot make -j${SERPENT_BUILD_JOBS} install
+strapyChroot make -j${STRAPY_BUILD_JOBS}
+strapyChroot make -j${STRAPY_BUILD_JOBS} install
