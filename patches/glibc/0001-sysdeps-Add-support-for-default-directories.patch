@@ -1,5 +1,5 @@
 From 5cce79d4d705afb887d80633aec471bd083dd5f6 Mon Sep 17 00:00:00 2001
-From: Peter O'Connor <sunnyflunk@strapyos.com>
+From: Peter O'Connor <sunnyflunk@serpentos.com>
 Date: Mon, 5 Jul 2021 11:08:53 +1000
 Subject: [PATCH] sysdeps: Add support for default directories
 
@@ -7,7 +7,7 @@ In Serpent OS, we use /usr/lib for our 64bit libs and /usr/lib32 for our 32bit i
 
 Teach glibc these paths natively so it knows where to find them.
 
-Signed-off-by: Peter O'Connor <sunnyflunk@strapyos.com>
+Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
 ---
  sysdeps/unix/sysv/linux/x86_64/dl-cache.h | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
