@@ -38,11 +38,6 @@ Use stage1 to cross-compile essentials for a working chroot, and freshly cross-c
 Reuse stage1 to build glibc + headers.
 Reuse stage2 at `/strapy` in a chroot to build a clean stage3 install.
 
-#### stage4
-
-Rely on the stage3 image and use `moss` and `boulder` tooling to build the initial native SerpentOS
-image from `stone.yml` recipes.
-
 ### Multiarch testing
 
 It is advised you install the correct qemu-user-static within your path so that the cross-compilation
@@ -69,14 +64,14 @@ Check that your distro uses `glibc-2.33` as this is required for a successful bo
 
 ```
 sudo pacman -Syu base-devel
-sudo pacman -Syu cmake ldc meson ninja
+sudo pacman -Syu cmake ldc meson ninja texinfo
 ```
 
 ##### Fedora
 
 ```
 sudo dnf group install 'Development Tools'
-sudo dnf install automake bison cmake gettext-devel ldc meson ninja-build
+sudo dnf install automake bison cmake gettext-devel ldc meson ninja-build texinfo
 ```
 
 #### Build the bootstrap stages
