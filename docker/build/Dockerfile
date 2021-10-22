@@ -6,7 +6,7 @@ RUN groupadd -r builder -g 433 && \
 USER root
 
 RUN dnf group install 'Development Tools' -y && \
-    dnf install vim nano wget curl bzip2 xz find -y && \
+    dnf install vim nano wget curl bzip2 xz findutils -y && \
     dnf install gcc gcc-c++ automake bison cmake gettext-devel ldc meson ninja-build texinfo -y && \
     dnf clean all
 
