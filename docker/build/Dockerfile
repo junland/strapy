@@ -12,6 +12,8 @@ RUN dnf group install 'Development Tools' -y && \
 
 USER builder
 
+ENV STRAPY_BUILD_JOBS 1
+
 COPY . /source
 
 WORKDIR /source
