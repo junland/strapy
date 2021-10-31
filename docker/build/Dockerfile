@@ -7,12 +7,12 @@ USER root
 
 RUN dnf group install 'Development Tools' -y && \
     dnf install vim nano wget curl bzip2 xz findutils -y && \
-    dnf install gcc gcc-c++ automake bison cmake gettext-devel ldc meson ninja-build texinfo -y && \
+    dnf install gcc gcc-c++ automake bison byacc cmake ldc m4 meson ninja-build texinfo flex-devel bison-devel gettext-devel -y && \
     dnf clean all
 
 USER builder
 
-ENV STRAPY_BUILD_JOBS 1
+ENV STRAPY_BUILD_JOBS 2
 
 COPY . /source
 
