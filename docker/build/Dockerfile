@@ -13,7 +13,7 @@ COPY . /source
 
 RUN useradd -m -d /source -c "Container build user" builder
 
-RUN chown builder:nobody -rv /source
+RUN chown builder -Rv /source
 
 USER builder
 
