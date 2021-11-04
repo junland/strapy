@@ -1,9 +1,9 @@
 From 8ecceb4620e29403e7c3c14f4823fa6e2d1e6794 Mon Sep 17 00:00:00 2001
-From: Peter O'Connor <sunnyflunk@strapyos.com>
+From: Peter O'Connor <sunnyflunk@serpentos.com>
 Date: Mon, 5 Jul 2021 11:15:25 +1000
 Subject: [PATCH] Force correct RTLDLIST for ldd
 
-Signed-off-by: Peter O'Connor <sunnyflunk@strapyos.com>
+Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
 ---
  elf/ldd.bash.in | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)

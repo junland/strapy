@@ -1,9 +1,9 @@
 From e4103526dc8808f77a7d18d38628539c01c23303 Mon Sep 17 00:00:00 2001
-From: Peter O'Connor <sunnyflunk@strapyos.com>
+From: Peter O'Connor <sunnyflunk@serpentos.com>
 Date: Mon, 5 Jul 2021 11:55:10 +1000
 Subject: [PATCH] Use modern linker locations for Serpent OS
 
-Signed-off-by: Peter O'Connor <sunnyflunk@strapyos.com>
+Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
 ---
  gcc/config/i386/linux64.h | 12 ++++++------
  1 file changed, 6 insertions(+), 6 deletions(-)

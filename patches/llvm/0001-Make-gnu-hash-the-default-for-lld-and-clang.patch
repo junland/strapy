@@ -1,9 +1,9 @@
 From fc9319ffb650ee5ef1be8a617ce441205a3a85b3 Mon Sep 17 00:00:00 2001
-From: Peter O'Connor <sunnyflunk@strapyos.com>
+From: Peter O'Connor <sunnyflunk@serpentos.com>
 Date: Mon, 5 Jul 2021 14:22:14 +1000
 Subject: [PATCH] Make gnu hash the default for lld and clang
 
-Signed-off-by: Peter O'Connor <sunnyflunk@strapyos.com>
+Signed-off-by: Peter O'Connor <sunnyflunk@serpentos.com>
 ---
  clang/lib/Driver/ToolChains/Linux.cpp | 3 +++
  lld/ELF/Driver.cpp                    | 2 +-
