@@ -12,9 +12,9 @@ RUN dnf upgrade -y && \
 RUN groupadd builder && \
     useradd -s /bin/bash -g builder -m -k /dev/null -d /source -c "Container build user" builder && \
     echo "builder:builder" | chpasswd && \
-    adduser builder wheel && \
     echo "builder ALL = NOPASSWD : ALL" >> /etc/sudoers && \
-    echo 'Defaults env_keep += "LC_ALL PATH STRAPY_BUILD_JOBS"' >> /etc/sudoers
+    echo 'Defaults env_keep += "LC_ALL PATH STRAPY_BUILD_JOBS"' >> /etc/sudoers && \
+    echo "umask 022" >> /source/.profile
 
 COPY . /source
 
