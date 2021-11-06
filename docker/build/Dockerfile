@@ -5,16 +5,13 @@ USER root
 RUN dnf upgrade -y && \
     dnf group install "C Development Tools and Libraries" "Development Tools" -y && \
     dnf install bzip2 curl findutils patch diffutils nano vim wget xz hostname sudo bash dash zsh -y && \
-    dnf install autoconf-archive automake bc bison bison-devel byacc cmake expat-devel expect flex-devel file g++ gawk gcc gcc-c++ gettext-devel \
+    dnf install acl autoconf-archive automake bc bison bison-devel byacc cmake expat-devel expect flex-devel file g++ gawk gcc gcc-c++ gettext-devel \
                 ldc libattr-devel m4 make meson ncurses-devel ninja-build perl-ExtUtils-ParseXS perl-XML-Parser python3 rsync texinfo langpacks-en \
                 gawk-all-langpacks glibc-all-langpacks glibc-locale-source -y && \
     dnf clean all
     
 RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
-    localedef -i en_US -f UTF-8 en_US.UTF-8 --force && \
-    localedef -i en_US -f UTF-8 en_US.UTF-8 --force && \
-    localedef -i POSIX -f UTF-8 C.UTF-8 --force && \
-    localedef -i en_US -f ISO-8859-1 en_US --force
+    localedef -i POSIX -f UTF-8 C.UTF-8 --force
 
 RUN groupadd builder && \
     useradd -s /bin/bash -g builder -m -k /dev/null -d /source -c "Container build user" builder && \
