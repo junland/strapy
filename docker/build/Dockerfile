@@ -9,19 +9,15 @@ RUN dnf upgrade -y && \
                 ldc libattr-devel m4 make meson ncurses-devel ninja-build procps-ng perl-ExtUtils-ParseXS perl-XML-Parser python3 rsync texinfo langpacks-en \
                 gawk-all-langpacks glibc-all-langpacks glibc-locale-source -y && \
     dnf clean all
-    
-RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime && \
-    localedef -i en_US -f UTF-8 en_US.UTF-8 --force && \
-    localedef -i POSIX -f UTF-8 C.UTF-8 --force 
 
 RUN groupadd builder && \
     useradd -s /bin/bash -g builder -m -k /dev/null -d /source -c "Container build user" builder && \
     echo "builder:builder" | chpasswd && \
     echo "builder ALL = NOPASSWD : ALL" >> /etc/sudoers && \
     echo 'Defaults env_keep += "LC_ALL PATH STRAPY_BUILD_JOBS"' >> /etc/sudoers && \
-    echo "umask 022" >> /source/.profile
-    echo "set +h" >> /source/.profile
-    echo "umask 022" >> /source/.bashrc
+    echo "umask 022" >> /source/.profile && \
+    echo "set +h" >> /source/.profile && \
+    echo "umask 022" >> /source/.bashrc && \
     echo "set +h" >> /source/.bashrc
 
 COPY . /source
