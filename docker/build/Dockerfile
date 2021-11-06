@@ -22,6 +22,9 @@ RUN groupadd builder && \
     echo "builder ALL = NOPASSWD : ALL" >> /etc/sudoers && \
     echo 'Defaults env_keep += "LC_ALL PATH STRAPY_BUILD_JOBS"' >> /etc/sudoers && \
     echo "umask 022" >> /source/.profile
+    echo "set +h" >> /source/.profile
+    echo "umask 022" >> /source/.bashrc
+    echo "set +h" >> /source/.bashrc
 
 COPY . /source
 
