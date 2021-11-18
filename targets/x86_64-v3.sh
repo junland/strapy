@@ -5,7 +5,7 @@
 # This profile is intended for modern Intel CPUs, and should happily work on
 # AMD Zen+
 
-export STRAPY_TARGET_CFLAGS="--with-arch=x86-64 --with-tune=generic -O2 -fPIC -pipe"
+export STRAPY_TARGET_CFLAGS="--with-arch=x86-64 --with-tune=generic -O2 -fPIC -pipe -mprefer-vector-width=128"
 export STRAPY_TARGET_CXXFLAGS="${STRAPY_TARGET_CFLAGS}"
 export STRAPY_TARGET_LDFLAGS=""
 export STRAPY_TRIPLET="x86_64-strapy-linux"
