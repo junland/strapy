@@ -4,7 +4,7 @@
 
 # This profile is intended for all CPUs made in last 10 years
 
-export STRAPY_TARGET_CFLAGS="-march=x86-64-v2 -mtune=generic -O2 -fPIC -pipe"
+export STRAPY_TARGET_CFLAGS="-march=x86-64-v2 -mtune=ivybridge -O2 -fPIC -pipe"
 export STRAPY_TARGET_CXXFLAGS="${STRAPY_TARGET_CFLAGS}"
 export STRAPY_TARGET_LDFLAGS=""
 export STRAPY_TRIPLET="x86_64-strapy-linux"
