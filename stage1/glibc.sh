@@ -35,7 +35,9 @@ echo "rtlddir=/usr/lib" >> configparms
     ac_cv_prog_AR=${STRAPY_TRIPLET}-ar \
     ac_cv_prog_RANLIB=${STRAPY_TRIPLET}-ranlib \
     ac_cv_prog_AS=${STRAPY_TRIPLET}-as \
-    ac_cv_prog_NM=${STRAPY_TRIPLET}-nm
+    ac_cv_prog_NM=${STRAPY_TRIPLET}-nm \
+    CC="gcc" \
+    CXX="g++"
 
 printInfo "Building glibc"
 make -j "${STRAPY_BUILD_JOBS}"
