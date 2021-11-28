@@ -7,9 +7,9 @@ extractSource libffi
 cd libffi-*
 
 export PATH="${STRAPY_INSTALL_DIR}/usr/bin:$PATH"
-export CC="clang"
-export CXX="clang++"
-export LD="ld.lld"
+export CC="${STRAPY_INSTALL_DIR}/usr/bin/clang"
+export CXX="${STRAPY_INSTALL_DIR}/usr/bin/clang++"
+export LD="${STRAPY_INSTALL_DIR}/usr/bin/ld.lld"
 
 export CFLAGS="${STRAPY_TARGET_CFLAGS} -L${STRAPY_INSTALL_DIR}/lib -L${STRAPY_INSTALL_DIR}/lib64"
 export CXXFLAGS="${STRAPY_TARGET_CXXFLAGS} -L${STRAPY_INSTALL_DIR}/lib -L${STRAPY_INSTALL_DIR}/lib64"
